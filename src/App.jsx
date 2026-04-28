@@ -180,9 +180,9 @@ function PointCloud({
         ref={materialRef}
         size={POINT_SIZE_BASE}
         vertexColors
-        transparent={false}
+        transparent
         opacity={1}
-        depthWrite
+        depthWrite={false}
         depthTest
         sizeAttenuation={POINT_SIZE_ATTENUATION}
       />
@@ -254,21 +254,18 @@ function ControlPanel({
   return (
     <div className="hud">
       <div
+        className={`gm-logo ${menuOpen ? "is-open" : ""}`}
+        onClick={onToggleMenu}
+        role="button"
+        aria-label="Toggle menu"
+      ></div>
+      <div
         className={menuOpen ? 'overlay is-open' : 'overlay'}
         onPointerEnter={() => onPanelHoverChange(true)}
         onPointerLeave={() => onPanelHoverChange(false)}
         onFocusCapture={() => onPanelHoverChange(true)}
         onBlurCapture={() => onPanelHoverChange(false)}
       >
-        <button
-          type="button"
-          className="title-toggle"
-          aria-expanded={menuOpen}
-          onClick={onToggleMenu}
-        >
-          grovematrix
-        </button>
-
         {menuOpen ? (
           <div className="menu-panel">
             {placementMode ? (
@@ -505,7 +502,7 @@ function LoadingOverlay({ error, ready }) {
     <div className={ready ? 'loading-overlay is-hidden' : 'loading-overlay'}>
       <div className="loading-panel">
         <p className="loading-eyebrow">listening instrument</p>
-        <h1>GROVEMATRIX</h1>
+        <div className="loading-logo"></div>
         <p className="loading-subtitle">assembling canopy scan</p>
         {error ? (
           <p className="loading-error">Point cloud failed to initialize. Check the model asset and refresh.</p>
@@ -1170,7 +1167,7 @@ export default function App() {
           camera.updateProjectionMatrix();
         }}
       >
-        <color attach="background" args={['#050816']} />
+        <color attach="background" args={['#0E1A14']} />
         <ambientLight intensity={0.75} />
         <PointCloudErrorBoundary onError={setPointCloudError}>
           <Suspense fallback={null}>

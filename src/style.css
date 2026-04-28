@@ -1,19 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Courier+Prime:wght@400;700&display=swap");
 
 :root {
-  --bg-deep: #070807;
-  --peat: #15100c;
-  --soil: #2b2118;
-  --moss: #8fae52;
-  --lichen: #d6d166;
-  --mycelium: #eee4bf;
-  --spore-pink: #f3a0c8;
-  --fungal-orange: #c7833d;
-  --wet-cyan: #8fcfbd;
-  --bruise-violet: #4b3a62;
-  --panel: rgba(15, 12, 9, 0.7);
-  --text: #eee4bf;
-  --muted: rgba(238, 228, 191, 0.62);
+  --bg-deep: #0E1A14;
+  --peat: #1A2A1E;
+  --soil: #2A3A2E;
+  --lichen-field: #6F8F72;
+  --fungal-flesh: #D6D2C4;
+  --mycelium-glow: #7CFFB2;
+  --spore-signal: #8A5CFF;
+  --panel: rgba(15, 26, 20, 0.7);
+  --text: var(--fungal-flesh);
+  --muted: rgba(214, 210, 196, 0.62);
 }
 
 * {
@@ -33,9 +30,9 @@ body,
 body {
   overflow: hidden;
   background:
-    radial-gradient(circle at 18% 16%, rgba(214, 209, 102, 0.055), transparent 26%),
-    radial-gradient(circle at 82% 76%, rgba(243, 160, 200, 0.04), transparent 30%),
-    radial-gradient(circle at 70% 22%, rgba(75, 58, 98, 0.075), transparent 26%),
+    radial-gradient(circle at 18% 16%, rgba(124, 255, 178, 0.055), transparent 26%),
+    radial-gradient(circle at 82% 76%, rgba(138, 92, 255, 0.04), transparent 30%),
+    radial-gradient(circle at 70% 22%, rgba(111, 143, 114, 0.075), transparent 26%),
     linear-gradient(180deg, var(--bg-deep) 0%, var(--peat) 46%, var(--soil) 100%);
   color: var(--text);
   font-family: "Space Mono", "Courier Prime", "Courier New", monospace;
@@ -66,10 +63,10 @@ canvas {
   display: grid;
   place-items: center;
   background:
-    radial-gradient(circle at 18% 18%, rgba(214, 209, 102, 0.075), transparent 28%),
-    radial-gradient(circle at 82% 74%, rgba(243, 160, 200, 0.055), transparent 32%),
-    radial-gradient(circle at 52% 90%, rgba(75, 58, 98, 0.09), transparent 36%),
-    linear-gradient(180deg, rgba(7, 8, 7, 0.97) 0%, rgba(21, 16, 12, 0.95) 100%);
+    radial-gradient(circle at 18% 18%, rgba(124, 255, 178, 0.075), transparent 28%),
+    radial-gradient(circle at 82% 74%, rgba(138, 92, 255, 0.055), transparent 32%),
+    radial-gradient(circle at 52% 90%, rgba(111, 143, 114, 0.09), transparent 36%),
+    linear-gradient(180deg, rgba(14, 26, 20, 0.97) 0%, rgba(26, 42, 30, 0.95) 100%);
   opacity: 1;
   transition: opacity 480ms ease;
   min-height: 100vh;
@@ -86,11 +83,11 @@ canvas {
 .loading-panel {
   width: min(28rem, calc(100vw - 2rem));
   padding: 1.4rem 1.5rem;
-  border: 1px solid rgba(232, 224, 191, 0.18);
+  border: 1px solid rgba(214, 210, 196, 0.18);
   border-radius: 16px;
   background:
-    radial-gradient(circle at top left, rgba(214, 209, 102, 0.045), transparent 42%),
-    rgba(15, 12, 9, 0.76);
+    radial-gradient(circle at top left, rgba(111, 143, 114, 0.045), transparent 42%),
+    rgba(14, 26, 20, 0.76);
   box-shadow:
     0 20px 60px rgba(0, 0, 0, 0.34),
     inset 0 0 0 1px rgba(243, 160, 200, 0.04);
@@ -101,24 +98,42 @@ canvas {
 
 .loading-panel h1 {
   margin: 0;
-  color: var(--mycelium);
+  color: var(--fungal-flesh);
   font-family: "Space Mono", "Courier Prime", monospace;
   font-size: clamp(1.55rem, 3vw, 2.3rem);
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   text-shadow:
-    0 0 12px rgba(214, 209, 102, 0.08),
-    0 0 18px rgba(243, 160, 200, 0.055);
+    0 0 12px rgba(214, 210, 196, 0.08),
+    0 0 18px rgba(214, 210, 196, 0.055);
 }
 
 .loading-eyebrow {
   margin: 0 0 0.7rem;
-  color: rgba(232, 224, 191, 0.74);
+  color: rgba(214, 210, 196, 0.74);
   font-family: "Courier Prime", "Space Mono", "Courier New", monospace;
   font-size: 0.72rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
+}
+
+.loading-logo {
+  width: 240px;
+  height: 48px;
+  margin: 0 auto 0.8rem;
+  background: #E2FF9A;
+  -webkit-mask-image: url("/patterns/gmlogo.svg");
+  mask-image: url("/patterns/gmlogo.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  filter:
+    drop-shadow(0 0 12px rgba(226,255,154,0.35))
+    drop-shadow(0 0 24px rgba(182,255,77,0.18));
 }
 
 .loading-subtitle,
@@ -145,8 +160,8 @@ canvas {
   width: 0.7rem;
   height: 0.7rem;
   border-radius: 999px;
-  background: linear-gradient(180deg, var(--lichen), var(--moss));
-  box-shadow: 0 0 16px rgba(143, 174, 82, 0.16);
+  background: linear-gradient(180deg, var(--lichen-field), var(--mycelium-glow));
+  box-shadow: 0 0 16px rgba(111, 143, 114, 0.16);
   animation: pulseCluster 1.4s ease-in-out infinite;
 }
 
@@ -178,6 +193,12 @@ canvas {
   }
 }
 
+@keyframes gmPulse {
+  0% { opacity: 0.9; }
+  50% { opacity: 1; }
+  100% { opacity: 0.9; }
+}
+
 .hud {
   position: fixed;
   inset: 0;
@@ -202,7 +223,7 @@ canvas {
   border-bottom: 1px solid transparent;
   border-radius: 0;
   background: transparent;
-  color: rgba(238, 228, 191, 0.86);
+  color: var(--fungal-flesh);
   cursor: pointer;
   margin: 0;
   font-family: "Space Mono", "Courier Prime", monospace;
@@ -212,8 +233,8 @@ canvas {
   line-height: 1.1;
   text-transform: lowercase;
   text-shadow:
-    0 0 10px rgba(182, 255, 77, 0.16),
-    0 0 22px rgba(238, 228, 191, 0.06);
+    0 0 10px rgba(124, 255, 178, 0.16),
+    0 0 22px var(--fungal-flesh);
   transition:
     border-color 140ms ease,
     color 140ms ease,
@@ -223,26 +244,81 @@ canvas {
 .title-toggle:hover,
 .title-toggle:focus-visible,
 .title-toggle[aria-expanded="true"] {
-  border-color: rgba(182, 255, 77, 0.48);
-  color: var(--mycelium);
+  border-color: rgba(124, 255, 178, 0.48);
+  color: var(--mycelium-glow);
   outline: none;
   text-shadow:
-    0 0 12px rgba(182, 255, 77, 0.24),
-    0 0 26px rgba(238, 228, 191, 0.08);
+    0 0 12px rgba(124, 255, 178, 0.24),
+    0 0 26px var(--fungal-flesh);
+}
+
+.gm-logo {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 20;
+  width: 180px;
+  height: 36px;
+  cursor: pointer;
+  pointer-events: auto;
+
+  background: #E2FF9A;
+
+  -webkit-mask-image: url("/patterns/gmlogo.svg");
+  mask-image: url("/patterns/gmlogo.svg");
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: left center;
+  mask-position: left center;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+
+  opacity: 0.92;
+
+  filter:
+    drop-shadow(0 0 6px rgba(226,255,154,0.35))
+    drop-shadow(0 0 12px rgba(182,255,77,0.18));
+
+  transition:
+    transform 140ms ease,
+    opacity 140ms ease,
+    filter 140ms ease,
+    background 140ms ease;
+
+  animation: gmPulse 6s ease-in-out infinite;
+}
+
+.gm-logo:hover {
+  opacity: 1;
+  transform: scale(1.04);
+
+  background: #F0FFC2;
+
+  filter:
+    drop-shadow(0 0 8px rgba(240,255,194,0.45))
+    drop-shadow(0 0 16px rgba(182,255,77,0.25));
+}
+
+.gm-logo.is-open {
+  background: #CCFF70;
+
+  filter:
+    drop-shadow(0 0 10px rgba(204,255,112,0.55))
+    drop-shadow(0 0 20px rgba(243,160,200,0.18));
 }
 
 .menu-panel {
   width: min(22rem, calc(100vw - 2rem));
   max-height: calc(100dvh - 4.25rem - env(safe-area-inset-top));
-  margin-top: 0.35rem;
+  margin-top: 3rem;
   padding: 0.72rem;
-  border: 1px solid rgba(238, 228, 191, 0.12);
+  border: 1px solid rgba(214, 210, 196, 0.12);
   border-radius: 8px;
-  background: rgba(15, 12, 9, 0.72);
+  background: rgba(14, 26, 20, 0.72);
   backdrop-filter: blur(16px) saturate(0.94);
   box-shadow:
     0 16px 44px rgba(0, 0, 0, 0.32),
-    inset 0 1px 0 rgba(238, 228, 191, 0.035);
+    inset 0 1px 0 rgba(214, 210, 196, 0.035);
   overflow: auto;
   overscroll-behavior: contain;
 }
@@ -258,7 +334,7 @@ canvas {
 .selection-card span,
 .list-title {
   display: block;
-  color: rgba(232, 224, 191, 0.84);
+  color: rgba(214, 210, 196, 0.84);
   font-family: "Courier Prime", "Space Mono", "Courier New", monospace;
   font-size: 0.68rem;
   font-weight: 700;
@@ -302,12 +378,12 @@ canvas {
 .control-row button,
 .drawer-toggle {
   appearance: none;
-  border: 1px solid rgba(238, 228, 191, 0.12);
+  border: 1px solid rgba(214, 210, 196, 0.12);
   border-radius: 8px;
   min-height: 40px;
   padding: 0.54rem 0.66rem;
   color: var(--text);
-  background: rgba(21, 16, 12, 0.78);
+  background: rgba(26, 42, 30, 0.78);
   font-family: "Space Mono", "Courier Prime", "Courier New", monospace;
   font-size: 0.72rem;
   font-weight: 700;
@@ -323,9 +399,9 @@ canvas {
 
 .control-row button:hover,
 .drawer-toggle:hover {
-  border-color: rgba(143, 207, 189, 0.24);
-  background: rgba(43, 33, 24, 0.9);
-  color: var(--mycelium);
+  border-color: rgba(124, 255, 178, 0.24);
+  background: rgba(42, 58, 46, 0.9);
+  color: var(--mycelium-glow);
   transform: translateY(-1px);
 }
 
@@ -336,9 +412,9 @@ canvas {
 }
 
 .control-row button.is-active {
-  border-color: rgba(214, 209, 102, 0.26);
-  background: rgba(43, 33, 24, 0.94);
-  color: var(--lichen);
+  border-color: rgba(111, 143, 114, 0.26);
+  background: rgba(42, 58, 46, 0.94);
+  color: var(--lichen-field);
 }
 
 .selection-card {
@@ -411,9 +487,9 @@ canvas {
   gap: 0.75rem;
   width: 100%;
   padding: 0.64rem 0.78rem;
-  border: 1px solid rgba(232, 224, 191, 0.08);
+  border: 1px solid rgba(214, 210, 196, 0.08);
   border-radius: 8px;
-  background: rgba(21, 16, 12, 0.74);
+  background: rgba(26, 42, 30, 0.74);
   color: var(--text);
   font-family: "Space Mono", "Courier Prime", "Courier New", monospace;
   font-size: 0.8rem;
@@ -428,14 +504,14 @@ canvas {
 }
 
 .marker-row:hover {
-  border-color: rgba(143, 207, 189, 0.22);
-  background: rgba(43, 33, 24, 0.88);
+  border-color: rgba(124, 255, 178, 0.22);
+  background: rgba(42, 58, 46, 0.88);
   transform: translateY(-1px);
 }
 
 .marker-row.is-selected {
-  border-color: rgba(243, 160, 200, 0.32);
-  background: rgba(43, 33, 24, 0.9);
+  border-color: rgba(138, 92, 255, 0.32);
+  background: rgba(42, 58, 46, 0.9);
 }
 
 .marker-row-main {
@@ -449,8 +525,8 @@ canvas {
   width: 0.65rem;
   height: 0.65rem;
   border-radius: 999px;
-  background: var(--lichen);
-  box-shadow: 0 0 8px rgba(214, 209, 102, 0.18);
+  background: var(--lichen-field);
+  box-shadow: 0 0 8px rgba(111, 143, 114, 0.18);
   flex: 0 0 auto;
 }
 
@@ -463,7 +539,7 @@ canvas {
   border-radius: 999px;
   color: var(--text);
   background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(232, 224, 191, 0.08);
+  border: 1px solid rgba(214, 210, 196, 0.08);
   font-family: "Space Mono", "Courier Prime", "Courier New", monospace;
   font-size: 0.8rem;
   line-height: 1;
@@ -477,9 +553,9 @@ canvas {
 
 .marker-delete:hover,
 .marker-delete:focus-visible {
-  background: rgba(243, 160, 200, 0.08);
-  border-color: rgba(243, 160, 200, 0.22);
-  color: var(--spore-pink);
+  background: rgba(138, 92, 255, 0.08);
+  border-color: rgba(138, 92, 255, 0.22);
+  color: var(--spore-signal);
   transform: scale(1.03);
   outline: none;
 }
@@ -496,7 +572,7 @@ canvas {
   min-width: 38px;
   min-height: 38px;
   pointer-events: none;
-  background: #b6ff4d;
+  background: #E2FF9A;
   opacity: 1;
   -webkit-mask-image: url("/patterns/Tree-01.svg");
   mask-image: url("/patterns/Tree-01.svg");
@@ -507,8 +583,8 @@ canvas {
   -webkit-mask-size: contain;
   mask-size: contain;
   filter:
-    drop-shadow(0 0 6px rgba(182, 255, 77, 0.62))
-    drop-shadow(0 0 12px rgba(182, 255, 77, 0.36));
+    drop-shadow(0 0 6px rgba(226,255,154,0.62))
+    drop-shadow(0 0 12px rgba(226,255,154,0.36));
   transition:
     transform 120ms ease,
     background 120ms ease,
@@ -528,19 +604,19 @@ canvas {
 }
 
 .marker-tree-mask.is-hovered {
-  background: #ccff70;
+  background: #F0FFC2;
   transform: scale(1.8);
   filter:
-    drop-shadow(0 0 10px rgba(204,255,112,0.78))
-    drop-shadow(0 0 18px rgba(204,255,112,0.5));
+    drop-shadow(0 0 10px rgba(240,255,194,0.78))
+    drop-shadow(0 0 18px rgba(240,255,194,0.5));
 }
 
 .marker-tree-mask.is-selected {
-  background: #e2ff9a;
+  background: #CCFF70;
   transform: scale(2.1);
   filter:
-    drop-shadow(0 0 10px rgba(226, 255, 154, 0.82))
-    drop-shadow(0 0 20px rgba(243, 160, 200, 0.32));
+    drop-shadow(0 0 10px rgba(204,255,112,0.82))
+    drop-shadow(0 0 20px rgba(204,255,112,0.32));
 }
 
 .marker-tree-mask.is-placement {
@@ -553,15 +629,15 @@ canvas {
   max-width: 190px;
   padding: 12px 14px 11px;
   border-radius: 14px;
-  background: rgba(7, 8, 7, 0.88);
-  border: 1px solid rgba(226, 255, 154, 0.32);
-  color: #eee4bf;
+  background: rgba(14, 26, 20, 0.88);
+  border: 1px solid rgba(138, 92, 255, 0.32);
+  color: var(--fungal-flesh);
   font-family: "Space Mono", "Courier Prime", "IBM Plex Mono", monospace;
   font-size: 12px;
   line-height: 1.25;
   box-shadow:
-    0 0 18px rgba(182, 255, 77, 0.16),
-    inset 0 0 16px rgba(238, 228, 191, 0.04);
+    0 0 18px rgba(124, 255, 178, 0.16),
+    inset 0 0 16px rgba(214, 210, 196, 0.04);
   transform: translate(26px, -86px);
   pointer-events: auto;
 }
@@ -574,14 +650,14 @@ canvas {
 
 .marker-balloon strong {
   margin: 0 20px 6px 0;
-  color: #e2ff9a;
+  color: var(--mycelium-glow);
   font-size: 0.8rem;
   letter-spacing: 0.04em;
 }
 
 .marker-balloon span,
 .marker-balloon small {
-  color: rgba(238, 228, 191, 0.84);
+  color: rgba(214, 210, 196, 0.84);
   font-size: 0.72rem;
   opacity: 0.78;
 }
@@ -594,7 +670,7 @@ canvas {
   height: 20px;
   background: transparent;
   border: 0;
-  color: #e2ff9a;
+  color: var(--mycelium-glow);
   font-family: "Space Mono", "Courier Prime", "Courier New", monospace;
   font-size: 0.72rem;
   line-height: 1;
@@ -621,9 +697,9 @@ canvas {
 
   body {
     background:
-      radial-gradient(circle at 14% 12%, rgba(214, 209, 102, 0.05), transparent 24%),
-      radial-gradient(circle at 82% 78%, rgba(243, 160, 200, 0.035), transparent 28%),
-      radial-gradient(circle at 54% 90%, rgba(75, 58, 98, 0.065), transparent 34%),
+        radial-gradient(circle at 14% 12%, rgba(124, 255, 178, 0.05), transparent 24%),
+        radial-gradient(circle at 82% 78%, rgba(138, 92, 255, 0.035), transparent 28%),
+        radial-gradient(circle at 54% 90%, rgba(111, 143, 114, 0.065), transparent 34%),
       linear-gradient(180deg, var(--bg-deep) 0%, var(--peat) 52%, var(--soil) 100%);
   }
 
@@ -684,89 +760,19 @@ canvas {
     margin-top: 0.2rem;
     padding: 0.62rem;
     border-radius: 8px;
-    background: rgba(15, 12, 9, 0.8);
+    background: rgba(14, 26, 20, 0.8);
     box-shadow:
       0 -12px 42px rgba(0, 0, 0, 0.3),
-      inset 0 1px 0 rgba(232, 224, 191, 0.04);
+      inset 0 1px 0 rgba(214, 210, 196, 0.04);
   }
 
-  .instruction-line {
-    padding: 0.58rem 0.66rem;
-    border-radius: 8px;
-    font-size: 0.84rem;
+  .gm-logo {
+    width: 140px;
+    height: 28px;
   }
 
-  .control-row {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.42rem;
-    margin-top: 0.62rem;
-  }
-
-  .control-row button,
-  .drawer-toggle,
-  .marker-row {
-    min-height: 42px;
-    border-radius: 8px;
-    padding: 0.52rem 0.56rem;
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-  }
-
-  .control-row button:first-child {
-    grid-column: 1 / -1;
-  }
-
-  .selection-card,
-  .list-card {
-    border-radius: 8px;
-    padding: 0.55rem 0.62rem;
-  }
-
-  .selection-card span {
-    font-size: 0.55rem;
-    letter-spacing: 0.12em;
-  }
-
-  .selection-card strong {
-    font-size: 0.82rem;
-  }
-
-  .selection-card {
-    margin-top: 0.54rem;
-  }
-
-  .selection-card summary {
-    min-height: 32px;
-  }
-
-  .selection-card-body p,
-  .selection-card > p {
-    font-size: 0.78rem;
-    line-height: 1.28;
-  }
-
-  .placeholder-line {
-    display: none;
-  }
-
-  .list-card {
-    margin-top: 0.52rem;
-  }
-
-  .marker-list {
-    max-height: 9rem;
-    overflow: auto;
-    overscroll-behavior: contain;
-  }
-
-  .marker-delete {
-    width: 2rem;
-    height: 2rem;
-  }
-
-  .marker-tree-mask {
-    width: 38px;
-    height: 38px;
+  .loading-logo {
+    width: 180px;
+    height: 36px;
   }
 }
