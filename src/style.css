@@ -625,8 +625,8 @@ canvas {
 
 .marker-balloon {
   position: relative;
-  min-width: 150px;
-  max-width: 190px;
+  min-width: 180px;
+  max-width: 240px;
   padding: 12px 14px 11px;
   border-radius: 14px;
   background: rgba(14, 26, 20, 0.88);
@@ -675,6 +675,21 @@ canvas {
   font-size: 0.72rem;
   line-height: 1;
   cursor: pointer;
+}
+
+.marker-balloon-section {
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(214, 210, 196, 0.12);
+}
+
+.marker-balloon-label {
+  display: block;
+  margin-bottom: 4px;
+  color: rgba(214, 210, 196, 0.6) !important;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.02em;
+  text-transform: lowercase;
 }
 
 @media (hover: none), (pointer: coarse) {

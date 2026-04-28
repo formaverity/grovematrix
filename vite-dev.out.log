@@ -111,3 +111,9 @@
 [2m5:10:36 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/style.css[22m
 [2m5:10:43 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mhmr update [39m[2m/src/style.css[22m
 [2m5:10:43 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:20:44 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:21:30 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:25:33 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m [32mpage reload [39m[2msrc/App.jsx[22m
+[2m5:33:28 PM[22m [36m[1m[vite][22m[39m [32m.env.local changed, restarting server...[39m
+[2m5:33:28 PM[22m [36m[1m[vite][22m[39m [90m[2m(client)[22m[39m Re-optimizing dependencies because vite config has changed
+[2m5:33:28 PM[22m [36m[1m[vite][22m[39m server restarted.

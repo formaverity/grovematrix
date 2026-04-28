@@ -11,6 +11,7 @@ import { Html, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { DoubleSide, Plane, Vector2, Vector3 } from 'three';
 import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader.js';
+import { createClient } from '@supabase/supabase-js';
 
 const DEBUG_INTERACTIONS = false;
 const DEBUG_MARKER_HITS = false;
@@ -34,12 +35,25 @@ const DEFAULT_MARKER_FIELDS = {
   species: 'Unknown',
   canopyRadiusFt: 14,
   condition: 'Unsurveyed',
+  verified: false,
+  notes: '',
+  annualStormwaterGal: 0,
+  annualCarbonLb: 0,
+  carbonStoredLb: 0,
+  coolingScore: 0,
+  shadeSqft: 0,
 };
 
 const safeNumber = (value, fallback = 0) => {
   const n = Number(value);
   return Number.isFinite(n) ? n : fallback;
 };
+
+// Initialize Supabase client
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
 
 class PointCloudErrorBoundary extends React.Component {
   constructor(props) {
@@ -103,6 +117,84 @@ function normalizeMarker(marker) {
     z,
     position: [x, PLACEMENT_Y, z],
   };
+}
+
+// Helper functions for formatting
+function formatNumber(value) {
+  const num = Number(value);
+  return Number.isFinite(num) && num > 0 ? num.toString() : 'pending calibration';
+}
+
+function formatBenefit(value, suffix) {
+  const num = Number(value);
+  return Number.isFinite(num) && num > 0 ? `${num} ${suffix}` : 'pending calibration';
+}
+
+function formatVerified(verified) {
+  return verified === true ? 'field verified' : 'sample / unverified';
+}
+
+// Estimate benefits for placeholder analytics
+function estimateBenefits(marker) {
+  const radius = Number(marker.canopyRadiusFt ?? marker.canopy_radius_ft ?? 14);
+  const shadeSqft = Math.round(Math.PI * radius * radius);
+  const annualStormwaterGal = Math.round(shadeSqft * 1.25);
+  const annualCarbonLb = Math.round(radius * 2.8);
+  const carbonStoredLb = Math.round(radius * radius * 1.7);
+  const coolingScore = Math.min(100, Math.round(35 + radius * 2.4));
+
+  return {
+    shadeSqft,
+    annualStormwaterGal,
+    annualCarbonLb,
+    carbonStoredLb,
+    coolingScore
+  };
+}
+
+// Normalize Supabase row to marker format
+function normalizeSupabaseMarker(row) {
+  const x = Number(row.x);
+  const z = Number(row.z);
+
+  if (!Number.isFinite(x) || !Number.isFinite(z)) {
+    console.warn('Skipping Supabase marker with invalid coordinates:', row);
+    return null;
+  }
+
+  const marker = {
+    id: row.marker_code,
+    marker_code: row.marker_code,
+    x,
+    y: Number(row.y ?? PLACEMENT_Y),
+    z,
+    position: [x, Number(row.y ?? PLACEMENT_Y), z],
+    commonName: row.common_name ?? "Unknown",
+    common_name: row.common_name ?? "Unknown",
+    species: row.species ?? "Unknown",
+    condition: row.condition ?? "Unsurveyed",
+    canopyRadiusFt: Number(row.canopy_radius_ft ?? 14),
+    canopy_radius_ft: Number(row.canopy_radius_ft ?? 14),
+    verified: Boolean(row.verified),
+    notes: row.notes ?? "",
+    annualStormwaterGal: Number(row.annual_stormwater_gal ?? 0),
+    annualCarbonLb: Number(row.annual_carbon_lb ?? 0),
+    carbonStoredLb: Number(row.carbon_stored_lb ?? 0),
+    coolingScore: Number(row.cooling_score ?? 0),
+    shadeSqft: Number(row.shade_sqft ?? 0)
+  };
+
+  // If analytics values are missing, estimate them
+  if (!marker.shadeSqft || !marker.annualStormwaterGal || !marker.annualCarbonLb || !marker.carbonStoredLb || !marker.coolingScore) {
+    const estimates = estimateBenefits(marker);
+    marker.shadeSqft = marker.shadeSqft || estimates.shadeSqft;
+    marker.annualStormwaterGal = marker.annualStormwaterGal || estimates.annualStormwaterGal;
+    marker.annualCarbonLb = marker.annualCarbonLb || estimates.annualCarbonLb;
+    marker.carbonStoredLb = marker.carbonStoredLb || estimates.carbonStoredLb;
+    marker.coolingScore = marker.coolingScore || estimates.coolingScore;
+  }
+
+  return marker;
 }
 
 function serializeMarkers(markers) {
@@ -251,9 +343,33 @@ function ControlPanel({
   onTogglePlacement,
   onTopView,
 }) {
+  const logoRef = useRef(null);
+
+  useEffect(() => {
+    const handleMouseMove = (event) => {
+      if (!logoRef.current) return;
+      
+      const rect = logoRef.current.getBoundingClientRect();
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      
+      const deltaX = (event.clientX - centerX) / window.innerWidth;
+      const deltaY = (event.clientY - centerY) / window.innerHeight;
+      
+      const moveX = deltaX * 8; // subtle movement
+      const moveY = deltaY * 8;
+      
+      logoRef.current.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    };
+
+    document.addEventListener('mousemove', handleMouseMove);
+    return () => document.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <div className="hud">
       <div
+        ref={logoRef}
         className={`gm-logo ${menuOpen ? "is-open" : ""}`}
         onClick={onToggleMenu}
         role="button"
@@ -489,7 +605,17 @@ function TreeMarker({
             <strong>{markerId}</strong>
             <span>{marker.commonName || marker.common_name || 'Tree marker'}</span>
             <small>{marker.species || 'species pending'}</small>
-            <small>{marker.condition || 'Unsurveyed'}</small>
+            <div className="marker-balloon-section">
+              <small>Condition: {marker.condition || 'Unsurveyed'}</small>
+              <small>Status: {formatVerified(marker.verified)}</small>
+            </div>
+            <div className="marker-balloon-section">
+              <small className="marker-balloon-label">canopy work</small>
+              <small>Shade: {formatBenefit(marker.shadeSqft, 'sq ft')}</small>
+              <small>Stormwater: {formatBenefit(marker.annualStormwaterGal, 'gal / yr')}</small>
+              <small>Carbon stored: {formatBenefit(marker.carbonStoredLb, 'lb')}</small>
+              <small>Cooling: {formatBenefit(marker.coolingScore, '/ 100')}</small>
+            </div>
           </div>
         </Html>
       ) : null}
@@ -501,9 +627,8 @@ function LoadingOverlay({ error, ready }) {
   return (
     <div className={ready ? 'loading-overlay is-hidden' : 'loading-overlay'}>
       <div className="loading-panel">
-        <p className="loading-eyebrow">listening instrument</p>
+        <p className="loading-subtitle">loading grovematrix</p>
         <div className="loading-logo"></div>
-        <p className="loading-subtitle">assembling canopy scan</p>
         {error ? (
           <p className="loading-error">Point cloud failed to initialize. Check the model asset and refresh.</p>
         ) : (
@@ -856,6 +981,35 @@ export default function App() {
 
     const loadMarkers = async () => {
       try {
+        // Try Supabase first
+        console.log('Loading markers from Supabase...');
+        const { data, error } = await supabase
+          .from("tree_markers")
+          .select("*")
+          .order("marker_code", { ascending: true });
+
+        if (error) {
+          console.warn('Supabase query failed:', error.message);
+          throw error;
+        }
+
+        if (data && data.length > 0) {
+          console.log(`Loaded ${data.length} markers from Supabase`);
+          const nextMarkers = data.map(normalizeSupabaseMarker).filter(Boolean);
+          const highestId = nextMarkers.reduce(
+            (max, marker) => Math.max(max, getMarkerSequence(marker.id)),
+            0,
+          );
+
+          if (!active) return;
+
+          markerCountRef.current = highestId + 1;
+          setMarkers(nextMarkers);
+          return;
+        }
+
+        // Fallback to JSON if Supabase is empty or fails
+        console.log('No markers in Supabase, falling back to JSON...');
         const response = await fetch('/data/tree-markers.json');
 
         if (!response.ok) {
@@ -871,20 +1025,16 @@ export default function App() {
           0,
         );
 
-        if (!active) {
-          return;
-        }
+        if (!active) return;
 
         markerCountRef.current = highestId + 1;
         setMarkers(nextMarkers);
       } catch (error) {
-        if (!active) {
-          return;
-        }
+        if (!active) return;
 
+        console.warn('Unable to load markers from Supabase or JSON:', error);
         markerCountRef.current = 1;
         setMarkers([]);
-        console.warn('Unable to load saved markers from /data/tree-markers.json', error);
       }
     };
 
