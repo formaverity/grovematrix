@@ -49,6 +49,119 @@ canvas {
   height: 100vh;
 }
 
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 18% 18%, rgba(155, 191, 82, 0.14), transparent 26%),
+    radial-gradient(circle at 82% 74%, rgba(243, 160, 200, 0.1), transparent 32%),
+    linear-gradient(180deg, rgba(7, 8, 7, 0.96) 0%, rgba(16, 32, 22, 0.94) 100%);
+  opacity: 1;
+  transition: opacity 480ms ease;
+}
+
+.loading-overlay.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-panel {
+  width: min(28rem, calc(100vw - 2rem));
+  padding: 1.4rem 1.5rem;
+  border: 1px solid rgba(232, 224, 191, 0.18);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at top left, rgba(155, 191, 82, 0.08), transparent 42%),
+    rgba(10, 16, 12, 0.72);
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.34),
+    inset 0 0 0 1px rgba(243, 160, 200, 0.04);
+  backdrop-filter: blur(16px);
+  text-align: center;
+}
+
+.loading-panel h1 {
+  margin: 0;
+  color: var(--mycelium);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: clamp(1.55rem, 3vw, 2.3rem);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-shadow:
+    0 0 12px rgba(155, 191, 82, 0.12),
+    0 0 18px rgba(243, 160, 200, 0.08);
+}
+
+.loading-eyebrow {
+  margin: 0 0 0.7rem;
+  color: rgba(232, 224, 191, 0.74);
+  font-family: "Courier Prime", "IBM Plex Mono", "Courier New", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.loading-subtitle,
+.loading-status,
+.loading-error {
+  margin: 0.8rem 0 0;
+  color: var(--muted);
+  font-family: "Courier Prime", "IBM Plex Mono", "Courier New", monospace;
+  text-transform: lowercase;
+}
+
+.loading-error {
+  color: var(--spore-pink);
+}
+
+.loading-glyph {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.1rem;
+}
+
+.loading-glyph span {
+  width: 0.7rem;
+  height: 0.7rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--lichen), var(--moss));
+  box-shadow: 0 0 16px rgba(155, 191, 82, 0.18);
+  animation: pulseCluster 1.4s ease-in-out infinite;
+}
+
+.loading-glyph span:nth-child(2) {
+  animation-delay: 0.14s;
+}
+
+.loading-glyph span:nth-child(3) {
+  animation-delay: 0.28s;
+}
+
+.loading-glyph span:nth-child(4) {
+  animation-delay: 0.42s;
+}
+
+.loading-glyph span:nth-child(5) {
+  animation-delay: 0.56s;
+}
+
+@keyframes pulseCluster {
+  0%,
+  100% {
+    transform: translateY(0) scale(0.92);
+    opacity: 0.42;
+  }
+  50% {
+    transform: translateY(-0.18rem) scale(1.12);
+    opacity: 1;
+  }
+}
+
 .cursor-focus {
   position: fixed;
   z-index: 4;
@@ -361,4 +474,28 @@ canvas {
   margin: 0.75rem 0 0;
   color: var(--muted);
   font-family: "Courier Prime", "IBM Plex Mono", "Courier New", monospace;
+}
+
+.marker-glyph {
+  color: var(--mycelium);
+  font-family: "Orbitron", system-ui, sans-serif;
+  font-size: 4rem;
+  line-height: 1;
+  text-shadow:
+    0 0 16px rgba(155, 191, 82, 0.16),
+    0 0 24px rgba(143, 207, 189, 0.12);
+  transform: translateY(-0.1rem);
+}
+
+.marker-glyph.is-hovered {
+  color: var(--lichen);
+  transform: translateY(-0.15rem) scale(1.08);
+}
+
+.marker-glyph.is-selected {
+  color: var(--spore-pink);
+  transform: translateY(-0.18rem) scale(1.14);
+  text-shadow:
+    0 0 18px rgba(243, 160, 200, 0.22),
+    0 0 28px rgba(201, 134, 61, 0.12);
 }

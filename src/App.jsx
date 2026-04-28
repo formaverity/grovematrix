@@ -1,4 +1,4 @@
-import {
+import React, {
   Suspense,
   useEffect,
   useLayoutEffect,
@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react';
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { Html, OrbitControls } from '@react-three/drei';
 import { DoubleSide, MathUtils, Plane, Vector2, Vector3 } from 'three';
 import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader.js';
 
@@ -35,6 +35,29 @@ const safeNumber = (value, fallback = 0) => {
   const n = Number(value);
   return Number.isFinite(n) ? n : fallback;
 };
+
+class PointCloudErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { error: null };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { error };
+  }
+
+  componentDidCatch(error) {
+    this.props.onError?.(error);
+  }
+
+  render() {
+    if (this.state.error) {
+      return null;
+    }
+
+    return this.props.children;
+  }
+}
 
 function formatMarkerId(index) {
   return `T-${String(index).padStart(3, '0')}`;
@@ -90,7 +113,7 @@ function serializeMarkers(markers) {
   }));
 }
 
-function PointCloud({ placementMode, pointerActive }) {
+function PointCloud({ onLoaded, placementMode, pointerActive }) {
   const sourceGeometry = useLoader(PLYLoader, '/models/grove_pointcloud.ply');
   const materialRef = useRef(null);
 
@@ -109,6 +132,10 @@ function PointCloud({ placementMode, pointerActive }) {
     next.computeBoundingSphere();
     return next;
   }, [sourceGeometry]);
+
+  useEffect(() => {
+    onLoaded?.();
+  }, [geometry, onLoaded]);
 
   useFrame(() => {
     if (!materialRef.current) {
@@ -185,6 +212,7 @@ function ControlPanel({
   drawerOpen,
   loadedMarkerCount,
   markerCount,
+  markerStyle,
   markers,
   placementMode,
   selectedMarker,
@@ -192,6 +220,7 @@ function ControlPanel({
   onDeleteSelected,
   onDeleteMarker,
   onDownloadJson,
+  onMarkerStyleChange,
   onPanelHoverChange,
   onSelectMarker,
   onToggleDrawer,
@@ -226,6 +255,9 @@ function ControlPanel({
           </button>
           <button type="button" onClick={onTopView}>
             Plan View
+          </button>
+          <button type="button" onClick={onMarkerStyleChange}>
+            Marker Style: {markerStyle === 'glyph' ? 'Glyph' : 'Sphere'}
           </button>
           <button type="button" onClick={onToggleMarkerDebug}>
             {showMarkerDebug ? 'Hide Marker Debug' : 'Show Marker Debug'}
@@ -302,6 +334,7 @@ function ControlPanel({
 function TreeMarkerSphere({
   hovered,
   marker,
+  markerStyle,
   placementMode,
   selected,
   onDragEnd,
@@ -387,45 +420,87 @@ function TreeMarkerSphere({
         onPointerCancel={handlePointerUp}
         onClick={handleClick}
       >
-        <sphereGeometry args={[radius, 24, 24]} />
+        <sphereGeometry args={[markerStyle === 'glyph' ? radius * 1.1 : radius, 24, 24]} />
         <meshBasicMaterial
           color={baseColor}
           transparent
-          opacity={coreOpacity}
+          opacity={markerStyle === 'glyph' ? 0 : coreOpacity}
           depthTest={false}
           depthWrite={false}
         />
       </mesh>
-      <mesh scale={1.25} renderOrder={999}>
-        <sphereGeometry args={[radius, 16, 16]} />
-        <meshBasicMaterial
-          color={glowColor}
-          transparent
-          opacity={glowOpacity}
-          depthTest={false}
-          depthWrite={false}
-        />
-      </mesh>
-      <mesh
-        renderOrder={1001}
-      >
-        <sphereGeometry
-          args={[
-            radius * 1.35,
-            16,
-            16,
-          ]}
-        />
-        <meshBasicMaterial
-          color={glowColor}
-          transparent
-          opacity={0.25}
-          wireframe
-          depthTest={false}
-          depthWrite={false}
-        />
-      </mesh>
+      {markerStyle === 'glyph' ? (
+        <Html center position={[0, 0, 0]} style={{ pointerEvents: 'none' }}>
+          <div
+            className={
+              selected
+                ? 'marker-glyph is-selected'
+                : hovered && !placementMode
+                  ? 'marker-glyph is-hovered'
+                  : 'marker-glyph'
+            }
+          >
+            {'\u2667'}
+          </div>
+        </Html>
+      ) : (
+        <>
+          <mesh scale={1.25} renderOrder={999}>
+            <sphereGeometry args={[radius, 16, 16]} />
+            <meshBasicMaterial
+              color={glowColor}
+              transparent
+              opacity={glowOpacity}
+              depthTest={false}
+              depthWrite={false}
+            />
+          </mesh>
+          <mesh renderOrder={1001}>
+            <sphereGeometry
+              args={[
+                radius * 1.35,
+                16,
+                16,
+              ]}
+            />
+            <meshBasicMaterial
+              color={glowColor}
+              transparent
+              opacity={0.25}
+              wireframe
+              depthTest={false}
+              depthWrite={false}
+            />
+          </mesh>
+        </>
+      )}
     </group>
+  );
+}
+
+function LoadingOverlay({ error, ready }) {
+  return (
+    <div className={ready ? 'loading-overlay is-hidden' : 'loading-overlay'}>
+      <div className="loading-panel">
+        <p className="loading-eyebrow">BIOLOGICAL SYNTHESIS</p>
+        <h1>GROVEMATRIX</h1>
+        <p className="loading-subtitle">assembling canopy scan</p>
+        {error ? (
+          <p className="loading-error">Point cloud failed to initialize. Check the model asset and refresh.</p>
+        ) : (
+          <>
+            <div className="loading-glyph" aria-hidden="true">
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
+            <p className="loading-status">point cloud initializing</p>
+          </>
+        )}
+      </div>
+    </div>
   );
 }
 
@@ -433,7 +508,9 @@ function Scene({
   controlsRef,
   draggingId,
   hoveredMarkerId,
+  markerStyle,
   markers,
+  onPointCloudLoaded,
   onCanvasPlacement,
   onDragEnd,
   onDragMove,
@@ -558,13 +635,18 @@ function Scene({
         />
       </mesh>
 
-      <PointCloud placementMode={placementMode} pointerActive={pointer.active} />
+      <PointCloud
+        onLoaded={onPointCloudLoaded}
+        placementMode={placementMode}
+        pointerActive={pointer.active}
+      />
 
       {markers.map((marker) => (
         <TreeMarkerSphere
           hovered={hoveredMarkerId === marker.id}
           key={marker.id}
           marker={marker}
+          markerStyle={markerStyle}
           placementMode={placementMode}
           selected={selectedMarker?.id === marker.id}
           onDragEnd={onDragEnd}
@@ -591,7 +673,11 @@ function Scene({
 
 export default function App() {
   const [hoveredMarkerId, setHoveredMarkerId] = useState(null);
+  const [markerStyle, setMarkerStyle] = useState('sphere');
   const [markers, setMarkers] = useState([]);
+  const [pointCloudLoaded, setPointCloudLoaded] = useState(false);
+  const [pointCloudError, setPointCloudError] = useState(null);
+  const [minIntroElapsed, setMinIntroElapsed] = useState(false);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [placementMode, setPlacementMode] = useState(false);
   const [showMarkerDebug, setShowMarkerDebug] = useState(false);
@@ -608,6 +694,14 @@ export default function App() {
   const dragPointRef = useRef(new Vector3());
   const pointerNdcRef = useRef(new Vector2());
   const markerPlaneRef = useRef(PLACEMENT_PLANE);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      setMinIntroElapsed(true);
+    }, 5000);
+
+    return () => window.clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     let active = true;
@@ -734,6 +828,10 @@ export default function App() {
     setDrawerOpen((current) => !current);
   };
 
+  const handleToggleMarkerStyle = () => {
+    setMarkerStyle((current) => (current === 'sphere' ? 'glyph' : 'sphere'));
+  };
+
   const handleCopyJson = async () => {
     try {
       await navigator.clipboard.writeText(
@@ -828,8 +926,11 @@ export default function App() {
           ? 'pointer'
           : 'default';
 
+  const loadingReady = pointCloudLoaded && minIntroElapsed && !pointCloudError;
+
   return (
     <div className="app-shell" style={{ cursor }}>
+      <LoadingOverlay error={pointCloudError} ready={loadingReady} />
       {pointer.active && !placementMode && !uiHover ? (
         <div
           className="cursor-focus"
@@ -840,6 +941,7 @@ export default function App() {
         drawerOpen={drawerOpen}
         loadedMarkerCount={loadedMarkerCount}
         markerCount={markers.length}
+        markerStyle={markerStyle}
         markers={markers}
         placementMode={placementMode}
         selectedMarker={selectedMarker}
@@ -847,6 +949,7 @@ export default function App() {
         onDeleteSelected={handleDeleteSelected}
         onDeleteMarker={handleDeleteMarker}
         onDownloadJson={handleDownloadJson}
+        onMarkerStyleChange={handleToggleMarkerStyle}
         onPanelHoverChange={setUiHover}
         onSelectMarker={handleSelectMarker}
         onToggleDrawer={handleToggleDrawer}
@@ -873,26 +976,30 @@ export default function App() {
       >
         <color attach="background" args={['#050816']} />
         <ambientLight intensity={0.75} />
-        <Suspense fallback={null}>
-          <Scene
-            controlsRef={controlsRef}
-            draggingId={draggingId}
-            hoveredMarkerId={hoveredMarkerId}
-            markers={markers}
-            onCanvasPlacement={handlePlaceMarker}
-            onDragEnd={handleDragEnd}
-            onDragMove={handleDragMove}
-            onDragStart={handleDragStart}
-            onMarkerHover={handleMarkerHover}
-            onSelectMarker={handleSelectMarker}
-            pointer={pointer}
-            placementMode={placementMode}
-            selectedMarker={selectedMarker}
-            showMarkerDebug={showMarkerDebug}
-            suppressPlacementRef={suppressPlaneClickRef}
-            topViewRequest={topViewRequest}
-          />
-        </Suspense>
+        <PointCloudErrorBoundary onError={setPointCloudError}>
+          <Suspense fallback={null}>
+            <Scene
+              controlsRef={controlsRef}
+              draggingId={draggingId}
+              hoveredMarkerId={hoveredMarkerId}
+              markerStyle={markerStyle}
+              markers={markers}
+              onCanvasPlacement={handlePlaceMarker}
+              onDragEnd={handleDragEnd}
+              onDragMove={handleDragMove}
+              onDragStart={handleDragStart}
+              onMarkerHover={handleMarkerHover}
+              onPointCloudLoaded={() => setPointCloudLoaded(true)}
+              onSelectMarker={handleSelectMarker}
+              pointer={pointer}
+              placementMode={placementMode}
+              selectedMarker={selectedMarker}
+              showMarkerDebug={showMarkerDebug}
+              suppressPlacementRef={suppressPlaneClickRef}
+              topViewRequest={topViewRequest}
+            />
+          </Suspense>
+        </PointCloudErrorBoundary>
       </Canvas>
     </div>
   );
