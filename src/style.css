@@ -178,35 +178,6 @@ canvas {
   }
 }
 
-.cursor-focus {
-  position: fixed;
-  z-index: 4;
-  pointer-events: none;
-  transform: translate(-50%, -50%);
-  width: 220px;
-  height: 220px;
-  border-radius: 999px;
-  background:
-    radial-gradient(circle,
-      rgba(243, 160, 200, 0.18) 0%,
-      rgba(214, 209, 102, 0.085) 32%,
-      rgba(143, 207, 189, 0.06) 56%,
-      rgba(0, 0, 0, 0) 72%);
-  filter: blur(10px);
-  mix-blend-mode: screen;
-}
-
-.cursor-focus::after {
-  content: "";
-  position: absolute;
-  inset: -18px;
-  border-radius: 999px;
-  border: 1px solid rgba(232, 224, 191, 0.08);
-  box-shadow:
-    0 0 30px rgba(243, 160, 200, 0.05),
-    inset 0 0 24px rgba(214, 209, 102, 0.04);
-}
-
 .hud {
   position: fixed;
   inset: 0;
@@ -218,37 +189,62 @@ canvas {
   position: fixed;
   top: calc(1rem + env(safe-area-inset-top));
   left: 1rem;
-  width: min(25rem, calc(100vw - 2rem));
-  max-height: calc(100dvh - 2rem - env(safe-area-inset-top));
-  padding: 1.05rem 1.08rem 1.12rem;
-  border: 1px solid rgba(238, 228, 191, 0.14);
-  border-radius: 14px;
-  background:
-    radial-gradient(circle at top left, rgba(214, 209, 102, 0.04), transparent 42%),
-    radial-gradient(circle at bottom right, rgba(243, 160, 200, 0.035), transparent 36%),
-    radial-gradient(circle at 70% 18%, rgba(75, 58, 98, 0.055), transparent 35%),
-    var(--panel);
-  backdrop-filter: blur(18px) saturate(0.92);
-  box-shadow:
-    0 18px 50px rgba(0, 0, 0, 0.34),
-    inset 0 1px 0 rgba(238, 228, 191, 0.035);
-  overflow: auto;
-  overscroll-behavior: contain;
   pointer-events: auto;
 }
 
-.overlay h1 {
+.title-toggle {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0;
+  border: 0;
+  border-bottom: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(238, 228, 191, 0.86);
+  cursor: pointer;
   margin: 0;
-  color: var(--mycelium);
   font-family: "Space Mono", "Courier Prime", monospace;
-  font-size: clamp(1.35rem, 2.4vw, 1.95rem);
+  font-size: 0.92rem;
   font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  letter-spacing: 0;
+  line-height: 1.1;
+  text-transform: lowercase;
   text-shadow:
-    0 0 14px rgba(214, 209, 102, 0.08),
-    0 0 22px rgba(143, 207, 189, 0.045);
+    0 0 10px rgba(182, 255, 77, 0.16),
+    0 0 22px rgba(238, 228, 191, 0.06);
+  transition:
+    border-color 140ms ease,
+    color 140ms ease,
+    text-shadow 140ms ease;
+}
+
+.title-toggle:hover,
+.title-toggle:focus-visible,
+.title-toggle[aria-expanded="true"] {
+  border-color: rgba(182, 255, 77, 0.48);
+  color: var(--mycelium);
+  outline: none;
+  text-shadow:
+    0 0 12px rgba(182, 255, 77, 0.24),
+    0 0 26px rgba(238, 228, 191, 0.08);
+}
+
+.menu-panel {
+  width: min(22rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 4.25rem - env(safe-area-inset-top));
+  margin-top: 0.35rem;
+  padding: 0.72rem;
+  border: 1px solid rgba(238, 228, 191, 0.12);
+  border-radius: 8px;
+  background: rgba(15, 12, 9, 0.72);
+  backdrop-filter: blur(16px) saturate(0.94);
+  box-shadow:
+    0 16px 44px rgba(0, 0, 0, 0.32),
+    inset 0 1px 0 rgba(238, 228, 191, 0.035);
+  overflow: auto;
+  overscroll-behavior: contain;
 }
 
 .overlay p {
@@ -259,7 +255,6 @@ canvas {
   font-family: "Space Mono", "Courier Prime", "Courier New", monospace;
 }
 
-.meta-grid span,
 .selection-card span,
 .list-title {
   display: block;
@@ -271,12 +266,7 @@ canvas {
   text-transform: uppercase;
 }
 
-.panel-copy {
-  color: rgba(232, 224, 191, 0.82);
-}
-
 .instruction-line,
-.meta-grid p,
 .selection-card,
 .list-card {
   border: 1px solid rgba(238, 228, 191, 0.09);
@@ -285,17 +275,28 @@ canvas {
 }
 
 .instruction-line {
-  margin-top: 0.8rem;
-  padding: 0.8rem 0.94rem;
-  border-radius: 10px;
+  margin-top: 0;
+  padding: 0.62rem 0.7rem;
+  border-radius: 8px;
   color: rgba(238, 228, 191, 0.86);
+  font-size: 0.78rem;
+}
+
+.debug-line {
+  margin-top: 0.45rem;
+  color: rgba(226, 255, 154, 0.84);
+  font-size: 0.72rem;
 }
 
 .control-row {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-  margin-top: 1rem;
+  margin-top: 0;
+}
+
+.instruction-line + .control-row {
+  margin-top: 0.55rem;
 }
 
 .control-row button,
@@ -303,11 +304,12 @@ canvas {
   appearance: none;
   border: 1px solid rgba(238, 228, 191, 0.12);
   border-radius: 8px;
-  padding: 0.56rem 0.72rem;
+  min-height: 40px;
+  padding: 0.54rem 0.66rem;
   color: var(--text);
   background: rgba(21, 16, 12, 0.78);
   font-family: "Space Mono", "Courier Prime", "Courier New", monospace;
-  font-size: 0.76rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -339,33 +341,24 @@ canvas {
   color: var(--lichen);
 }
 
-.meta-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.75rem;
-  margin-top: 1rem;
-}
-
-.meta-grid p,
 .selection-card {
   margin: 0;
-  padding: 0.82rem 0.92rem;
-  border-radius: 10px;
+  padding: 0.62rem 0.68rem;
+  border-radius: 8px;
 }
 
-.meta-grid strong,
 .selection-card strong {
   display: block;
   margin-top: 0.35rem;
   color: var(--text);
   font-family: "Courier Prime", "Space Mono", "Courier New", monospace;
-  font-size: 0.96rem;
+  font-size: 0.86rem;
   font-weight: 700;
   letter-spacing: 0.03em;
 }
 
 .selection-card {
-  margin-top: 0.75rem;
+  margin-top: 0.6rem;
 }
 
 .selection-card summary {
@@ -391,9 +384,9 @@ canvas {
 }
 
 .list-card {
-  margin-top: 0.75rem;
-  padding: 0.8rem 0.9rem;
-  border-radius: 10px;
+  margin-top: 0.6rem;
+  padding: 0.62rem 0.68rem;
+  border-radius: 8px;
 }
 
 .list-card.is-open {
@@ -497,37 +490,11 @@ canvas {
   font-family: "Courier Prime", "Space Mono", "Courier New", monospace;
 }
 
-.marker-orb {
-  width: 46px;
-  height: 46px;
-  border-radius: 999px;
-  display: grid;
-  place-items: center;
-  pointer-events: none;
-  background:
-    radial-gradient(circle at 38% 30%,
-      rgba(238, 228, 191, 0.38) 0%,
-      rgba(63, 207, 150, 0.24) 28%,
-      rgba(143, 207, 189, 0.13) 52%,
-      rgba(22, 17, 13, 0.18) 74%,
-      rgba(22, 17, 13, 0.02) 100%);
-  box-shadow:
-    0 0 6px rgba(63, 207, 150, 0.1),
-    0 0 16px rgba(143, 207, 189, 0.08),
-    inset 0 0 10px rgba(238, 228, 191, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.25);
-  opacity: 0.82;
-  transition:
-    transform 180ms ease,
-    opacity 180ms ease,
-    box-shadow 180ms ease,
-    background 180ms ease,
-    border-color 180ms ease;
-}
-
 .marker-tree-mask {
-  width: 28px;
-  height: 28px;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  min-height: 38px;
   pointer-events: none;
   background: #b6ff4d;
   opacity: 1;
@@ -543,66 +510,98 @@ canvas {
     drop-shadow(0 0 6px rgba(182, 255, 77, 0.62))
     drop-shadow(0 0 12px rgba(182, 255, 77, 0.36));
   transition:
-    transform 180ms ease,
-    opacity 180ms ease,
-    background 180ms ease,
-    filter 180ms ease;
+    transform 120ms ease,
+    background 120ms ease,
+    filter 120ms ease;
+  transform: scale(1);
+  transform-origin: center;
 }
 
-.marker-orb.is-hovered {
-  transform: scale(1.1);
-  opacity: 1;
-  background:
-    radial-gradient(circle at 38% 30%,
-      rgba(238, 228, 191, 0.48) 0%,
-      rgba(63, 207, 150, 0.34) 30%,
-      rgba(143, 207, 189, 0.2) 56%,
-      rgba(22, 17, 13, 0.12) 76%,
-      rgba(22, 17, 13, 0.02) 100%);
-  box-shadow:
-    0 0 16px rgba(63, 207, 150, 0.28),
-    0 0 34px rgba(143, 207, 189, 0.18),
-    inset 0 0 22px rgba(238, 228, 191, 0.1);
+.marker-tree-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
 }
 
 .marker-tree-mask.is-hovered {
   background: #ccff70;
-  transform: scale(1.08);
+  transform: scale(1.8);
   filter:
-    drop-shadow(0 0 8px rgba(204, 255, 112, 0.72))
-    drop-shadow(0 0 16px rgba(204, 255, 112, 0.42));
-}
-
-.marker-orb.is-selected {
-  transform: scale(1.16);
-  opacity: 1;
-  background:
-    radial-gradient(circle at 38% 30%,
-      rgba(238, 228, 191, 0.55) 0%,
-      rgba(243, 160, 200, 0.24) 32%,
-      rgba(63, 207, 150, 0.28) 58%,
-      rgba(22, 17, 13, 0.1) 78%,
-      rgba(22, 17, 13, 0.02) 100%);
-  box-shadow:
-    0 0 18px rgba(243, 160, 200, 0.28),
-    0 0 38px rgba(63, 207, 150, 0.22),
-    inset 0 0 24px rgba(238, 228, 191, 0.12);
-  border-color: rgba(243, 160, 200, 0.3);
+    drop-shadow(0 0 10px rgba(204,255,112,0.78))
+    drop-shadow(0 0 18px rgba(204,255,112,0.5));
 }
 
 .marker-tree-mask.is-selected {
   background: #e2ff9a;
-  transform: scale(1.12);
+  transform: scale(2.1);
   filter:
     drop-shadow(0 0 10px rgba(226, 255, 154, 0.82))
     drop-shadow(0 0 20px rgba(243, 160, 200, 0.32));
 }
 
-@media (hover: none), (pointer: coarse) {
-  .cursor-focus {
-    display: none;
-  }
+.marker-tree-mask.is-placement {
+  transition-duration: 80ms;
+}
 
+.marker-balloon {
+  position: relative;
+  min-width: 150px;
+  max-width: 190px;
+  padding: 12px 14px 11px;
+  border-radius: 14px;
+  background: rgba(7, 8, 7, 0.88);
+  border: 1px solid rgba(226, 255, 154, 0.32);
+  color: #eee4bf;
+  font-family: "Space Mono", "Courier Prime", "IBM Plex Mono", monospace;
+  font-size: 12px;
+  line-height: 1.25;
+  box-shadow:
+    0 0 18px rgba(182, 255, 77, 0.16),
+    inset 0 0 16px rgba(238, 228, 191, 0.04);
+  transform: translate(26px, -86px);
+  pointer-events: auto;
+}
+
+.marker-balloon strong,
+.marker-balloon span,
+.marker-balloon small {
+  display: block;
+}
+
+.marker-balloon strong {
+  margin: 0 20px 6px 0;
+  color: #e2ff9a;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+}
+
+.marker-balloon span,
+.marker-balloon small {
+  color: rgba(238, 228, 191, 0.84);
+  font-size: 0.72rem;
+  opacity: 0.78;
+}
+
+.marker-balloon-close {
+  position: absolute;
+  top: 5px;
+  right: 7px;
+  width: 20px;
+  height: 20px;
+  background: transparent;
+  border: 0;
+  color: #e2ff9a;
+  font-family: "Space Mono", "Courier Prime", "Courier New", monospace;
+  font-size: 0.72rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+@media (hover: none), (pointer: coarse) {
   .control-row button:hover,
   .drawer-toggle:hover,
   .marker-row:hover,
@@ -661,50 +660,39 @@ canvas {
   }
 
   .overlay {
+    top: calc(0.55rem + env(safe-area-inset-top));
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(22rem, calc(100vw - 24px));
+    display: grid;
+    justify-items: center;
+  }
+
+  .overlay.is-open {
     top: auto;
-    left: 12px;
-    right: 12px;
-    bottom: calc(12px + env(safe-area-inset-bottom));
-    width: auto;
-    max-width: calc(100vw - 24px);
+    bottom: calc(10px + env(safe-area-inset-bottom));
+  }
+
+  .title-toggle {
+    min-height: 44px;
+    font-size: 0.88rem;
+  }
+
+  .menu-panel {
+    width: min(22rem, calc(100vw - 24px));
     max-height: min(58svh, 28rem);
-    padding: 0.72rem;
-    border-radius: 14px;
-    background:
-      radial-gradient(circle at top left, rgba(214, 209, 102, 0.035), transparent 42%),
-      linear-gradient(180deg, rgba(21, 16, 12, 0.88), rgba(7, 8, 7, 0.94)),
-      var(--panel);
+    margin-top: 0.2rem;
+    padding: 0.62rem;
+    border-radius: 8px;
+    background: rgba(15, 12, 9, 0.8);
     box-shadow:
       0 -12px 42px rgba(0, 0, 0, 0.3),
       inset 0 1px 0 rgba(232, 224, 191, 0.04);
   }
 
-  .overlay h1 {
-    font-size: 1.12rem;
-    letter-spacing: 0.12em;
-  }
-
-  .panel-copy {
-    margin-top: 0.28rem;
-    font-size: 0.78rem;
-  }
-
-  .panel-copy::before {
-    content: "canopy scan";
-  }
-
-  .panel-copy {
-    font-size: 0;
-  }
-
-  .panel-copy::before {
-    font-size: 0.8rem;
-  }
-
   .instruction-line {
-    margin-top: 0.54rem;
     padding: 0.58rem 0.66rem;
-    border-radius: 10px;
+    border-radius: 8px;
     font-size: 0.84rem;
   }
 
@@ -729,26 +717,17 @@ canvas {
     grid-column: 1 / -1;
   }
 
-  .meta-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.42rem;
-    margin-top: 0.58rem;
-  }
-
-  .meta-grid p,
   .selection-card,
   .list-card {
-    border-radius: 10px;
+    border-radius: 8px;
     padding: 0.55rem 0.62rem;
   }
 
-  .meta-grid span,
   .selection-card span {
     font-size: 0.55rem;
     letter-spacing: 0.12em;
   }
 
-  .meta-grid strong,
   .selection-card strong {
     font-size: 0.82rem;
   }
@@ -786,13 +765,8 @@ canvas {
     height: 2rem;
   }
 
-  .marker-orb {
-    width: 52px;
-    height: 52px;
-  }
-
   .marker-tree-mask {
-    width: 30px;
-    height: 30px;
+    width: 38px;
+    height: 38px;
   }
 }

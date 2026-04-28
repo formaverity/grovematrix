@@ -9,20 +9,19 @@ import React, {
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { Html, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
-import { DoubleSide, MathUtils, Plane, Vector2, Vector3 } from 'three';
+import { DoubleSide, Plane, Vector2, Vector3 } from 'three';
 import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader.js';
 
-const POINT_SIZE_BASE = 2.2;
-const POINT_SIZE_HOVER = 3.4;
-const POINT_SIZE_PLACEMENT = 2.4;
-const POINT_SIZE_LERP = 0.08;
-const POINT_OPACITY = 0.9;
+const DEBUG_INTERACTIONS = false;
+const DEBUG_MARKER_HITS = false;
+const POINT_SIZE_BASE = 1.8;
+const POINT_SIZE_HOVER = 3.8;
+const POINT_SIZE_MOVING = 1.25;
+const POINT_SIZE_LERP = 0.18;
+const POINT_SIZE_ATTENUATION = false;
 const PLACEMENT_Y = 10;
 const PLACEMENT_PLANE_SIZE = 100000;
-const MARKER_RADIUS_BASE = 18;
-const MARKER_RADIUS_SELECTED = 24;
-const MARKER_RADIUS_HOVER = 28;
-const MARKER_HOVER_RADIUS_PX = 48;
+const MARKER_HIT_RADIUS = 80;
 const MOBILE_PLACEMENT_TAP_DISTANCE = 8;
 const MOBILE_PLACEMENT_TAP_DURATION = 400;
 const CAMERA_FAR = 10000000;
@@ -119,9 +118,16 @@ function serializeMarkers(markers) {
   }));
 }
 
-function PointCloud({ isCoarsePointer, onLoaded, placementMode, pointerActive }) {
+function PointCloud({
+  isCoarsePointer,
+  isNavigatingRef,
+  onLoaded,
+  placementMode,
+  pointerRef,
+}) {
   const sourceGeometry = useLoader(PLYLoader, '/models/grove_pointcloud.ply');
   const materialRef = useRef(null);
+  const pointsRef = useRef(null);
 
   const geometry = useMemo(() => {
     const next = sourceGeometry.clone();
@@ -136,6 +142,7 @@ function PointCloud({ isCoarsePointer, onLoaded, placementMode, pointerActive })
     }
 
     next.computeBoundingSphere();
+    next.computeBoundingBox();
     return next;
   }, [sourceGeometry]);
 
@@ -143,37 +150,41 @@ function PointCloud({ isCoarsePointer, onLoaded, placementMode, pointerActive })
     onLoaded?.();
   }, [geometry, onLoaded]);
 
+  useEffect(() => {
+    if (pointsRef.current) {
+      pointsRef.current.frustumCulled = false;
+      pointsRef.current.raycast = () => null;
+    }
+  }, [geometry]);
+
   useFrame(() => {
     if (!materialRef.current) {
       return;
     }
 
-    // Future mobile optimization: ship a lighter PLY for small/touch devices.
-    if (isCoarsePointer) {
-      materialRef.current.size += (POINT_SIZE_BASE - materialRef.current.size) * POINT_SIZE_LERP;
-      materialRef.current.opacity += (0.78 - materialRef.current.opacity) * POINT_SIZE_LERP;
-      return;
-    }
+    const pointerActive =
+      pointerRef?.current?.active === true;
 
-    const target = placementMode
-      ? POINT_SIZE_PLACEMENT
-      : pointerActive
-        ? POINT_SIZE_HOVER
-        : POINT_SIZE_BASE;
+    let target = POINT_SIZE_BASE;
+
+    if (!isCoarsePointer && !placementMode && pointerActive) {
+      target = POINT_SIZE_HOVER;
+    }
 
     materialRef.current.size += (target - materialRef.current.size) * POINT_SIZE_LERP;
   });
 
   return (
-    <points geometry={geometry} raycast={() => null}>
+    <points ref={pointsRef} geometry={geometry} frustumCulled={false} raycast={() => null}>
       <pointsMaterial
         ref={materialRef}
         size={POINT_SIZE_BASE}
         vertexColors
-        transparent
-        opacity={isCoarsePointer ? 0.78 : POINT_OPACITY}
-        depthWrite={false}
-        sizeAttenuation={false}
+        transparent={false}
+        opacity={1}
+        depthWrite
+        depthTest
+        sizeAttenuation={POINT_SIZE_ATTENUATION}
       />
     </points>
   );
@@ -222,8 +233,9 @@ function MarkerList({ markers, selectedMarkerId, onDeleteMarker, onSelectMarker 
 }
 
 function ControlPanel({
-  isCoarsePointer,
+  debugPointerActive,
   drawerOpen,
+  menuOpen,
   markerCount,
   markers,
   placementMode,
@@ -235,143 +247,109 @@ function ControlPanel({
   onPanelHoverChange,
   onSelectMarker,
   onToggleDrawer,
+  onToggleMenu,
   onTogglePlacement,
   onTopView,
 }) {
   return (
     <div className="hud">
       <div
-        className="overlay"
+        className={menuOpen ? 'overlay is-open' : 'overlay'}
         onPointerEnter={() => onPanelHoverChange(true)}
         onPointerLeave={() => onPanelHoverChange(false)}
+        onFocusCapture={() => onPanelHoverChange(true)}
+        onBlurCapture={() => onPanelHoverChange(false)}
       >
-        <h1>GROVEMATRIX</h1>
-        <p className="panel-copy">canopy scan</p>
-        <p className="instruction-line">
-          {placementMode
-            ? 'Tap to place. Drag nodes to adjust.'
-            : isCoarsePointer
-              ? 'Explore with one finger. Pinch or two-finger drag to zoom and pan.'
-              : 'Orbit the canopy matrix. Select a node to inspect.'}
-        </p>
+        <button
+          type="button"
+          className="title-toggle"
+          aria-expanded={menuOpen}
+          onClick={onToggleMenu}
+        >
+          grovematrix
+        </button>
 
-        <div className="control-row">
-          <button
-            type="button"
-            className={placementMode ? 'is-active' : ''}
-            onClick={onTogglePlacement}
-          >
-            Placement Mode: {placementMode ? 'On' : 'Off'}
-          </button>
-          <button type="button" onClick={onTopView}>
-            Plan
-          </button>
-          <button type="button" onClick={onCopyJson} disabled={!markerCount}>
-            Copy JSON
-          </button>
-          <button type="button" onClick={onDownloadJson} disabled={!markerCount}>
-            Download JSON
-          </button>
-          <button type="button" onClick={onDeleteSelected} disabled={!selectedMarker}>
-            Delete Selected
-          </button>
-        </div>
+        {menuOpen ? (
+          <div className="menu-panel">
+            {placementMode ? (
+              <p className="instruction-line">Tap to place. Drag markers to adjust.</p>
+            ) : null}
+            {DEBUG_INTERACTIONS ? (
+              <p className="debug-line">Point hover: {debugPointerActive ? 'active' : 'inactive'}</p>
+            ) : null}
 
-        <div className="meta-grid">
-          <p>
-            <span>Markers</span>
-            <strong>{markerCount}</strong>
-          </p>
-          <p>
-            <span>Mode</span>
-            <strong>{placementMode ? 'Editing' : 'Observing'}</strong>
-          </p>
-        </div>
-
-        <details className="selection-card" open={!isCoarsePointer}>
-          <summary>
-            <span>Selected Marker</span>
-            <strong>{selectedMarker ? selectedMarker.id : 'None'}</strong>
-          </summary>
-          {selectedMarker ? (
-            <div className="selection-card-body">
-              <p>
-                x {selectedMarker.position[0].toFixed(2)} | y {selectedMarker.position[1].toFixed(2)} | z{' '}
-                {selectedMarker.position[2].toFixed(2)}
-              </p>
-              <p>Common Name: {selectedMarker.commonName}</p>
-              <p>Species: {selectedMarker.species}</p>
-              <p>Condition: {selectedMarker.condition}</p>
-              <p className="placeholder-line">
-                Environmental analytics pending calibration.
-              </p>
+            <div className="control-row">
+              <button
+                type="button"
+                className={placementMode ? 'is-active' : ''}
+                onClick={onTogglePlacement}
+              >
+                Placement {placementMode ? 'On' : 'Off'}
+              </button>
+              <button type="button" onClick={onTopView}>
+                Plan View
+              </button>
+              <button type="button" onClick={onCopyJson} disabled={!markerCount}>
+                Copy JSON
+              </button>
+              <button type="button" onClick={onDownloadJson} disabled={!markerCount}>
+                Download JSON
+              </button>
+              <button type="button" onClick={onDeleteSelected} disabled={!selectedMarker}>
+                Delete Selected
+              </button>
             </div>
-          ) : (
-            <p>No marker selected</p>
-          )}
-        </details>
 
-        <div className={drawerOpen ? 'list-card is-open' : 'list-card'}>
-          <button type="button" className="drawer-toggle" onClick={onToggleDrawer}>
-            Markers ({markerCount})
-          </button>
-          {drawerOpen ? (
-            <MarkerList
-              markers={markers}
-              selectedMarkerId={selectedMarker?.id ?? null}
-              onDeleteMarker={onDeleteMarker}
-              onSelectMarker={onSelectMarker}
-            />
-          ) : null}
-        </div>
+            <details className="selection-card">
+              <summary>
+                <span>Selected</span>
+                <strong>{selectedMarker ? selectedMarker.id : 'None'}</strong>
+              </summary>
+              <p>{selectedMarker ? 'Details in scene balloon' : 'No marker selected'}</p>
+            </details>
+
+            <div className={drawerOpen ? 'list-card is-open' : 'list-card'}>
+              <button type="button" className="drawer-toggle" onClick={onToggleDrawer}>
+                Markers ({markerCount})
+              </button>
+              {drawerOpen ? (
+                <MarkerList
+                  markers={markers}
+                  selectedMarkerId={selectedMarker?.id ?? null}
+                  onDeleteMarker={onDeleteMarker}
+                  onSelectMarker={onSelectMarker}
+                />
+              ) : null}
+            </div>
+          </div>
+        ) : null}
       </div>
     </div>
   );
 }
 
-function TreeMarkerSphere({
+function TreeMarker({
   hovered,
   isCoarsePointer,
-  markerScaleMultiplier,
   marker,
   placementMode,
   selected,
+  onClearSelection,
   onDragEnd,
   onDragMove,
   onDragStart,
+  onHoverChange,
   onSelect,
 }) {
-  const x = safeNumber(marker.x, 0);
-  const z = safeNumber(marker.z, 0);
-  const groupRef = useRef(null);
-  const worldPositionRef = useRef(new Vector3());
-  const { camera } = useThree();
+  const x = Number(marker?.x);
+  const z = Number(marker?.z);
+  const markerId = marker?.marker_code || marker?.id;
 
-  useFrame(({ clock }) => {
-    if (!groupRef.current) {
-      return;
-    }
-
-    const pulse = 1 + Math.sin(clock.elapsedTime * 0.85 + x * 0.02 + z * 0.02) * 0.035;
-    worldPositionRef.current.set(x, PLACEMENT_Y + 2, z);
-    const distance = camera.position.distanceTo(worldPositionRef.current);
-    const adaptiveScale = MathUtils.clamp(distance / 180, 1, 4);
-    const interactionScale = selected
-      ? adaptiveScale * 1.25
-      : !isCoarsePointer && !placementMode && hovered
-        ? adaptiveScale * 1.35
-        : adaptiveScale;
-    const scale = pulse * interactionScale * markerScaleMultiplier;
-    groupRef.current.scale.setScalar(scale);
-  });
+  if (!Number.isFinite(x) || !Number.isFinite(z)) {
+    return null;
+  }
 
   const canHover = !isCoarsePointer && !placementMode && hovered;
-  const baseColor = selected ? '#f3a0c8' : canHover ? '#8fcfbd' : '#d6d166';
-  const radius = selected
-    ? MARKER_RADIUS_SELECTED
-    : canHover
-      ? MARKER_RADIUS_HOVER
-      : MARKER_RADIUS_BASE;
 
   const handlePointerDown = (event) => {
     event.stopPropagation();
@@ -379,7 +357,7 @@ function TreeMarkerSphere({
     onSelect(marker);
 
     if (placementMode) {
-      onDragStart(marker.id);
+      onDragStart(markerId);
     }
   };
 
@@ -389,7 +367,7 @@ function TreeMarkerSphere({
     }
 
     event.stopPropagation();
-    onDragMove(event, marker.id);
+    onDragMove(event, markerId);
   };
 
   const handlePointerUp = (event) => {
@@ -402,47 +380,122 @@ function TreeMarkerSphere({
     onDragEnd();
   };
 
+  const handlePointerOver = (event) => {
+    event.stopPropagation();
+    onHoverChange(markerId);
+    document.body.style.cursor = placementMode ? 'grab' : 'pointer';
+    if (DEBUG_INTERACTIONS) {
+      console.log('marker over', markerId);
+    }
+  };
+
+  const handlePointerOut = (event) => {
+    event.stopPropagation();
+    onHoverChange(null);
+    document.body.style.cursor = '';
+    if (DEBUG_INTERACTIONS) {
+      console.log('marker out', markerId);
+    }
+  };
+
   const handleClick = (event) => {
     event.stopPropagation();
     onSelect(marker);
+    if (DEBUG_INTERACTIONS) {
+      console.log('marker click', markerId);
+    }
   };
 
   return (
-    <group ref={groupRef} position={[x, PLACEMENT_Y + 2, z]}>
+    <group frustumCulled={false} position={[x, PLACEMENT_Y, z]} renderOrder={9999}>
       <mesh
-        renderOrder={1000}
+        name={`marker-hit-${markerId}`}
+        frustumCulled={false}
+        renderOrder={9999}
+        onPointerOver={handlePointerOver}
+        onPointerOut={handlePointerOut}
         onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
         onClick={handleClick}
       >
-        <sphereGeometry args={[radius, 24, 24]} />
+        <sphereGeometry args={[MARKER_HIT_RADIUS, 24, 24]} />
         <meshBasicMaterial
-          color={baseColor}
           transparent
-          opacity={0}
+          opacity={DEBUG_MARKER_HITS ? 0.22 : 0.001}
+          color="#ff00ff"
           depthTest={false}
           depthWrite={false}
         />
       </mesh>
-      <Html center position={[0, 0, 0]} style={{ pointerEvents: 'none' }}>
-        <div
-          className={
-            selected
-              ? 'marker-orb is-selected'
-              : canHover
-                ? 'marker-orb is-hovered'
-                : 'marker-orb'
-          }
+
+      <Html
+        center
+        occlude={false}
+        transform={false}
+        pointerEvents={placementMode ? 'none' : 'auto'}
+        zIndexRange={[1000, 0]}
+      >
+        <button
+          type="button"
+          className="marker-tree-button"
+          onMouseEnter={(event) => {
+            event.stopPropagation();
+            onHoverChange(markerId);
+            document.body.style.cursor = 'pointer';
+          }}
+          onMouseLeave={(event) => {
+            event.stopPropagation();
+            onHoverChange(null);
+            document.body.style.cursor = '';
+          }}
+          onClick={(event) => {
+            event.stopPropagation();
+            onSelect(marker);
+          }}
         >
           <div
-            className={`marker-tree-mask ${selected ? 'is-selected' : ''} ${
-              canHover ? 'is-hovered' : ''
-            }`}
+            className={[
+              'marker-tree-mask',
+              canHover ? 'is-hovered' : '',
+              selected ? 'is-selected' : '',
+              placementMode ? 'is-placement' : '',
+            ].join(' ')}
           />
-        </div>
+        </button>
       </Html>
+
+      {selected ? (
+        <Html
+          center={false}
+          occlude={false}
+          transform={false}
+          pointerEvents="auto"
+          zIndexRange={[2000, 0]}
+        >
+          <div
+            className="marker-balloon"
+            onClick={(event) => event.stopPropagation()}
+            onPointerDown={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="marker-balloon-close"
+              onClick={(event) => {
+                event.stopPropagation();
+                onClearSelection();
+              }}
+            >
+              x
+            </button>
+            <strong>{markerId}</strong>
+            <span>{marker.commonName || marker.common_name || 'Tree marker'}</span>
+            <small>{marker.species || 'species pending'}</small>
+            <small>{marker.condition || 'Unsurveyed'}</small>
+          </div>
+        </Html>
+      ) : null}
     </group>
   );
 }
@@ -478,24 +531,26 @@ function Scene({
   draggingId,
   hoveredMarkerId,
   isCoarsePointer,
-  markerScaleMultiplier,
+  isNavigatingRef,
+  navigationEndTimeoutRef,
   markers,
   onPointCloudLoaded,
   onCanvasPlacement,
+  onClearSelection,
   onDragEnd,
   onDragMove,
   onDragStart,
   onMarkerHover,
   onSelectMarker,
-  pointer,
+  pointerRef,
   placementMode,
   selectedMarker,
   suppressPlacementRef,
   planViewRequest,
+  onHoverChange,
 }) {
   const sourceGeometry = useLoader(PLYLoader, '/models/grove_pointcloud.ply');
-  const { camera, gl, raycaster, size } = useThree();
-  const projectedRef = useRef(new Vector3());
+  const { camera, gl, raycaster } = useThree();
   const placementTapRef = useRef(null);
 
   const radius = useMemo(() => {
@@ -647,46 +702,23 @@ function Scene({
         controlsRef.current.maxDistance = ORBIT_MAX_DISTANCE;
       }
     }
-
-    if (isCoarsePointer || placementMode || !pointer.active || !markers.length) {
-      if (hoveredMarkerId !== null) {
-        onMarkerHover(null);
-      }
-      return;
-    }
-
-    let nearestId = null;
-    let nearestDistance = Number.POSITIVE_INFINITY;
-
-    for (const marker of markers) {
-      projectedRef.current.set(
-        safeNumber(marker.x, 0),
-        PLACEMENT_Y + 2,
-        safeNumber(marker.z, 0),
-      );
-      projectedRef.current.project(camera);
-
-      const sx = ((projectedRef.current.x + 1) * 0.5) * size.width;
-      const sy = ((1 - projectedRef.current.y) * 0.5) * size.height;
-      const distance = Math.hypot(pointer.x - sx, pointer.y - sy);
-
-      if (distance < MARKER_HOVER_RADIUS_PX && distance < nearestDistance) {
-        nearestDistance = distance;
-        nearestId = marker.id;
-      }
-    }
-
-    if (nearestId !== hoveredMarkerId) {
-      onMarkerHover(nearestId);
-    }
   });
 
   return (
     <>
+      <PointCloud
+        isCoarsePointer={isCoarsePointer}
+        isNavigatingRef={isNavigatingRef}
+        onLoaded={onPointCloudLoaded}
+        placementMode={placementMode}
+        pointerRef={pointerRef}
+      />
+
       <mesh
         position={[0, PLACEMENT_Y, 0]}
         rotation={[-Math.PI / 2, 0, 0]}
         renderOrder={1}
+        raycast={() => null}
       >
         <planeGeometry args={[PLACEMENT_PLANE_SIZE, PLACEMENT_PLANE_SIZE]} />
         <meshBasicMaterial
@@ -698,44 +730,59 @@ function Scene({
         />
       </mesh>
 
-      <PointCloud
-        isCoarsePointer={isCoarsePointer}
-        onLoaded={onPointCloudLoaded}
-        placementMode={placementMode}
-        pointerActive={!isCoarsePointer && pointer.active}
-      />
+      {markers.map((marker) => {
+        const markerId = marker?.marker_code || marker?.id;
+        const selectedId = selectedMarker?.marker_code || selectedMarker?.id;
 
-      {markers.map((marker) => (
-        <TreeMarkerSphere
-          hovered={hoveredMarkerId === marker.id}
-          isCoarsePointer={isCoarsePointer}
-          key={marker.id}
-          marker={marker}
-          markerScaleMultiplier={markerScaleMultiplier}
-          placementMode={placementMode}
-          selected={selectedMarker?.id === marker.id}
-          onDragEnd={onDragEnd}
-          onDragMove={onDragMove}
-          onDragStart={onDragStart}
-          onSelect={onSelectMarker}
-        />
-      ))}
+        return (
+          <TreeMarker
+            hovered={hoveredMarkerId === markerId}
+            isCoarsePointer={isCoarsePointer}
+            key={markerId}
+            marker={marker}
+            placementMode={placementMode}
+            selected={selectedId === markerId}
+            onClearSelection={onClearSelection}
+            onDragEnd={onDragEnd}
+            onDragMove={onDragMove}
+            onDragStart={onDragStart}
+            onHoverChange={onHoverChange}
+            onSelect={onSelectMarker}
+          />
+        );
+      })}
 
       <OrbitControls
         ref={controlsRef}
         enableDamping
-        dampingFactor={0.08}
+        dampingFactor={0.28}
         enablePan
         enableRotate
         enableZoom
         enabled={!draggingId}
+        onStart={() => {
+          if (navigationEndTimeoutRef.current) {
+            window.clearTimeout(navigationEndTimeoutRef.current);
+            navigationEndTimeoutRef.current = null;
+          }
+          isNavigatingRef.current = true;
+        }}
+        onEnd={() => {
+          if (navigationEndTimeoutRef.current) {
+            window.clearTimeout(navigationEndTimeoutRef.current);
+          }
+          navigationEndTimeoutRef.current = window.setTimeout(() => {
+            isNavigatingRef.current = false;
+            navigationEndTimeoutRef.current = null;
+          }, 80);
+        }}
         mouseButtons={{
           LEFT: THREE.MOUSE.ROTATE,
           MIDDLE: THREE.MOUSE.DOLLY,
           RIGHT: THREE.MOUSE.PAN,
         }}
         panSpeed={0.55}
-        rotateSpeed={0.45}
+        rotateSpeed={0.28}
         screenSpacePanning
         target={[0, 0, 0]}
         touches={{
@@ -745,13 +792,14 @@ function Scene({
         minDistance={ORBIT_MIN_DISTANCE}
         maxDistance={ORBIT_MAX_DISTANCE}
         maxPolarAngle={Math.PI / 2.03}
-        zoomSpeed={0.65}
+        zoomSpeed={0.72}
       />
     </>
   );
 }
 
 export default function App() {
+  const [debugPointerActive, setDebugPointerActive] = useState(false);
   const [hoveredMarkerId, setHoveredMarkerId] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [pointCloudLoaded, setPointCloudLoaded] = useState(false);
@@ -762,16 +810,18 @@ export default function App() {
   const [planViewRequest, setPlanViewRequest] = useState(null);
   const [draggingId, setDraggingId] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [pointer, setPointer] = useState({ x: 0, y: 0, active: false });
+  const [menuOpen, setMenuOpen] = useState(false);
   const [uiHover, setUiHover] = useState(false);
   const [isCoarsePointer, setIsCoarsePointer] = useState(false);
   const controlsRef = useRef(null);
-  const cameraRef = useRef(null);
+  const isNavigatingRef = useRef(false);
+  const navigationEndTimeoutRef = useRef(null);
   const markerCountRef = useRef(1);
   const draggingIdRef = useRef(null);
   const suppressPlaneClickRef = useRef(false);
   const dragPointRef = useRef(new Vector3());
   const pointerNdcRef = useRef(new Vector2());
+  const pointerRef = useRef({ x: 0, y: 0, clientX: 0, clientY: 0, active: false });
   const markerPlaneRef = useRef(PLACEMENT_PLANE);
 
   useEffect(() => {
@@ -780,6 +830,14 @@ export default function App() {
     }, 5000);
 
     return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (navigationEndTimeoutRef.current) {
+        window.clearTimeout(navigationEndTimeoutRef.current);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -822,12 +880,6 @@ export default function App() {
 
         markerCountRef.current = highestId + 1;
         setMarkers(nextMarkers);
-        console.log('Loaded markers for scene:', nextMarkers);
-        console.log(
-          'Renderable marker count:',
-          nextMarkers.length,
-          nextMarkers.slice(0, 3),
-        );
       } catch (error) {
         if (!active) {
           return;
@@ -848,6 +900,11 @@ export default function App() {
 
   useEffect(() => {
     const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setSelectedMarker(null);
+        return;
+      }
+
       if ((event.key === 'Delete' || event.key === 'Backspace') && selectedMarker) {
         event.preventDefault();
         setMarkers((current) =>
@@ -878,9 +935,11 @@ export default function App() {
   };
 
   const handleMarkerHover = (markerId) => {
-    if (!placementMode) {
-      setHoveredMarkerId(markerId);
-    }
+    setHoveredMarkerId(markerId);
+  };
+
+  const handleClearSelection = () => {
+    setSelectedMarker(null);
   };
 
   const handleDeleteMarker = (markerId) => {
@@ -897,6 +956,36 @@ export default function App() {
     if (selectedMarker) {
       handleDeleteMarker(selectedMarker.id);
     }
+  };
+
+  const handlePointerEnter = (event) => {
+    pointerRef.current.x = event.nativeEvent.offsetX ?? pointerRef.current.x;
+    pointerRef.current.y = event.nativeEvent.offsetY ?? pointerRef.current.y;
+    pointerRef.current.clientX = event.clientX;
+    pointerRef.current.clientY = event.clientY;
+    pointerRef.current.active = true;
+    setDebugPointerActive(true);
+    if (DEBUG_INTERACTIONS) {
+      console.log('pointer active', pointerRef.current.active);
+    }
+  };
+
+  const handlePointerMove = (event) => {
+    pointerRef.current.x = event.nativeEvent.offsetX ?? pointerRef.current.x;
+    pointerRef.current.y = event.nativeEvent.offsetY ?? pointerRef.current.y;
+    pointerRef.current.clientX = event.clientX;
+    pointerRef.current.clientY = event.clientY;
+    pointerRef.current.active = true;
+  };
+
+  const handlePointerLeave = () => {
+    pointerRef.current.active = false;
+    document.body.style.cursor = '';
+    setDebugPointerActive(false);
+    if (DEBUG_INTERACTIONS) {
+      console.log('pointer active', pointerRef.current.active);
+    }
+    setHoveredMarkerId(null);
   };
 
   const handleTogglePlacement = () => {
@@ -920,6 +1009,10 @@ export default function App() {
 
   const handleToggleDrawer = () => {
     setDrawerOpen((current) => !current);
+  };
+
+  const handleToggleMenu = () => {
+    setMenuOpen((current) => !current);
   };
 
   const handleCopyJson = async () => {
@@ -950,6 +1043,11 @@ export default function App() {
     if (controlsRef.current) {
       controlsRef.current.enabled = false;
     }
+    if (navigationEndTimeoutRef.current) {
+      window.clearTimeout(navigationEndTimeoutRef.current);
+      navigationEndTimeoutRef.current = null;
+    }
+    isNavigatingRef.current = false;
     setDraggingId(markerId);
   };
 
@@ -1004,6 +1102,11 @@ export default function App() {
     if (controlsRef.current) {
       controlsRef.current.enabled = true;
     }
+    if (navigationEndTimeoutRef.current) {
+      window.clearTimeout(navigationEndTimeoutRef.current);
+      navigationEndTimeoutRef.current = null;
+    }
+    isNavigatingRef.current = false;
     setDraggingId(null);
 
     window.setTimeout(() => {
@@ -1017,28 +1120,25 @@ export default function App() {
       : draggingId
       ? 'grabbing'
       : placementMode
-        ? pointer.active
-          ? 'crosshair'
-          : 'default'
+        ? 'crosshair'
         : hoveredMarkerId
           ? 'pointer'
           : 'default';
 
   const loadingReady = pointCloudLoaded && minIntroElapsed && !pointCloudError;
-  const markerScaleMultiplier = isCoarsePointer ? 1.35 : 1;
-
   return (
-    <div className="app-shell" style={{ cursor }}>
+    <div
+      className="app-shell app"
+      style={{ cursor }}
+      onPointerEnter={handlePointerEnter}
+      onPointerMove={handlePointerMove}
+      onPointerLeave={handlePointerLeave}
+    >
       <LoadingOverlay error={pointCloudError} ready={loadingReady} />
-      {!isCoarsePointer && pointer.active && !placementMode && !uiHover ? (
-        <div
-          className="cursor-focus"
-          style={{ left: `${pointer.x}px`, top: `${pointer.y}px` }}
-        />
-      ) : null}
       <ControlPanel
-        isCoarsePointer={isCoarsePointer}
+        debugPointerActive={debugPointerActive}
         drawerOpen={drawerOpen}
+        menuOpen={menuOpen}
         markerCount={markers.length}
         markers={markers}
         placementMode={placementMode}
@@ -1050,29 +1150,24 @@ export default function App() {
         onPanelHoverChange={setUiHover}
         onSelectMarker={handleSelectMarker}
         onToggleDrawer={handleToggleDrawer}
+        onToggleMenu={handleToggleMenu}
         onTogglePlacement={handleTogglePlacement}
         onTopView={handleTopView}
       />
 
       <Canvas
         camera={{ position: [0, 300, 0.01], fov: 55, near: 0.1, far: CAMERA_FAR }}
-        dpr={[1, 2]}
-        gl={{ antialias: true, alpha: true }}
+        dpr={[1, 1.25]}
+        gl={{ antialias: true, alpha: false, powerPreference: 'high-performance' }}
+        onPointerMissed={() => {
+          if (!placementMode) {
+            setSelectedMarker(null);
+          }
+        }}
         onCreated={({ camera }) => {
-          cameraRef.current = camera;
           camera.near = 0.1;
           camera.far = CAMERA_FAR;
           camera.updateProjectionMatrix();
-        }}
-        onPointerEnter={(event) => {
-          setPointer({ x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY, active: true });
-        }}
-        onPointerMove={(event) => {
-          setPointer({ x: event.nativeEvent.offsetX, y: event.nativeEvent.offsetY, active: true });
-        }}
-        onPointerLeave={() => {
-          setPointer((current) => ({ ...current, active: false }));
-          setHoveredMarkerId(null);
         }}
       >
         <color attach="background" args={['#050816']} />
@@ -1084,16 +1179,18 @@ export default function App() {
               draggingId={draggingId}
               hoveredMarkerId={hoveredMarkerId}
               isCoarsePointer={isCoarsePointer}
-              markerScaleMultiplier={markerScaleMultiplier}
+              isNavigatingRef={isNavigatingRef}
+              navigationEndTimeoutRef={navigationEndTimeoutRef}
               markers={markers}
               onCanvasPlacement={handlePlaceMarker}
+              onClearSelection={handleClearSelection}
               onDragEnd={handleDragEnd}
               onDragMove={handleDragMove}
               onDragStart={handleDragStart}
               onMarkerHover={handleMarkerHover}
               onPointCloudLoaded={() => setPointCloudLoaded(true)}
               onSelectMarker={handleSelectMarker}
-              pointer={pointer}
+              pointerRef={pointerRef}
               placementMode={placementMode}
               selectedMarker={selectedMarker}
               suppressPlacementRef={suppressPlaneClickRef}

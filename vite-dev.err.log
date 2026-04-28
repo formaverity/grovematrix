@@ -1,3 +1,978 @@
-[2m9:51:22 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
-[2m9:51:45 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
-[2m10:13:49 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m3:08:56 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m3:14:00 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m3:17:59 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m3:36:59 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m3:42:32 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mReferenceError[22m: pointer is not defined
+[39m > App src/App.jsx:1165:23
+    1163 |                onPointCloudLoaded={() => setPointCloudLoaded(true)}
+    1164 |                onSelectMarker={handleSelectMarker}
+    1165 |                pointer={pointer}
+         |                         ^
+    1166 |                placementMode={placementMode}
+    1167 |                selectedMarker={selectedMarker}
+ > Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25904:19
+ > renderWithHooks node_modules/react-dom/cjs/react-dom-client.development.js:7662:21
+ > updateFunctionComponent node_modules/react-dom/cjs/react-dom-client.development.js:10166:18
+ > beginWork node_modules/react-dom/cjs/react-dom-client.development.js:11778:17
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > performUnitOfWork node_modules/react-dom/cjs/react-dom-client.development.js:17641:21
+ > workLoopSync node_modules/react-dom/cjs/react-dom-client.development.js:17469:40
+ > renderRootSync node_modules/react-dom/cjs/react-dom-client.development.js:17450:10
+ > performWorkOnRoot node_modules/react-dom/cjs/react-dom-client.development.js:16583:34
+
+[2m3:42:32 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mAn error occurred in the <App> component.
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+[2m3:43:41 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m3:48:33 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m3:56:11 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m4:04:54 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m4:11:37 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mReferenceError[22m: CursorWand is not defined
+[39m > App src/App.jsx:1112:7
+    1110 |      >
+    1111 |        <LoadingOverlay error={pointCloudError} ready={loadingReady} />
+    1112 |        <CursorWand
+         |         ^
+    1113 |          disabled={isCoarsePointer || placementMode || uiHover}
+    1114 |          pointerRef={pointerRef}
+ > Object.react_stack_bottom_frame node_modules/react-dom/cjs/react-dom-client.development.js:25904:19
+ > renderWithHooks node_modules/react-dom/cjs/react-dom-client.development.js:7662:21
+ > updateFunctionComponent node_modules/react-dom/cjs/react-dom-client.development.js:10166:18
+ > beginWork node_modules/react-dom/cjs/react-dom-client.development.js:11778:17
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > performUnitOfWork node_modules/react-dom/cjs/react-dom-client.development.js:17641:21
+ > workLoopSync node_modules/react-dom/cjs/react-dom-client.development.js:17469:40
+ > renderRootSync node_modules/react-dom/cjs/react-dom-client.development.js:17450:10
+ > performWorkOnRoot node_modules/react-dom/cjs/react-dom-client.development.js:16583:34
+
+[2m4:11:37 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mAn error occurred in the <App> component.
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://react.dev/link/error-boundaries to learn more about error boundaries.
+
+[2m4:14:14 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m4:24:00 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m4:24:18 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > Object.handlePointerOver [as onPointerOver] src/App.jsx:387:4
+    385 |    const handlePointerOver = (event) => {
+    386 |      event.stopPropagation();
+    387 |      onHoverChange(markerId);
+        |      ^
+    388 |      document.body.style.cursor = placementMode ? 'grab' : 'pointer';
+    389 |      if (DEBUG_INTERACTIONS) {
+ > onIntersect node_modules/@react-three/fiber/dist/events-760a1017.esm.js:878:65
+ > handleIntersects node_modules/@react-three/fiber/dist/events-760a1017.esm.js:748:10
+ > HTMLDivElement.handleEvent node_modules/@react-three/fiber/dist/events-760a1017.esm.js:907:6
+
+[2m4:24:18 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > Object.handlePointerOut [as onPointerOut] src/App.jsx:396:4
+    394 |    const handlePointerOut = (event) => {
+    395 |      event.stopPropagation();
+    396 |      onHoverChange(null);
+        |      ^
+    397 |      document.body.style.cursor = '';
+    398 |      if (DEBUG_INTERACTIONS) {
+ > cancelPointer node_modules/@react-three/fiber/dist/events-760a1017.esm.js:774:60
+ > HTMLDivElement.handleEvent node_modules/@react-three/fiber/dist/events-760a1017.esm.js:845:25
+
+[2m4:24:35 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > Object.handlePointerOver [as onPointerOver] src/App.jsx:387:4
+    385 |    const handlePointerOver = (event) => {
+    386 |      event.stopPropagation();
+    387 |      onHoverChange(markerId);
+        |      ^
+    388 |      document.body.style.cursor = placementMode ? 'grab' : 'pointer';
+    389 |      if (DEBUG_INTERACTIONS) {
+ > onIntersect node_modules/@react-three/fiber/dist/events-760a1017.esm.js:878:65
+ > handleIntersects node_modules/@react-three/fiber/dist/events-760a1017.esm.js:748:10
+ > HTMLDivElement.handleEvent node_modules/@react-three/fiber/dist/events-760a1017.esm.js:907:6
+
+[2m4:24:35 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > Object.handlePointerOut [as onPointerOut] src/App.jsx:396:4
+    394 |    const handlePointerOut = (event) => {
+    395 |      event.stopPropagation();
+    396 |      onHoverChange(null);
+        |      ^
+    397 |      document.body.style.cursor = '';
+    398 |      if (DEBUG_INTERACTIONS) {
+ > cancelPointer node_modules/@react-three/fiber/dist/events-760a1017.esm.js:774:60
+ > HTMLDivElement.handleEvent node_modules/@react-three/fiber/dist/events-760a1017.esm.js:845:25
+
+[2m4:24:45 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > Object.handlePointerOver [as onPointerOver] src/App.jsx:387:4
+    385 |    const handlePointerOver = (event) => {
+    386 |      event.stopPropagation();
+    387 |      onHoverChange(markerId);
+        |      ^
+    388 |      document.body.style.cursor = placementMode ? 'grab' : 'pointer';
+    389 |      if (DEBUG_INTERACTIONS) {
+ > onIntersect node_modules/@react-three/fiber/dist/events-760a1017.esm.js:878:65
+ > handleIntersects node_modules/@react-three/fiber/dist/events-760a1017.esm.js:748:10
+ > HTMLDivElement.handleEvent node_modules/@react-three/fiber/dist/events-760a1017.esm.js:907:6
+
+[2m4:24:45 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > Object.handlePointerOut [as onPointerOut] src/App.jsx:396:4
+    394 |    const handlePointerOut = (event) => {
+    395 |      event.stopPropagation();
+    396 |      onHoverChange(null);
+        |      ^
+    397 |      document.body.style.cursor = '';
+    398 |      if (DEBUG_INTERACTIONS) {
+ > cancelPointer node_modules/@react-three/fiber/dist/events-760a1017.esm.js:774:60
+ > HTMLDivElement.handleEvent node_modules/@react-three/fiber/dist/events-760a1017.esm.js:845:25
+
+[2m4:26:40 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m4:27:06 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m4:29:57 PM[22m [33m[1m[vite][22m[39m [33m[2m(client)[22m[39m [2m[console.warn] [22mTHREE.Clock: This module has been deprecated. Please use THREE.Timer instead.
+[2m4:30:03 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:03 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:05 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:05 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:05 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:05 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:05 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:06 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:07 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:07 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:07 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:08 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:08 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:08 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:10 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:10 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:10 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:10 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:10 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:10 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:11 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:11 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:11 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:12 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:12 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:12 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:12 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:13 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:13 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:14 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:14 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:15 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:16 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:16 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:16 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:18 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:18 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:18 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:18 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:19 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:19 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:19 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:19 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:20 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:21 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:21 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:21 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:22 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:22 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseEnter src/App.jsx:447:12
+    445 |            onMouseEnter={(event) => {
+    446 |              event.stopPropagation();
+    447 |              onHoverChange(markerId);
+        |              ^
+    448 |              document.body.style.cursor = 'pointer';
+    449 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
+[2m4:30:23 PM[22m [31m[1m[vite][22m[39m [31m[2m(client)[22m[39m [31m[Unhandled error] [1mTypeError[22m: onHoverChange is not a function
+[39m > onMouseLeave src/App.jsx:452:12
+    450 |            onMouseLeave={(event) => {
+    451 |              event.stopPropagation();
+    452 |              onHoverChange(null);
+        |              ^
+    453 |              document.body.style.cursor = '';
+    454 |            }}
+ > executeDispatch node_modules/react-dom/cjs/react-dom-client.development.js:19116:8
+ > runWithFiberInDEV node_modules/react-dom/cjs/react-dom-client.development.js:871:29
+ > processDispatchQueue node_modules/react-dom/cjs/react-dom-client.development.js:19166:18
+ > node_modules/react-dom/cjs/react-dom-client.development.js:19767:8
+ > batchedUpdates$1 node_modules/react-dom/cjs/react-dom-client.development.js:3255:39
+ > dispatchEventForPluginEventSystem node_modules/react-dom/cjs/react-dom-client.development.js:19320:6
+ > dispatchEvent node_modules/react-dom/cjs/react-dom-client.development.js:23585:10
+ > dispatchContinuousEvent node_modules/react-dom/cjs/react-dom-client.development.js:23570:10
+
