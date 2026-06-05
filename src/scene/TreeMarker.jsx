@@ -1,10 +1,17 @@
 import React from 'react';
 import { Html } from '@react-three/drei';
 import { PLACEMENT_Y } from '../lib/markerHelpers.js';
-import { formatBenefit, formatVerified } from '../lib/markerHelpers.js';
+import { formatVerified } from '../lib/markerHelpers.js';
 import { useGroveStore } from '../store/useGroveStore.js';
+import { TIER_LABELS, METRIC_LABELS } from '../lib/ecology.js';
 
 const STATUS_CLASS = { verified: 'status-verified', partial: 'status-partial', sample: 'status-sample' };
+
+function fmt(n, unit) {
+  if (!n) return '—';
+  if (n >= 1_000) return `${(n / 1_000).toFixed(1)} k ${unit}`;
+  return `${Math.round(n).toLocaleString()} ${unit}`;
+}
 
 const DEBUG_MARKER_HITS = false;
 const MARKER_HIT_RADIUS = 80;
@@ -176,12 +183,25 @@ export function TreeMarker({
               </div>
             )}
 
+            {/* Ecological benefits with confidence badge */}
             <div className="marker-balloon-section">
-              <small className="marker-balloon-label">canopy work</small>
-              <small>Shade: {formatBenefit(marker.shadeSqft, 'sq ft')}</small>
-              <small>Stormwater: {formatBenefit(marker.annualStormwaterGal, 'gal / yr')}</small>
-              <small>Carbon stored: {formatBenefit(marker.carbonStoredLb, 'lb')}</small>
-              <small>Cooling: {formatBenefit(marker.coolingScore, '/ 100')}</small>
+              <div className="marker-eco-header">
+                <small className="marker-balloon-label">eco services ~</small>
+                {marker.benefits_tier && (
+                  <span className={`marker-eco-badge tier-${marker.benefits_tier}`}>
+                    {TIER_LABELS[marker.benefits_tier]}
+                  </span>
+                )}
+              </div>
+              <div className="marker-eco-grid">
+                <div><span className="eco-val">{fmt(marker.carbonStoredLb, 'lb')}</span><span className="eco-lbl">C stored</span></div>
+                <div><span className="eco-val">{fmt(marker.annualCarbonLb, 'lb/yr')}</span><span className="eco-lbl">C/yr</span></div>
+                <div><span className="eco-val">{fmt(marker.annualStormwaterGal, 'gal')}</span><span className="eco-lbl">H₂O/yr</span></div>
+                <div><span className="eco-val">{fmt(marker.shadeSqft, 'ft²')}</span><span className="eco-lbl">shade</span></div>
+              </div>
+              {marker.benefits_assumptions && (
+                <small className="eco-assumption">{marker.benefits_assumptions[0]}</small>
+              )}
             </div>
 
             {/* Characterize CTA */}

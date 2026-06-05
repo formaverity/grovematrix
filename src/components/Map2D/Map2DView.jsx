@@ -3,6 +3,7 @@ import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useGroveStore, selectSelectedMarker } from '../../store/useGroveStore.js';
 import { getLayer } from '../../lib/cityData.js';
+import { computeBenefits } from '../../lib/ecology.js';
 
 // ── Blank dark basemap ────────────────────────────────────────────────────────
 // No external tile provider — the three Overture GeoJSON sources are the map.
@@ -34,6 +35,49 @@ const LAYER_GROUPS = {
   buildings:  ['buildings-fill', 'buildings-outline'],
   hardscape:  ['hardscape-line', 'hardscape-fill'],
 };
+
+// ── Service field helpers ─────────────────────────────────────────────────────
+
+// Approximate a circle as a GeoJSON Polygon (16 points) in lng/lat space.
+function circlePolygon(lng, lat, radiusDeg, n = 16) {
+  const latRad   = lat * Math.PI / 180;
+  const lngScale = 1 / Math.cos(latRad);
+  const pts = [];
+  for (let i = 0; i <= n; i++) {
+    const a = (i / n) * 2 * Math.PI;
+    pts.push([lng + radiusDeg * lngScale * Math.sin(a), lat + radiusDeg * Math.cos(a)]);
+  }
+  return { type: 'Polygon', coordinates: [pts] };
+}
+
+function buildServiceFieldGeoJSON(markers, metric) {
+  const allVals = markers
+    .filter((m) => m.lng != null && m.lat != null)
+    .map((m) => computeBenefits(m).metrics[metric] ?? 0);
+  const maxVal = Math.max(...allVals, 1);
+
+  return {
+    type: 'FeatureCollection',
+    features: markers
+      .filter((m) => m.lng != null && m.lat != null)
+      .map((m) => {
+        const b        = computeBenefits(m);
+        const val      = b.metrics[metric] ?? 0;
+        // Crown radius in degrees latitude (~111320 m/deg)
+        const radiusFt = (m.crown_spread_ft ?? (m.canopyRadiusFt ?? 14) * 2) / 2;
+        const radiusDeg = (radiusFt * 0.3048) / 111320;
+        return {
+          type: 'Feature',
+          geometry: circlePolygon(m.lng, m.lat, radiusDeg),
+          properties: {
+            id:         m.id,
+            valueNorm:  maxVal > 0 ? val / maxVal : 0,
+            confidence: b.confidenceWeight,
+          },
+        };
+      }),
+  };
+}
 
 // ── GeoJSON helpers ───────────────────────────────────────────────────────────
 
@@ -167,6 +211,7 @@ export function Map2DView() {
   const selectedMarkerId = useGroveStore((s) => s.selectedMarkerId);
   const placementMode    = useGroveStore((s) => s.placementMode);
   const layerVisibility  = useGroveStore((s) => s.layerVisibility);
+  const serviceField     = useGroveStore((s) => s.serviceField);
 
   const selectMarker       = useGroveStore((s) => s.selectMarker);
   const clearSelection     = useGroveStore((s) => s.clearSelection);
@@ -218,8 +263,29 @@ export function Map2DView() {
         ),
       });
 
-      const { layerVisibility: lv } = useGroveStore.getState();
+      const { layerVisibility: lv, serviceField: sf, markers: ms } = useGroveStore.getState();
       addLayers(map, lv);
+
+      // Service field — circles colored by ecological metric
+      map.addSource('service-field', {
+        type: 'geojson',
+        data: buildServiceFieldGeoJSON(ms, sf.metric),
+      });
+      map.addLayer({
+        id: 'service-field-fill',
+        type: 'fill',
+        source: 'service-field',
+        paint: {
+          'fill-color': [
+            'interpolate', ['linear'], ['get', 'valueNorm'],
+            0, '#2d5a40',
+            0.5, '#4e8c42',
+            1, '#7cffb2',
+          ],
+          'fill-opacity': ['*', ['get', 'confidence'], 0.6],
+        },
+        layout: { visibility: sf.visible ? 'visible' : 'none' },
+      });
 
       // Fit to marker extent on first load
       const geoMarkers = useGroveStore.getState().markers.filter(
@@ -311,6 +377,17 @@ export function Map2DView() {
     const source = mapRef.current.getSource('markers');
     source?.setData(buildMarkersGeoJSON(markers, selectedMarkerId));
   }, [markers, selectedMarkerId, mapReady]);
+
+  // ── Sync service field ──────────────────────────────────────────────────────
+
+  useEffect(() => {
+    if (!mapReady || !mapRef.current) return;
+    const map = mapRef.current;
+    map.getSource('service-field')?.setData(buildServiceFieldGeoJSON(markers, serviceField.metric));
+    if (map.getLayer('service-field-fill')) {
+      map.setLayoutProperty('service-field-fill', 'visibility', serviceField.visible ? 'visible' : 'none');
+    }
+  }, [serviceField, markers, mapReady]);
 
   // ── No georeference guard ───────────────────────────────────────────────────
 

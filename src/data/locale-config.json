@@ -1,0 +1,7 @@
+{
+  "location": "Asbury Park / Monmouth County, NJ",
+  "latitude": 40.22,
+  "annualRainfallIn": 47.2,
+  "rainfallSource": "NOAA Climate Normals 1991-2020, NJ station network (nearest: New Brunswick COOP). Monmouth County average. Update if your site differs significantly.",
+  "notes": "All values are editable. annualRainfallIn is used in the stormwater interception calculation."
+}

@@ -11,6 +11,7 @@ import { CalibratorPanel } from './components/Calibrator/CalibratorPanel.jsx';
 import { Map2DView } from './components/Map2D/Map2DView.jsx';
 import { City3DView } from './scene/City3DView.jsx';
 import { CaptureFlow } from './components/Capture/CaptureFlow.jsx';
+import { BenefitsSummary } from './components/Benefits/BenefitsSummary.jsx';
 
 const CAMERA_FAR = 10000000;
 const PLAN_VIEW_POSITION = [0, 12000, 0.01];
@@ -309,6 +310,9 @@ function GroveApp() {
 
       {/* Capture flow — global overlay, works in any mode */}
       <CaptureFlow />
+
+      {/* Benefits summary panel */}
+      <BenefitsSummary />
     </div>
   );
 }

@@ -8,6 +8,7 @@ import {
   PLACEMENT_Y,
 } from '../lib/markerHelpers.js';
 import { worldToScene } from '../lib/geoTransform.js';
+import { applyBenefits } from '../lib/ecology.js';
 
 const GEOREF_STORAGE_KEY = 'grove-georeference';
 
@@ -53,6 +54,10 @@ export const useGroveStore = create((set, get) => ({
 
   // ── Capture flow ────────────────────────────────────────────────────────────
   captureMarkerId: null,
+
+  // ── Service field (Phase 5 ecological viz) ─────────────────────────────────
+  serviceField: { visible: false, metric: 'carbonStoredLb' },
+  summaryOpen: false,
 
   // ── Marker actions ─────────────────────────────────────────────────────────
 
@@ -180,6 +185,13 @@ export const useGroveStore = create((set, get) => ({
 
   setCloudOpacity: (v) => set({ cloudOpacity: Math.max(0, Math.min(1, v)) }),
 
+  // ── Service field actions ──────────────────────────────────────────────────
+  toggleServiceField: () =>
+    set((s) => ({ serviceField: { ...s.serviceField, visible: !s.serviceField.visible } })),
+  setServiceMetric: (metric) =>
+    set((s) => ({ serviceField: { ...s.serviceField, metric } })),
+  toggleSummary: () => set((s) => ({ summaryOpen: !s.summaryOpen })),
+
   // ── Capture actions ────────────────────────────────────────────────────────
 
   openCapture:  (markerId) => set({ captureMarkerId: markerId }),
@@ -242,17 +254,11 @@ export const useGroveStore = create((set, get) => ({
       updated_at:           new Date().toISOString(),
     };
 
-    const marker = get().markers.find((m) => m.id === markerId);
-    const supabaseId = marker?.marker_code ?? markerId;
+    const existingMarker = get().markers.find((m) => m.id === markerId);
+    const supabaseId     = existingMarker?.marker_code ?? markerId;
 
-    try {
-      await supabase.from('tree_markers').update(supabaseFields).eq('marker_code', supabaseId);
-    } catch (err) {
-      console.warn('characterizeMarker: Supabase update failed', err);
-    }
-
-    // Update local state
-    const storeUpdate = {
+    // Build updated marker and recompute benefits BEFORE the Supabase write
+    const baseUpdate = {
       commonName,
       common_name: commonName,
       species,
@@ -269,8 +275,28 @@ export const useGroveStore = create((set, get) => ({
       verified:             dataStatus === 'verified',
     };
 
+    // Recompute ecological benefits with the new characterization data
+    const updatedMarker = { ...(existingMarker ?? {}), ...baseUpdate };
+    const withBenefits  = applyBenefits(updatedMarker);
+    const storeUpdate   = { ...baseUpdate, ...withBenefits };
+
+    // Single Supabase write — includes both characterization + recomputed benefit columns
+    Object.assign(supabaseFields, {
+      shade_sqft:            withBenefits.shadeSqft,
+      annual_stormwater_gal: withBenefits.annualStormwaterGal,
+      annual_carbon_lb:      withBenefits.annualCarbonLb,
+      carbon_stored_lb:      withBenefits.carbonStoredLb,
+      cooling_score:         withBenefits.coolingScore,
+    });
+
+    try {
+      await supabase.from('tree_markers').update(supabaseFields).eq('marker_code', supabaseId);
+    } catch (err) {
+      console.warn('characterizeMarker: Supabase update failed', err);
+    }
+
     set((state) => ({
-      markers:         state.markers.map((m) => m.id === markerId ? { ...m, ...storeUpdate } : m),
+      markers:         state.markers.map((m) => m.id === markerId ? storeUpdate : m),
       captureMarkerId: null,
     }));
   },

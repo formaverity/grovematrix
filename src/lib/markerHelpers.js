@@ -1,4 +1,5 @@
 import { sceneToWorld, worldToScene } from './geoTransform.js';
+import { applyBenefits } from './ecology.js';
 
 export const PLACEMENT_Y = 10;
 
@@ -25,6 +26,8 @@ export function getMarkerSequence(id) {
   return match ? Number(match[1]) : 0;
 }
 
+// estimateBenefits kept as a thin alias so any remaining callers don't break.
+// New code should use computeBenefits from ecology.js directly.
 export function estimateBenefits(marker) {
   const radius = Number(marker.canopyRadiusFt ?? marker.canopy_radius_ft ?? 14);
   const shadeSqft = Math.round(Math.PI * radius * radius);
@@ -77,15 +80,7 @@ export function normalizeMarker(marker) {
     position: [x, PLACEMENT_Y, z],
   };
 
-  const est = estimateBenefits(base);
-  return {
-    ...base,
-    shadeSqft: base.shadeSqft || est.shadeSqft,
-    annualStormwaterGal: base.annualStormwaterGal || est.annualStormwaterGal,
-    annualCarbonLb: base.annualCarbonLb || est.annualCarbonLb,
-    carbonStoredLb: base.carbonStoredLb || est.carbonStoredLb,
-    coolingScore: base.coolingScore || est.coolingScore,
-  };
+  return applyBenefits(base);
 }
 
 export function normalizeSupabaseMarker(row, georef = null) {
@@ -146,14 +141,7 @@ export function normalizeSupabaseMarker(row, georef = null) {
     photo_url:            row.photo_url ?? null,
   };
 
-  const est = estimateBenefits(marker);
-  if (!marker.shadeSqft) marker.shadeSqft = est.shadeSqft;
-  if (!marker.annualStormwaterGal) marker.annualStormwaterGal = est.annualStormwaterGal;
-  if (!marker.annualCarbonLb) marker.annualCarbonLb = est.annualCarbonLb;
-  if (!marker.carbonStoredLb) marker.carbonStoredLb = est.carbonStoredLb;
-  if (!marker.coolingScore) marker.coolingScore = est.coolingScore;
-
-  return marker;
+  return applyBenefits(marker);
 }
 
 export function serializeMarkers(markers) {

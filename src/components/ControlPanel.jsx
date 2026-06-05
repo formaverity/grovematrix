@@ -31,6 +31,10 @@ export function ControlPanel({
   const toggleLayerVisibility = useGroveStore((s) => s.toggleLayerVisibility);
   const cloudOpacity          = useGroveStore((s) => s.cloudOpacity);
   const setCloudOpacity       = useGroveStore((s) => s.setCloudOpacity);
+  const serviceField          = useGroveStore((s) => s.serviceField);
+  const toggleServiceField    = useGroveStore((s) => s.toggleServiceField);
+  const setServiceMetric      = useGroveStore((s) => s.setServiceMetric);
+  const toggleSummary         = useGroveStore((s) => s.toggleSummary);
 
   const logoRef = useRef(null);
 
@@ -120,6 +124,36 @@ export function ControlPanel({
                     </button>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {(viewMode === 'map2d' || viewMode === 'city3d') && (
+              <div className="service-field-control">
+                <div className="service-field-header">
+                  <button
+                    type="button"
+                    className={`layer-toggle-btn${serviceField.visible ? ' is-active' : ''}`}
+                    onClick={toggleServiceField}
+                  >
+                    ◉ Eco Services
+                  </button>
+                  <button type="button" className="summary-btn" onClick={toggleSummary} title="Benefits summary">
+                    ∑
+                  </button>
+                </div>
+                {serviceField.visible && (
+                  <select
+                    className="service-metric-select"
+                    value={serviceField.metric}
+                    onChange={(e) => setServiceMetric(e.target.value)}
+                  >
+                    <option value="carbonStoredLb">Carbon stored (lb)</option>
+                    <option value="annualCarbonLb">Annual sequestration (lb/yr)</option>
+                    <option value="annualStormwaterGal">Stormwater (gal/yr)</option>
+                    <option value="shadeSqft">Shade area (ft²)</option>
+                    <option value="coolingScore">Cooling proxy</option>
+                  </select>
+                )}
               </div>
             )}
 

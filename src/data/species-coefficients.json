@@ -1,0 +1,67 @@
+{
+  "version": "1.0",
+  "biomassSource": "Jenkins, J.C., Chojnacky, D.C., Heath, L.S., Birdsey, R.A. (2003). National-scale biomass estimators for United States tree species. Forest Science 49(1):12-35. Equation: ln(biomass_kg) = β0 + β1 × ln(DBH_cm).",
+  "carbonFractionSource": "IPCC (2006) Guidelines for National Greenhouse Gas Inventories, Vol 4, Table 4.3. Broadleaf: 0.47, Conifer: 0.51.",
+  "interceptionSource": "Rao, M., et al. (2014). USDA National Urban Forest Effects model (UFORE/i-Tree Eco). Regional averages for NE US deciduous canopy.",
+  "groups": {
+    "hardwood-deciduous": {
+      "_note": "Applies to most NJ street trees: maples, oaks, planes, elms, zelkova, linden, etc.",
+      "biomassB0": -2.4800,
+      "biomassB1":  2.4835,
+      "carbonFraction": 0.47,
+      "lai": 4.5,
+      "interceptionFraction": 0.18,
+      "source": "Jenkins et al. 2003 hardwood, IPCC Tier 1 carbon fraction"
+    },
+    "softwood-evergreen": {
+      "_note": "Pines, spruces, firs. Less common as NJ street trees.",
+      "biomassB0": -2.5356,
+      "biomassB1":  2.4349,
+      "carbonFraction": 0.51,
+      "lai": 6.5,
+      "interceptionFraction": 0.28,
+      "source": "Jenkins et al. 2003 softwood, IPCC Tier 1 conifer carbon fraction"
+    },
+    "small-ornamental": {
+      "_note": "Small-stature ornamentals: serviceberry, dogwood, callery pear, etc.",
+      "biomassB0": -2.6500,
+      "biomassB1":  2.3200,
+      "carbonFraction": 0.47,
+      "lai": 3.5,
+      "interceptionFraction": 0.15,
+      "source": "Jenkins et al. 2003 hardwood with conservative coefficients for small-stature forms"
+    }
+  },
+  "speciesGroups": {
+    "Acer rubrum":              "hardwood-deciduous",
+    "Acer platanoides":         "hardwood-deciduous",
+    "Acer saccharinum":         "hardwood-deciduous",
+    "Acer saccharum":           "hardwood-deciduous",
+    "Platanus × acerifolia":    "hardwood-deciduous",
+    "Platanus occidentalis":    "hardwood-deciduous",
+    "Quercus palustris":        "hardwood-deciduous",
+    "Quercus rubra":            "hardwood-deciduous",
+    "Quercus bicolor":          "hardwood-deciduous",
+    "Quercus alba":             "hardwood-deciduous",
+    "Zelkova serrata":          "hardwood-deciduous",
+    "Tilia cordata":            "hardwood-deciduous",
+    "Liquidambar styraciflua":  "hardwood-deciduous",
+    "Liriodendron tulipifera":  "hardwood-deciduous",
+    "Gleditsia triacanthos":    "hardwood-deciduous",
+    "Ulmus americana":          "hardwood-deciduous",
+    "Ulmus parvifolia":         "hardwood-deciduous",
+    "Betula nigra":             "hardwood-deciduous",
+    "Ginkgo biloba":            "hardwood-deciduous",
+    "Styphnolobium japonicum":  "hardwood-deciduous",
+    "Nyssa sylvatica":          "hardwood-deciduous",
+    "Celtis occidentalis":      "hardwood-deciduous",
+    "Carpinus caroliniana":     "hardwood-deciduous",
+    "Prunus serotina":          "hardwood-deciduous",
+    "Pyrus calleryana":         "small-ornamental",
+    "Amelanchier canadensis":   "small-ornamental",
+    "Cornus florida":           "small-ornamental",
+    "Oxydendrum arboreum":      "small-ornamental"
+  },
+  "_genericFallback": "hardwood-deciduous",
+  "_genericFallbackNote": "Any species not listed above uses the hardwood-deciduous coefficients. This is a conservative choice appropriate for most NJ broadleaf street trees."
+}

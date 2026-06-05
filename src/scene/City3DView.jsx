@@ -14,6 +14,7 @@ import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader.js';
 import { useGroveStore, selectSelectedMarker } from '../store/useGroveStore.js';
 import { getLayer } from '../lib/cityData.js';
 import { latLngToENU, lngLatToEnuCoords } from '../lib/geoTransform.js';
+import { CanopyDomes } from './CanopyDomes.jsx';
 import { formatBenefit } from '../lib/markerHelpers.js';
 
 const EMPTY_FC = { type: 'FeatureCollection', features: [] };
@@ -356,6 +357,7 @@ function CityScene({
   const clearSelection     = useGroveStore((s) => s.clearSelection);
   const placeMarkerAtWorld = useGroveStore((s) => s.placeMarkerAtWorld);
   const setHoveredMarkerId = useGroveStore((s) => s.setHoveredMarkerId);
+  const serviceField       = useGroveStore((s) => s.serviceField);
 
   // Frame to city extent on first load
   const { camera } = useThree();
@@ -427,6 +429,14 @@ function CityScene({
           onHover={setHoveredMarkerId}
         />
       ))}
+
+      {/* Canopy domes (service field layer) */}
+      <CanopyDomes
+        markers={markers}
+        anchor={anchor}
+        metric={serviceField.metric}
+        visible={serviceField.visible}
+      />
 
       {/* Scanned cloud overlay */}
       <Suspense fallback={null}>
