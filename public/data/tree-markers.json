@@ -7,7 +7,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06139573,
+    "lat": 40.33083572,
+    "geo_source": "derived"
   },
   {
     "id": "T-004",
@@ -17,7 +20,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06137908,
+    "lat": 40.33090973,
+    "geo_source": "derived"
   },
   {
     "id": "T-005",
@@ -27,7 +33,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06131773,
+    "lat": 40.33102172,
+    "geo_source": "derived"
   },
   {
     "id": "T-006",
@@ -37,7 +46,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.061286,
+    "lat": 40.33107937,
+    "geo_source": "derived"
   },
   {
     "id": "T-007",
@@ -47,7 +59,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.0614256,
+    "lat": 40.33110858,
+    "geo_source": "derived"
   },
   {
     "id": "T-008",
@@ -57,7 +72,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06156913,
+    "lat": 40.33113923,
+    "geo_source": "derived"
   },
   {
     "id": "T-009",
@@ -67,7 +85,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06175135,
+    "lat": 40.33119926,
+    "geo_source": "derived"
   },
   {
     "id": "T-010",
@@ -77,7 +98,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06191859,
+    "lat": 40.33124787,
+    "geo_source": "derived"
   },
   {
     "id": "T-011",
@@ -87,7 +111,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.0615389,
+    "lat": 40.33093311,
+    "geo_source": "derived"
   },
   {
     "id": "T-012",
@@ -97,7 +124,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06172805,
+    "lat": 40.3309853,
+    "geo_source": "derived"
   },
   {
     "id": "T-013",
@@ -107,7 +137,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06191524,
+    "lat": 40.33105645,
+    "geo_source": "derived"
   },
   {
     "id": "T-014",
@@ -117,7 +150,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06204961,
+    "lat": 40.33111352,
+    "geo_source": "derived"
   },
   {
     "id": "T-015",
@@ -127,7 +163,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06216502,
+    "lat": 40.33128754,
+    "geo_source": "derived"
   },
   {
     "id": "T-016",
@@ -137,7 +176,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06216167,
+    "lat": 40.33135936,
+    "geo_source": "derived"
   },
   {
     "id": "T-017",
@@ -147,7 +189,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06214976,
+    "lat": 40.33118317,
+    "geo_source": "derived"
   },
   {
     "id": "T-018",
@@ -157,7 +202,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06214491,
+    "lat": 40.33110227,
+    "geo_source": "derived"
   },
   {
     "id": "T-019",
@@ -167,7 +215,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06212754,
+    "lat": 40.33098581,
+    "geo_source": "derived"
   },
   {
     "id": "T-020",
@@ -177,7 +228,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.0621063,
+    "lat": 40.33088354,
+    "geo_source": "derived"
   },
   {
     "id": "T-021",
@@ -187,7 +241,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06194519,
+    "lat": 40.3308601,
+    "geo_source": "derived"
   },
   {
     "id": "T-022",
@@ -197,7 +254,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06180028,
+    "lat": 40.33081524,
+    "geo_source": "derived"
   },
   {
     "id": "T-023",
@@ -207,7 +267,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06164466,
+    "lat": 40.33076247,
+    "geo_source": "derived"
   },
   {
     "id": "T-024",
@@ -217,7 +280,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06151949,
+    "lat": 40.33069586,
+    "geo_source": "derived"
   },
   {
     "id": "T-025",
@@ -227,7 +293,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06148084,
+    "lat": 40.33074525,
+    "geo_source": "derived"
   },
   {
     "id": "T-028",
@@ -237,7 +306,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06136772,
+    "lat": 40.33147819,
+    "geo_source": "derived"
   },
   {
     "id": "T-029",
@@ -247,7 +319,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06137887,
+    "lat": 40.33154976,
+    "geo_source": "derived"
   },
   {
     "id": "T-030",
@@ -257,7 +332,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06154797,
+    "lat": 40.33159219,
+    "geo_source": "derived"
   },
   {
     "id": "T-031",
@@ -267,7 +345,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06168404,
+    "lat": 40.3316218,
+    "geo_source": "derived"
   },
   {
     "id": "T-032",
@@ -277,7 +358,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.0618135,
+    "lat": 40.33167194,
+    "geo_source": "derived"
   },
   {
     "id": "T-033",
@@ -287,7 +371,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06200462,
+    "lat": 40.33173246,
+    "geo_source": "derived"
   },
   {
     "id": "T-034",
@@ -297,7 +384,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06165516,
+    "lat": 40.330613,
+    "geo_source": "derived"
   },
   {
     "id": "T-035",
@@ -307,7 +397,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06176841,
+    "lat": 40.33062216,
+    "geo_source": "derived"
   },
   {
     "id": "T-036",
@@ -317,7 +410,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06185098,
+    "lat": 40.33063669,
+    "geo_source": "derived"
   },
   {
     "id": "T-037",
@@ -327,7 +423,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06198076,
+    "lat": 40.33066573,
+    "geo_source": "derived"
   },
   {
     "id": "T-038",
@@ -337,7 +436,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06209407,
+    "lat": 40.33069657,
+    "geo_source": "derived"
   },
   {
     "id": "T-039",
@@ -347,7 +449,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06206573,
+    "lat": 40.33078147,
+    "geo_source": "derived"
   },
   {
     "id": "T-040",
@@ -357,7 +462,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06204217,
+    "lat": 40.3305738,
+    "geo_source": "derived"
   },
   {
     "id": "T-042",
@@ -367,7 +475,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06139767,
+    "lat": 40.33171007,
+    "geo_source": "derived"
   },
   {
     "id": "T-043",
@@ -377,7 +488,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06141162,
+    "lat": 40.33179389,
+    "geo_source": "derived"
   },
   {
     "id": "T-044",
@@ -387,7 +501,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06162349,
+    "lat": 40.33181392,
+    "geo_source": "derived"
   },
   {
     "id": "T-045",
@@ -397,7 +514,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06178445,
+    "lat": 40.33189624,
+    "geo_source": "derived"
   },
   {
     "id": "T-046",
@@ -407,7 +527,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06193047,
+    "lat": 40.33195893,
+    "geo_source": "derived"
   },
   {
     "id": "T-047",
@@ -417,7 +540,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06221007,
+    "lat": 40.33178511,
+    "geo_source": "derived"
   },
   {
     "id": "T-048",
@@ -427,7 +553,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06216601,
+    "lat": 40.33186705,
+    "geo_source": "derived"
   },
   {
     "id": "T-049",
@@ -437,7 +566,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06211791,
+    "lat": 40.33195005,
+    "geo_source": "derived"
   },
   {
     "id": "T-050",
@@ -447,7 +579,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06208864,
+    "lat": 40.33202469,
+    "geo_source": "derived"
   },
   {
     "id": "T-051",
@@ -457,7 +592,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06202439,
+    "lat": 40.33211395,
+    "geo_source": "derived"
   },
   {
     "id": "T-052",
@@ -467,7 +605,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06188552,
+    "lat": 40.33212476,
+    "geo_source": "derived"
   },
   {
     "id": "T-053",
@@ -477,7 +618,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06178409,
+    "lat": 40.33207538,
+    "geo_source": "derived"
   },
   {
     "id": "T-054",
@@ -487,7 +631,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06165306,
+    "lat": 40.3320406,
+    "geo_source": "derived"
   },
   {
     "id": "T-055",
@@ -497,7 +644,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06146262,
+    "lat": 40.33199461,
+    "geo_source": "derived"
   },
   {
     "id": "T-056",
@@ -507,7 +657,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06141631,
+    "lat": 40.33191089,
+    "geo_source": "derived"
   },
   {
     "id": "T-057",
@@ -517,7 +670,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06141644,
+    "lat": 40.33218219,
+    "geo_source": "derived"
   },
   {
     "id": "T-058",
@@ -527,7 +683,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06159986,
+    "lat": 40.33217745,
+    "geo_source": "derived"
   },
   {
     "id": "T-059",
@@ -537,7 +696,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06174435,
+    "lat": 40.33220805,
+    "geo_source": "derived"
   },
   {
     "id": "T-060",
@@ -547,7 +709,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06184028,
+    "lat": 40.33223881,
+    "geo_source": "derived"
   },
   {
     "id": "T-061",
@@ -557,7 +722,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06192278,
+    "lat": 40.33227789,
+    "geo_source": "derived"
   },
   {
     "id": "T-062",
@@ -567,7 +735,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06146063,
+    "lat": 40.33233121,
+    "geo_source": "derived"
   },
   {
     "id": "T-063",
@@ -577,7 +748,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06163425,
+    "lat": 40.3323701,
+    "geo_source": "derived"
   },
   {
     "id": "T-064",
@@ -587,7 +761,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06177788,
+    "lat": 40.33240579,
+    "geo_source": "derived"
   },
   {
     "id": "T-065",
@@ -597,7 +774,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06185946,
+    "lat": 40.33244662,
+    "geo_source": "derived"
   },
   {
     "id": "T-066",
@@ -607,7 +787,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06191679,
+    "lat": 40.33236097,
+    "geo_source": "derived"
   },
   {
     "id": "T-067",
@@ -617,7 +800,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06130169,
+    "lat": 40.33125603,
+    "geo_source": "derived"
   },
   {
     "id": "T-068",
@@ -627,7 +813,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.061343,
+    "lat": 40.33137299,
+    "geo_source": "derived"
   },
   {
     "id": "T-069",
@@ -637,7 +826,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06140558,
+    "lat": 40.33128848,
+    "geo_source": "derived"
   },
   {
     "id": "T-070",
@@ -647,7 +839,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06142014,
+    "lat": 40.33134776,
+    "geo_source": "derived"
   },
   {
     "id": "T-071",
@@ -657,7 +852,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06150556,
+    "lat": 40.33134749,
+    "geo_source": "derived"
   },
   {
     "id": "T-072",
@@ -667,7 +865,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06159943,
+    "lat": 40.33140651,
+    "geo_source": "derived"
   },
   {
     "id": "T-073",
@@ -677,7 +878,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06171359,
+    "lat": 40.3314561,
+    "geo_source": "derived"
   },
   {
     "id": "T-074",
@@ -687,7 +891,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06185005,
+    "lat": 40.33149313,
+    "geo_source": "derived"
   },
   {
     "id": "T-075",
@@ -697,7 +904,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.0619153,
+    "lat": 40.33152415,
+    "geo_source": "derived"
   },
   {
     "id": "T-076",
@@ -707,7 +917,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06200067,
+    "lat": 40.33151607,
+    "geo_source": "derived"
   },
   {
     "id": "T-077",
@@ -717,7 +930,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.0622039,
+    "lat": 40.33149043,
+    "geo_source": "derived"
   },
   {
     "id": "T-078",
@@ -727,7 +943,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06221253,
+    "lat": 40.3315794,
+    "geo_source": "derived"
   },
   {
     "id": "T-079",
@@ -737,7 +956,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06204178,
+    "lat": 40.33159556,
+    "geo_source": "derived"
   },
   {
     "id": "T-080",
@@ -747,7 +969,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06111922,
+    "lat": 40.33189141,
+    "geo_source": "derived"
   },
   {
     "id": "T-081",
@@ -757,7 +982,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06122382,
+    "lat": 40.33187137,
+    "geo_source": "derived"
   },
   {
     "id": "T-082",
@@ -767,7 +995,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06115965,
+    "lat": 40.33210196,
+    "geo_source": "derived"
   },
   {
     "id": "T-084",
@@ -777,7 +1008,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06150343,
+    "lat": 40.33260625,
+    "geo_source": "derived"
   },
   {
     "id": "T-085",
@@ -787,7 +1021,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06148863,
+    "lat": 40.33253767,
+    "geo_source": "derived"
   },
   {
     "id": "T-086",
@@ -797,7 +1034,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06173844,
+    "lat": 40.33257588,
+    "geo_source": "derived"
   },
   {
     "id": "T-087",
@@ -807,7 +1047,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06166001,
+    "lat": 40.33270768,
+    "geo_source": "derived"
   },
   {
     "id": "T-088",
@@ -817,7 +1060,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06161922,
+    "lat": 40.33281508,
+    "geo_source": "derived"
   },
   {
     "id": "T-089",
@@ -827,7 +1073,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06181519,
+    "lat": 40.33284616,
+    "geo_source": "derived"
   },
   {
     "id": "T-090",
@@ -837,7 +1086,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06193032,
+    "lat": 40.33261281,
+    "geo_source": "derived"
   },
   {
     "id": "T-091",
@@ -847,7 +1099,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.0620254,
+    "lat": 40.33296065,
+    "geo_source": "derived"
   },
   {
     "id": "T-092",
@@ -857,7 +1112,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06204796,
+    "lat": 40.33287509,
+    "geo_source": "derived"
   },
   {
     "id": "T-093",
@@ -867,7 +1125,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06210199,
+    "lat": 40.3327754,
+    "geo_source": "derived"
   },
   {
     "id": "T-094",
@@ -877,7 +1138,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06228132,
+    "lat": 40.33293965,
+    "geo_source": "derived"
   },
   {
     "id": "T-095",
@@ -887,7 +1151,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06232994,
+    "lat": 40.33282945,
+    "geo_source": "derived"
   },
   {
     "id": "T-096",
@@ -897,7 +1164,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06240305,
+    "lat": 40.3328385,
+    "geo_source": "derived"
   },
   {
     "id": "T-097",
@@ -907,7 +1177,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06240916,
+    "lat": 40.3330345,
+    "geo_source": "derived"
   },
   {
     "id": "T-098",
@@ -917,7 +1190,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.0623523,
+    "lat": 40.33315787,
+    "geo_source": "derived"
   },
   {
     "id": "T-099",
@@ -927,7 +1203,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06219038,
+    "lat": 40.33304445,
+    "geo_source": "derived"
   },
   {
     "id": "T-100",
@@ -937,7 +1216,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06235467,
+    "lat": 40.33263563,
+    "geo_source": "derived"
   },
   {
     "id": "T-101",
@@ -947,7 +1229,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06226576,
+    "lat": 40.33258468,
+    "geo_source": "derived"
   },
   {
     "id": "T-102",
@@ -957,7 +1242,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06217942,
+    "lat": 40.33256791,
+    "geo_source": "derived"
   },
   {
     "id": "T-103",
@@ -967,7 +1255,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06200014,
+    "lat": 40.33240218,
+    "geo_source": "derived"
   },
   {
     "id": "T-104",
@@ -977,7 +1268,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06224422,
+    "lat": 40.33243879,
+    "geo_source": "derived"
   },
   {
     "id": "T-105",
@@ -987,7 +1281,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06231865,
+    "lat": 40.33236181,
+    "geo_source": "derived"
   },
   {
     "id": "T-106",
@@ -997,7 +1294,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06239954,
+    "lat": 40.33226716,
+    "geo_source": "derived"
   },
   {
     "id": "T-107",
@@ -1007,7 +1307,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06248378,
+    "lat": 40.33237784,
+    "geo_source": "derived"
   },
   {
     "id": "T-108",
@@ -1017,7 +1320,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06242618,
+    "lat": 40.33248507,
+    "geo_source": "derived"
   },
   {
     "id": "T-109",
@@ -1027,7 +1333,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06255829,
+    "lat": 40.33261627,
+    "geo_source": "derived"
   },
   {
     "id": "T-110",
@@ -1037,7 +1346,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06257563,
+    "lat": 40.33283697,
+    "geo_source": "derived"
   },
   {
     "id": "T-111",
@@ -1047,7 +1359,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06260211,
+    "lat": 40.33292964,
+    "geo_source": "derived"
   },
   {
     "id": "T-112",
@@ -1057,7 +1372,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.0626124,
+    "lat": 40.33299728,
+    "geo_source": "derived"
   },
   {
     "id": "T-113",
@@ -1067,7 +1385,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06260784,
+    "lat": 40.3330613,
+    "geo_source": "derived"
   },
   {
     "id": "T-114",
@@ -1077,7 +1398,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06261373,
+    "lat": 40.33313213,
+    "geo_source": "derived"
   },
   {
     "id": "T-115",
@@ -1087,7 +1411,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06263269,
+    "lat": 40.33331013,
+    "geo_source": "derived"
   },
   {
     "id": "T-116",
@@ -1097,7 +1424,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06256994,
+    "lat": 40.33236497,
+    "geo_source": "derived"
   },
   {
     "id": "T-124",
@@ -1107,7 +1437,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06264994,
+    "lat": 40.33226061,
+    "geo_source": "derived"
   },
   {
     "id": "T-125",
@@ -1117,7 +1450,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06225647,
+    "lat": 40.33222662,
+    "geo_source": "derived"
   },
   {
     "id": "T-126",
@@ -1127,7 +1463,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06214539,
+    "lat": 40.33218238,
+    "geo_source": "derived"
   },
   {
     "id": "T-127",
@@ -1137,7 +1476,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06225606,
+    "lat": 40.33211391,
+    "geo_source": "derived"
   },
   {
     "id": "T-128",
@@ -1147,7 +1489,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06228112,
+    "lat": 40.33203923,
+    "geo_source": "derived"
   },
   {
     "id": "T-129",
@@ -1157,7 +1502,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06232593,
+    "lat": 40.33195542,
+    "geo_source": "derived"
   },
   {
     "id": "T-130",
@@ -1167,7 +1515,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06239445,
+    "lat": 40.33188802,
+    "geo_source": "derived"
   },
   {
     "id": "T-131",
@@ -1177,7 +1528,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06241815,
+    "lat": 40.33180327,
+    "geo_source": "derived"
   },
   {
     "id": "T-132",
@@ -1187,7 +1541,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06244465,
+    "lat": 40.33171913,
+    "geo_source": "derived"
   },
   {
     "id": "T-133",
@@ -1197,7 +1554,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06243212,
+    "lat": 40.33165837,
+    "geo_source": "derived"
   },
   {
     "id": "T-134",
@@ -1207,7 +1567,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06241048,
+    "lat": 40.33158948,
+    "geo_source": "derived"
   },
   {
     "id": "T-135",
@@ -1217,7 +1580,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06242839,
+    "lat": 40.33149289,
+    "geo_source": "derived"
   },
   {
     "id": "T-136",
@@ -1227,7 +1593,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06240496,
+    "lat": 40.3314093,
+    "geo_source": "derived"
   },
   {
     "id": "T-137",
@@ -1237,7 +1606,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06238522,
+    "lat": 40.3313351,
+    "geo_source": "derived"
   },
   {
     "id": "T-138",
@@ -1247,7 +1619,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06237994,
+    "lat": 40.33124962,
+    "geo_source": "derived"
   },
   {
     "id": "T-139",
@@ -1257,7 +1632,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.0623765,
+    "lat": 40.33115387,
+    "geo_source": "derived"
   },
   {
     "id": "T-140",
@@ -1267,7 +1645,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06235285,
+    "lat": 40.33107269,
+    "geo_source": "derived"
   },
   {
     "id": "T-141",
@@ -1277,7 +1658,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06235216,
+    "lat": 40.33099682,
+    "geo_source": "derived"
   },
   {
     "id": "T-142",
@@ -1287,7 +1671,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06233957,
+    "lat": 40.33091042,
+    "geo_source": "derived"
   },
   {
     "id": "T-143",
@@ -1297,7 +1684,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06232371,
+    "lat": 40.33072876,
+    "geo_source": "derived"
   },
   {
     "id": "T-144",
@@ -1307,7 +1697,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06220855,
+    "lat": 40.33059262,
+    "geo_source": "derived"
   },
   {
     "id": "T-145",
@@ -1317,7 +1710,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06236628,
+    "lat": 40.33051001,
+    "geo_source": "derived"
   },
   {
     "id": "T-146",
@@ -1327,7 +1723,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06220492,
+    "lat": 40.33032767,
+    "geo_source": "derived"
   },
   {
     "id": "T-147",
@@ -1337,7 +1736,10 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.0621182,
+    "lat": 40.33238044,
+    "geo_source": "derived"
   },
   {
     "id": "T-148",
@@ -1347,6 +1749,9 @@
     "commonName": "Unknown",
     "species": "Unknown",
     "canopyRadiusFt": 14,
-    "condition": "Unsurveyed"
+    "condition": "Unsurveyed",
+    "lng": -74.06232509,
+    "lat": 40.33246185,
+    "geo_source": "derived"
   }
 ]

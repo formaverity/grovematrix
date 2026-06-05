@@ -1,0 +1,14 @@
+{
+  "last_release": "2026-05-20.0",
+  "last_run": "2026-06-05T19:40:00.467031+00:00",
+  "theme": "buildings",
+  "type": "building",
+  "bbox": {
+    "xmin": -74.0660464,
+    "ymin": 40.3262679,
+    "xmax": -74.0553819,
+    "ymax": 40.3365257
+  },
+  "backend": "geojson",
+  "output": "C:\\Users\\Liam Martin\\Documents\\grove-canopy\\public\\data\\overture\\_raw\\buildings.geojson"
+}

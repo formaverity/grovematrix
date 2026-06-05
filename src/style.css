@@ -692,6 +692,885 @@ canvas {
   text-transform: lowercase;
 }
 
+/* ── Mode toggle ─────────────────────────────────────────────────────────── */
+
+.mode-toggle {
+  position: fixed;
+  bottom: calc(1.25rem + env(safe-area-inset-bottom));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 12;
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.28rem;
+  border: 1px solid rgba(214, 210, 196, 0.1);
+  border-radius: 999px;
+  background: rgba(14, 26, 20, 0.78);
+  backdrop-filter: blur(16px) saturate(0.92);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+  pointer-events: auto;
+}
+
+.mode-toggle-btn {
+  appearance: none;
+  padding: 0.38rem 0.88rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-family: "Space Mono", "Courier Prime", monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease;
+}
+
+.mode-toggle-btn:hover {
+  color: var(--fungal-flesh);
+  background: rgba(42, 58, 46, 0.6);
+}
+
+.mode-toggle-btn.is-active {
+  background: rgba(42, 58, 46, 0.92);
+  border-color: rgba(124, 255, 178, 0.22);
+  color: var(--mycelium-glow);
+}
+
+/* ── Stub mode views ──────────────────────────────────────────────────────── */
+
+.stub-mode {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(124, 255, 178, 0.04), transparent 40%),
+    var(--bg-deep);
+  z-index: 1;
+}
+
+.stub-mode-inner {
+  text-align: center;
+}
+
+.stub-mode-label {
+  margin: 0;
+  color: var(--lichen-field);
+  font-family: "Space Mono", monospace;
+  font-size: clamp(1.1rem, 3vw, 1.8rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.stub-mode-hint {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-family: "Courier Prime", monospace;
+  font-size: 0.8rem;
+}
+
+/* ── Calibrator ───────────────────────────────────────────────────────────── */
+
+.cal-shell {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  height: 100dvh;
+  overflow: hidden;
+  background: var(--bg-deep);
+  color: var(--text);
+  font-family: "Space Mono", "Courier Prime", monospace;
+}
+
+.cal-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.6rem 1rem;
+  border-bottom: 1px solid rgba(214, 210, 196, 0.1);
+  background: rgba(14, 26, 20, 0.88);
+  backdrop-filter: blur(12px);
+  flex-shrink: 0;
+}
+
+.cal-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mycelium-glow);
+}
+
+.cal-subtitle {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.cal-rms {
+  font-size: 0.7rem;
+  color: var(--lichen-field);
+  margin-left: auto;
+}
+
+.cal-exit {
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-decoration: none;
+  margin-left: auto;
+}
+
+.cal-exit:hover { color: var(--mycelium-glow); }
+
+.cal-body {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+}
+
+.cal-pane {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.cal-pane + .cal-pane {
+  border-left: 1px solid rgba(214, 210, 196, 0.1);
+}
+
+.cal-pane-label {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.7rem;
+  z-index: 5;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  background: rgba(14, 26, 20, 0.72);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.cal-north-indicator {
+  position: absolute;
+  top: 2.4rem;
+  left: 0.6rem;
+  z-index: 6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.05rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+.cal-north-arrow {
+  font-size: 1rem;
+  color: var(--mycelium-glow);
+  line-height: 1;
+  text-shadow: 0 0 6px rgba(124, 255, 178, 0.5);
+}
+
+.cal-north-label {
+  font-family: "Space Mono", monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  color: var(--mycelium-glow);
+  letter-spacing: 0.1em;
+}
+
+.cal-reset-view {
+  position: absolute;
+  bottom: 0.6rem;
+  left: 0.6rem;
+  z-index: 6;
+  appearance: none;
+  padding: 0.28rem 0.55rem;
+  border: 1px solid rgba(214, 210, 196, 0.14);
+  border-radius: 6px;
+  background: rgba(14, 26, 20, 0.82);
+  color: var(--muted);
+  font-family: "Space Mono", monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+}
+
+.cal-reset-view:hover {
+  color: var(--mycelium-glow);
+  border-color: rgba(124, 255, 178, 0.22);
+}
+
+.cal-pick-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: grid;
+  place-items: center;
+  background: rgba(124, 255, 178, 0.055);
+  border: 2px solid rgba(124, 255, 178, 0.24);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--mycelium-glow);
+  pointer-events: none;
+}
+
+.cal-map {
+  width: 100%;
+  height: 100%;
+}
+
+.cal-controls {
+  flex-shrink: 0;
+  max-height: 38dvh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.72rem 1rem;
+  border-top: 1px solid rgba(214, 210, 196, 0.1);
+  background: rgba(14, 26, 20, 0.84);
+}
+
+.cal-instruction {
+  margin: 0 0 0.6rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-family: "Courier Prime", monospace;
+}
+
+.cal-action-row {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+
+.cal-btn {
+  appearance: none;
+  padding: 0.44rem 0.78rem;
+  border: 1px solid rgba(214, 210, 196, 0.14);
+  border-radius: 8px;
+  background: rgba(26, 42, 30, 0.82);
+  color: var(--text);
+  font-family: "Space Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
+}
+
+.cal-btn:hover:not(:disabled) {
+  border-color: rgba(124, 255, 178, 0.26);
+  background: rgba(42, 58, 46, 0.9);
+  color: var(--mycelium-glow);
+}
+
+.cal-btn:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.cal-btn-solve {
+  border-color: rgba(124, 255, 178, 0.2);
+  color: var(--mycelium-glow);
+}
+
+.cal-btn-cancel {
+  border-color: rgba(138, 92, 255, 0.22);
+  color: var(--spore-signal);
+}
+
+.cal-error {
+  margin: 0 0 0.5rem;
+  color: rgba(255, 100, 100, 0.88);
+  font-size: 0.75rem;
+  font-family: "Courier Prime", monospace;
+}
+
+.cal-gcp-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 0.6rem;
+}
+
+.cal-gcp-row {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.38rem 0.55rem;
+  border: 1px solid rgba(214, 210, 196, 0.08);
+  border-radius: 6px;
+  background: rgba(26, 42, 30, 0.6);
+  font-size: 0.7rem;
+}
+
+.cal-gcp-idx {
+  color: var(--lichen-field);
+  font-weight: 700;
+  min-width: 1.4rem;
+}
+
+.cal-gcp-coords {
+  flex: 1;
+  color: var(--muted);
+  font-family: "Courier Prime", monospace;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cal-gcp-res {
+  color: var(--mycelium-glow);
+  font-size: 0.68rem;
+  white-space: nowrap;
+}
+
+.cal-gcp-remove {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 0.2rem;
+}
+
+.cal-gcp-remove:hover { color: var(--spore-signal); }
+
+.cal-manual {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+.cal-manual summary {
+  cursor: pointer;
+  user-select: none;
+  padding: 0.3rem 0;
+}
+
+.cal-manual-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr) repeat(2, 1fr) auto;
+  gap: 0.4rem;
+  align-items: end;
+  margin-top: 0.5rem;
+}
+
+.cal-manual-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.22rem;
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.cal-manual-grid input {
+  width: 100%;
+  padding: 0.34rem 0.46rem;
+  border: 1px solid rgba(214, 210, 196, 0.14);
+  border-radius: 6px;
+  background: rgba(26, 42, 30, 0.72);
+  color: var(--text);
+  font-family: "Space Mono", monospace;
+  font-size: 0.7rem;
+}
+
+.cal-manual-grid input:focus {
+  outline: none;
+  border-color: rgba(124, 255, 178, 0.3);
+}
+
+@media (max-width: 767px) {
+  .mode-toggle {
+    bottom: calc(0.75rem + env(safe-area-inset-bottom));
+  }
+
+  .cal-body {
+    flex-direction: column;
+  }
+
+  .cal-pane + .cal-pane {
+    border-left: none;
+    border-top: 1px solid rgba(214, 210, 196, 0.1);
+  }
+
+  .cal-manual-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cal-manual-grid .cal-btn {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ── Calibrator: map overlay controls ────────────────────────────────────── */
+
+.cal-map-controls {
+  position: absolute;
+  top: 2.4rem;
+  right: 0.6rem;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.4rem;
+  pointer-events: auto;
+}
+
+.cal-search-form {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+}
+
+.cal-search-form > .cal-search-input,
+.cal-search-form > .cal-search-btn {
+  /* row layout for input + button */
+  display: inline-block;
+}
+
+.cal-search-form {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: stretch;
+  width: min(260px, calc(50vw - 1.4rem));
+}
+
+.cal-search-input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.36rem 0.55rem;
+  border: 1px solid rgba(214, 210, 196, 0.18);
+  border-right: none;
+  border-radius: 8px 0 0 8px;
+  background: rgba(14, 26, 20, 0.86);
+  color: var(--text);
+  font-family: "Space Mono", "Courier Prime", monospace;
+  font-size: 0.7rem;
+  backdrop-filter: blur(12px);
+  outline: none;
+}
+
+.cal-search-input::placeholder {
+  color: var(--muted);
+}
+
+.cal-search-input:focus {
+  border-color: rgba(124, 255, 178, 0.3);
+}
+
+.cal-search-btn {
+  appearance: none;
+  padding: 0.36rem 0.6rem;
+  border: 1px solid rgba(214, 210, 196, 0.18);
+  border-radius: 0 8px 8px 0;
+  background: rgba(26, 42, 30, 0.88);
+  color: var(--mycelium-glow);
+  font-family: "Space Mono", monospace;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: background 120ms ease;
+  backdrop-filter: blur(12px);
+}
+
+.cal-search-btn:hover:not(:disabled) {
+  background: rgba(42, 58, 46, 0.96);
+}
+
+.cal-search-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.cal-search-results {
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+  right: 0;
+  z-index: 20;
+  list-style: none;
+  margin: 0;
+  padding: 0.3rem 0;
+  border: 1px solid rgba(214, 210, 196, 0.14);
+  border-radius: 8px;
+  background: rgba(14, 26, 20, 0.95);
+  backdrop-filter: blur(16px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.38);
+  overflow: hidden;
+}
+
+.cal-search-result-btn {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0.42rem 0.65rem;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+  gap: 0.1rem;
+  transition: background 100ms ease;
+}
+
+.cal-search-result-btn:hover {
+  background: rgba(42, 58, 46, 0.72);
+}
+
+.cal-result-name {
+  font-family: "Space Mono", monospace;
+  font-size: 0.72rem;
+  color: var(--fungal-flesh);
+}
+
+.cal-result-detail {
+  font-family: "Courier Prime", monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+.cal-search-empty {
+  padding: 0.42rem 0.65rem;
+  font-size: 0.7rem;
+  color: var(--muted);
+  font-family: "Courier Prime", monospace;
+  background: rgba(14, 26, 20, 0.95);
+  border: 1px solid rgba(214, 210, 196, 0.14);
+  border-radius: 8px;
+  backdrop-filter: blur(16px);
+  position: absolute;
+  top: calc(100% + 3px);
+  left: 0;
+  right: 0;
+}
+
+.cal-basemap-toggle {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.cal-basemap-btn {
+  appearance: none;
+  padding: 0.28rem 0.6rem;
+  border: 1px solid rgba(214, 210, 196, 0.14);
+  border-radius: 6px;
+  background: rgba(14, 26, 20, 0.82);
+  color: var(--muted);
+  font-family: "Space Mono", monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.cal-basemap-btn:hover {
+  color: var(--fungal-flesh);
+  background: rgba(26, 42, 30, 0.9);
+}
+
+.cal-basemap-btn.is-active {
+  background: rgba(42, 58, 46, 0.94);
+  border-color: rgba(124, 255, 178, 0.22);
+  color: var(--mycelium-glow);
+}
+
+/* ── 2D Map view ─────────────────────────────────────────────────────────── */
+
+.map2d-container {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+.map2d-map {
+  width: 100%;
+  height: 100%;
+}
+
+/* MapLibre canvas fix for full-height layout */
+.map2d-container .maplibregl-canvas {
+  outline: none;
+}
+
+.map2d-attribution {
+  position: absolute;
+  bottom: calc(0.4rem + env(safe-area-inset-bottom));
+  right: 0.5rem;
+  z-index: 5;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(14, 26, 20, 0.72);
+  backdrop-filter: blur(8px);
+  font-family: "Courier Prime", monospace;
+  font-size: 0.58rem;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.map2d-attribution a {
+  color: var(--muted);
+  text-decoration: none;
+  pointer-events: auto;
+}
+
+.map2d-attribution a:hover {
+  color: var(--mycelium-glow);
+}
+
+.map2d-etl-banner {
+  position: absolute;
+  top: 0.6rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  max-width: min(560px, calc(100vw - 2rem));
+  padding: 0.55rem 0.85rem;
+  border: 1px solid rgba(214, 210, 196, 0.12);
+  border-radius: 8px;
+  background: rgba(14, 26, 20, 0.86);
+  backdrop-filter: blur(12px);
+  font-family: "Courier Prime", monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  text-align: center;
+  pointer-events: none;
+}
+
+.map2d-etl-banner code {
+  font-family: "Space Mono", monospace;
+  color: var(--lichen-field);
+  font-size: 0.65rem;
+}
+
+.map2d-no-georef {
+  display: grid;
+  place-items: center;
+  background: var(--bg-deep);
+}
+
+.map2d-notice {
+  max-width: 26rem;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid rgba(214, 210, 196, 0.14);
+  border-radius: 12px;
+  background: rgba(14, 26, 20, 0.78);
+  backdrop-filter: blur(16px);
+  text-align: center;
+}
+
+.map2d-notice-title {
+  margin: 0 0 0.5rem;
+  font-family: "Space Mono", monospace;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--fungal-flesh);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.map2d-notice-body {
+  margin: 0;
+  font-family: "Courier Prime", monospace;
+  font-size: 0.8rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.map2d-notice-body a {
+  color: var(--mycelium-glow);
+}
+
+/* ── Layer toggles (inside ControlPanel, visible in map2d + city3d) ─────── */
+
+.layer-toggles {
+  margin-top: 0.6rem;
+  padding: 0.55rem 0.68rem;
+  border: 1px solid rgba(238, 228, 191, 0.09);
+  border-radius: 8px;
+  background: rgba(238, 228, 191, 0.025);
+}
+
+.layer-toggles-label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-family: "Courier Prime", "Space Mono", monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(214, 210, 196, 0.84);
+}
+
+.layer-toggles-row {
+  display: flex;
+  gap: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.layer-toggle-btn {
+  appearance: none;
+  padding: 0.3rem 0.6rem;
+  border: 1px solid rgba(214, 210, 196, 0.12);
+  border-radius: 6px;
+  background: rgba(26, 42, 30, 0.6);
+  color: var(--muted);
+  font-family: "Space Mono", monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.layer-toggle-btn.is-active {
+  background: rgba(42, 58, 46, 0.88);
+  border-color: rgba(124, 255, 178, 0.22);
+  color: var(--mycelium-glow);
+}
+
+.layer-toggle-btn:hover {
+  color: var(--fungal-flesh);
+  background: rgba(42, 58, 46, 0.7);
+}
+
+/* ── 3D City view ────────────────────────────────────────────────────────── */
+
+.city3d-container {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+}
+
+.city3d-loading {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  background: rgba(14, 26, 20, 0.8);
+  font-family: "Courier Prime", monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  backdrop-filter: blur(8px);
+  pointer-events: none;
+}
+
+.city3d-attribution {
+  position: absolute;
+  bottom: calc(0.4rem + env(safe-area-inset-bottom));
+  right: 0.5rem;
+  z-index: 5;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  background: rgba(14, 26, 20, 0.72);
+  backdrop-filter: blur(8px);
+  font-family: "Courier Prime", monospace;
+  font-size: 0.58rem;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.city3d-attribution a {
+  color: var(--muted);
+  text-decoration: none;
+  pointer-events: auto;
+}
+
+.city3d-attribution a:hover { color: var(--mycelium-glow); }
+
+.city-marker-balloon {
+  transform: translate(26px, -70px);
+}
+
+/* ── Cross-fade slider ────────────────────────────────────────────────────── */
+
+.crossfade-control {
+  margin-top: 0.6rem;
+  padding: 0.55rem 0.68rem;
+  border: 1px solid rgba(238, 228, 191, 0.09);
+  border-radius: 8px;
+  background: rgba(238, 228, 191, 0.025);
+}
+
+.crossfade-label-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.35rem;
+}
+
+.crossfade-label {
+  font-family: "Courier Prime", monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.crossfade-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(
+    to right,
+    var(--lichen-field) 0%,
+    var(--lichen-field) calc(var(--val, 0%) * 100%),
+    rgba(214, 210, 196, 0.18) calc(var(--val, 0%) * 100%),
+    rgba(214, 210, 196, 0.18) 100%
+  );
+  outline: none;
+  cursor: pointer;
+}
+
+.crossfade-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  background: var(--mycelium-glow);
+  box-shadow: 0 0 6px rgba(124, 255, 178, 0.4);
+  cursor: grab;
+}
+
+.crossfade-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: none;
+  border-radius: 999px;
+  background: var(--mycelium-glow);
+  cursor: grab;
+}
+
+/* ── Existing hover/coarse overrides (unchanged) ───────────────────────────── */
+
 @media (hover: none), (pointer: coarse) {
   .control-row button:hover,
   .drawer-toggle:hover,
