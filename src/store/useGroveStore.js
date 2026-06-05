@@ -51,6 +51,9 @@ export const useGroveStore = create((set, get) => ({
   // ── City 3D cross-fade (0 = full city, 1 = full scanned cloud) ────────────
   cloudOpacity: 0,
 
+  // ── Capture flow ────────────────────────────────────────────────────────────
+  captureMarkerId: null,
+
   // ── Marker actions ─────────────────────────────────────────────────────────
 
   fetchMarkers: async () => {
@@ -176,6 +179,101 @@ export const useGroveStore = create((set, get) => ({
   // ── Georeference actions ───────────────────────────────────────────────────
 
   setCloudOpacity: (v) => set({ cloudOpacity: Math.max(0, Math.min(1, v)) }),
+
+  // ── Capture actions ────────────────────────────────────────────────────────
+
+  openCapture:  (markerId) => set({ captureMarkerId: markerId }),
+  closeCapture: ()         => set({ captureMarkerId: null }),
+
+  /**
+   * Persist a completed characterization to store + Supabase.
+   * Gracefully degrades if Supabase or Storage are unavailable.
+   *
+   * @param {string} markerId  The marker's local id (e.g. 'T-003')
+   * @param {object} fields
+   *   species, commonName, speciesConfidence, speciesSource,
+   *   dbhIn, heightFt, crownSpreadFt, crownBaseFt, structureSource,
+   *   captureJson, primaryImageFile (optional File object)
+   */
+  characterizeMarker: async (markerId, fields) => {
+    const {
+      species, commonName, speciesConfidence, speciesSource,
+      dbhIn, heightFt, crownSpreadFt, crownBaseFt, structureSource,
+      captureJson, primaryImageFile,
+    } = fields;
+
+    const dataStatus = (species && species !== 'Unknown' && dbhIn)
+      ? 'verified'
+      : (species && species !== 'Unknown') ? 'partial' : 'sample';
+
+    // ── Optional photo upload to Supabase Storage ───────────────────────────
+    let photoUrl = null;
+    if (primaryImageFile) {
+      try {
+        const ext  = primaryImageFile.type === 'image/png' ? 'png' : 'jpg';
+        const path = `${markerId}/${Date.now()}.${ext}`;
+        const { data: uploadData, error: uploadErr } = await supabase.storage
+          .from('tree-captures')
+          .upload(path, primaryImageFile, { contentType: primaryImageFile.type, upsert: false });
+        if (!uploadErr && uploadData) {
+          const { data: urlData } = supabase.storage.from('tree-captures').getPublicUrl(uploadData.path);
+          photoUrl = urlData?.publicUrl ?? null;
+        }
+      } catch {
+        // Bucket not configured — continue without photo_url
+      }
+    }
+
+    const captureWithPhoto = { ...captureJson, photoUrl };
+
+    const supabaseFields = {
+      common_name:          commonName,
+      species,
+      species_confidence:   speciesConfidence ?? null,
+      species_source:       speciesSource ?? 'manual',
+      dbh_in:               dbhIn   != null ? Number(dbhIn)   : null,
+      height_ft:            heightFt != null ? Number(heightFt) : null,
+      crown_spread_ft:      crownSpreadFt != null ? Number(crownSpreadFt) : null,
+      crown_base_height_ft: crownBaseFt  != null ? Number(crownBaseFt)  : null,
+      structure_source:     structureSource ?? 'manual',
+      capture:              captureWithPhoto,
+      photo_url:            photoUrl,
+      data_status:          dataStatus,
+      updated_at:           new Date().toISOString(),
+    };
+
+    const marker = get().markers.find((m) => m.id === markerId);
+    const supabaseId = marker?.marker_code ?? markerId;
+
+    try {
+      await supabase.from('tree_markers').update(supabaseFields).eq('marker_code', supabaseId);
+    } catch (err) {
+      console.warn('characterizeMarker: Supabase update failed', err);
+    }
+
+    // Update local state
+    const storeUpdate = {
+      commonName,
+      common_name: commonName,
+      species,
+      species_confidence:   speciesConfidence ?? null,
+      species_source:       speciesSource ?? 'manual',
+      dbh_in:               dbhIn   != null ? Number(dbhIn)   : null,
+      height_ft:            heightFt != null ? Number(heightFt) : null,
+      crown_spread_ft:      crownSpreadFt != null ? Number(crownSpreadFt) : null,
+      crown_base_height_ft: crownBaseFt  != null ? Number(crownBaseFt)  : null,
+      structure_source:     structureSource ?? 'manual',
+      capture:              captureWithPhoto,
+      photo_url:            photoUrl,
+      data_status:          dataStatus,
+      verified:             dataStatus === 'verified',
+    };
+
+    set((state) => ({
+      markers:         state.markers.map((m) => m.id === markerId ? { ...m, ...storeUpdate } : m),
+      captureMarkerId: null,
+    }));
+  },
 
   setGeoreference: (georef) => {
     try {

@@ -393,9 +393,22 @@ export function CalibratorPanel() {
       const result = solveTransform(gcps);
       setSolved(result);
       setGeoreference(result);
+      // Auto-download so the user never needs the browser console
+      triggerDownload(result);
     } catch (err) {
       setSolveError(err.message);
     }
+  };
+
+  const triggerDownload = (transform) => {
+    const json = JSON.stringify(transform, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = 'grove-georeference.json';
+    a.click();
+    URL.revokeObjectURL(url);
   };
 
   const instructionText = {
@@ -415,8 +428,16 @@ export function CalibratorPanel() {
         <span className="cal-subtitle">georef · Asbury Park NJ</span>
         {solved && (
           <span className="cal-rms">
-            RMS {solved.rmsM.toFixed(2)} m · scale {solved.scale.toFixed(5)} · saved
+            RMS {solved.rmsM.toFixed(2)} m · scale {solved.scale.toFixed(5)}
+            {solved.rmsM < 5 ? ' ✓' : solved.rmsM < 15 ? ' ⚠' : ' ✗ re-pick GCPs'}
           </span>
+        )}
+        {solved && (
+          <button type="button" className="cal-btn cal-btn-solve" style={{ marginLeft: 'auto' }}
+            onClick={() => triggerDownload(solved)}
+          >
+            ↓ grove-georeference.json
+          </button>
         )}
         <a className="cal-exit" href="/" aria-label="Exit calibrator">← back to app</a>
       </div>
@@ -492,6 +513,32 @@ export function CalibratorPanel() {
         </div>
 
         {solveError && <p className="cal-error">{solveError}</p>}
+
+        {solved && (
+          <div className="cal-next-steps">
+            <p className="cal-next-title">Next steps</p>
+            <p className="cal-next-body">
+              1.&nbsp; Move the downloaded <code>grove-georeference.json</code> to the project root
+              (replacing the old one).
+            </p>
+            <p className="cal-next-body">2.&nbsp; Run the backfill in your terminal:</p>
+            <div className="cal-cmd-row">
+              <code className="cal-cmd">
+                node scripts/backfill-georeference.js --transform ./grove-georeference.json
+              </code>
+              <button
+                type="button"
+                className="cal-btn cal-cmd-copy"
+                onClick={() => navigator.clipboard.writeText(
+                  'node scripts/backfill-georeference.js --transform ./grove-georeference.json'
+                )}
+              >
+                Copy
+              </button>
+            </div>
+            <p className="cal-next-body">3.&nbsp; Reload the app — markers and cloud should align.</p>
+          </div>
+        )}
 
         {gcps.length > 0 && (
           <div className="cal-gcp-list">

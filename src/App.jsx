@@ -10,6 +10,7 @@ import { ModeToggle } from './components/ModeToggle.jsx';
 import { CalibratorPanel } from './components/Calibrator/CalibratorPanel.jsx';
 import { Map2DView } from './components/Map2D/Map2DView.jsx';
 import { City3DView } from './scene/City3DView.jsx';
+import { CaptureFlow } from './components/Capture/CaptureFlow.jsx';
 
 const CAMERA_FAR = 10000000;
 const PLAN_VIEW_POSITION = [0, 12000, 0.01];
@@ -305,6 +306,9 @@ function GroveApp() {
 
       {viewMode === 'map2d' && <Map2DView />}
       {viewMode === 'city3d' && <City3DView />}
+
+      {/* Capture flow — global overlay, works in any mode */}
+      <CaptureFlow />
     </div>
   );
 }

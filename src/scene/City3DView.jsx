@@ -6,18 +6,14 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
+import { Canvas, useLoader, useThree } from '@react-three/fiber';
 import { Html, OrbitControls } from '@react-three/drei';
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { PLYLoader } from 'three/examples/jsm/loaders/PLYLoader.js';
 import { useGroveStore, selectSelectedMarker } from '../store/useGroveStore.js';
 import { getLayer } from '../lib/cityData.js';
-import {
-  latLngToENU,
-  lngLatToEnuCoords,
-  makeSceneToEnuMatrix,
-} from '../lib/geoTransform.js';
+import { latLngToENU, lngLatToEnuCoords } from '../lib/geoTransform.js';
 import { formatBenefit } from '../lib/markerHelpers.js';
 
 const EMPTY_FC = { type: 'FeatureCollection', features: [] };
@@ -25,13 +21,43 @@ const EMPTY_FC = { type: 'FeatureCollection', features: [] };
 // ── Palette ───────────────────────────────────────────────────────────────────
 
 const MAT = {
-  ground:         new THREE.MeshStandardMaterial({ color: '#0a150f', roughness: 1 }),
-  buildings:      new THREE.MeshStandardMaterial({ color: '#1e3324', roughness: 0.85, metalness: 0.05 }),
-  buildingsEst:   new THREE.MeshStandardMaterial({ color: '#1e3324', roughness: 0.85, wireframe: false, transparent: true, opacity: 0.7 }),
-  greenspace:     new THREE.MeshStandardMaterial({ color: '#2d4a2f', roughness: 1, side: THREE.DoubleSide }),
-  hardscape:      new THREE.MeshStandardMaterial({ color: '#1e2a1e', roughness: 0.95, side: THREE.DoubleSide }),
-  markerDefault:  new THREE.MeshStandardMaterial({ color: '#6F8F72', roughness: 0.6 }),
-  markerSelected: new THREE.MeshStandardMaterial({ color: '#7CFFB2', emissive: '#3a7a50', roughness: 0.4 }),
+  // Neutral dark floor — contrast base for everything above it
+  ground: new THREE.MeshStandardMaterial({
+    color: '#0d1710', roughness: 1,
+  }),
+
+  // Buildings (measured height) — lit mid-green with warm emissive edge
+  buildings: new THREE.MeshStandardMaterial({
+    color: '#3a6e4a', roughness: 0.65, metalness: 0.08,
+    emissive: '#0f2a18', emissiveIntensity: 0.35,
+    polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
+  }),
+
+  // Buildings (estimated height) — same hue, clearly transparent
+  buildingsEst: new THREE.MeshStandardMaterial({
+    color: '#3a6e4a', roughness: 0.75,
+    transparent: true, opacity: 0.45,
+    polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2,
+  }),
+
+  // Greenspace — clearly visible mid-green, slightly raised
+  greenspace: new THREE.MeshStandardMaterial({
+    color: '#4e8c42', roughness: 1,
+    side: THREE.DoubleSide,
+    polygonOffset: true, polygonOffsetFactor: -3, polygonOffsetUnits: -3,
+  }),
+
+  // Hardscape surfaces — warm grey-green, distinct from ground
+  hardscape: new THREE.MeshStandardMaterial({
+    color: '#2e3e2f', roughness: 0.9,
+    side: THREE.DoubleSide,
+    polygonOffset: true, polygonOffsetFactor: -1, polygonOffsetUnits: -1,
+  }),
+
+  markerDefault:  new THREE.MeshStandardMaterial({ color: '#6F8F72', roughness: 0.5 }),
+  markerSelected: new THREE.MeshStandardMaterial({
+    color: '#7CFFB2', emissive: '#3a7a50', emissiveIntensity: 0.6, roughness: 0.3,
+  }),
 };
 
 // ── Coordinate helpers ────────────────────────────────────────────────────────
@@ -217,32 +243,52 @@ function CityMarkerPin({ marker, anchor, selected, placementMode, onSelect, onHo
 }
 
 // ── Pointcloud overlay ────────────────────────────────────────────────────────
+//
+// The PLY is centered (same as PointCloud.jsx). The similarity transform is
+// decomposed into R3F position / rotation / scale props so R3F handles the
+// matrix update every frame — avoiding the matrixAutoUpdate timing issues.
+//
+// Math: matrix block [[ar, ai],[-ai, ar]] = scale * Ry(θ) in Three.js, where
+//   θ = atan2(ai, ar), position = [tx, 0, -ty].
+// Verified: R3F TRS order gives X=ar·x+ai·z+tx, Z=−ai·x+ar·z−ty ✓
 
 function PointCloudOverlay({ georeference, opacity }) {
   const sourceGeometry = useLoader(PLYLoader, '/models/grove_pointcloud.ply');
-  const pointsRef      = useRef(null);
 
   const geometry = useMemo(() => {
     const g = sourceGeometry.clone();
     g.computeBoundingSphere();
     if (g.boundingSphere) {
-      g.translate(-g.boundingSphere.center.x, -g.boundingSphere.center.y, -g.boundingSphere.center.z);
+      g.translate(
+        -g.boundingSphere.center.x,
+        -g.boundingSphere.center.y,
+        -g.boundingSphere.center.z,
+      );
     }
     return g;
   }, [sourceGeometry]);
 
-  const matrix = useMemo(() => makeSceneToEnuMatrix(georeference, THREE.Matrix4), [georeference]);
-
-  useLayoutEffect(() => {
-    if (!pointsRef.current) return;
-    pointsRef.current.matrixAutoUpdate = false;
-    pointsRef.current.matrix.copy(matrix);
-  }, [matrix]);
+  // Decompose the similarity matrix into Three.js position/rotation/scale
+  const [pos, rot, scl] = useMemo(() => {
+    const { ar, ai, scale: s, tx, ty } = georeference;
+    const theta = Math.atan2(ai, ar); // rotation around Y (Three.js convention)
+    return [
+      [tx, 0, -ty],   // translation: ENU (tx, 0, -ty)
+      [0, theta, 0],  // Y-axis rotation
+      [s, s, s],      // uniform scale
+    ];
+  }, [georeference]);
 
   if (opacity <= 0) return null;
 
   return (
-    <points ref={pointsRef} geometry={geometry} frustumCulled={false}>
+    <points
+      geometry={geometry}
+      frustumCulled={false}
+      position={pos}
+      rotation={rot}
+      scale={scl}
+    >
       <pointsMaterial
         size={1.8}
         vertexColors

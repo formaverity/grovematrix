@@ -1292,6 +1292,65 @@ canvas {
   background: rgba(26, 42, 30, 0.9);
 }
 
+.cal-next-steps {
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0.6rem;
+  border: 1px solid rgba(124, 255, 178, 0.18);
+  border-radius: 8px;
+  background: rgba(14, 26, 20, 0.6);
+}
+
+.cal-next-title {
+  margin: 0 0 0.4rem;
+  font-family: "Space Mono", monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mycelium-glow);
+}
+
+.cal-next-body {
+  margin: 0.2rem 0;
+  font-family: "Courier Prime", monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.cal-next-body code {
+  font-family: "Space Mono", monospace;
+  font-size: 0.65rem;
+  color: var(--lichen-field);
+}
+
+.cal-cmd-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.35rem 0 0.2rem;
+}
+
+.cal-cmd {
+  flex: 1;
+  display: block;
+  padding: 0.32rem 0.55rem;
+  border: 1px solid rgba(214, 210, 196, 0.12);
+  border-radius: 6px;
+  background: rgba(26, 42, 30, 0.7);
+  font-family: "Space Mono", monospace;
+  font-size: 0.62rem;
+  color: var(--fungal-flesh);
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.cal-cmd-copy {
+  flex-shrink: 0;
+  padding: 0.3rem 0.55rem;
+  font-size: 0.65rem;
+}
+
 .cal-basemap-btn.is-active {
   background: rgba(42, 58, 46, 0.94);
   border-color: rgba(124, 255, 178, 0.22);
@@ -1567,6 +1626,625 @@ canvas {
   border-radius: 999px;
   background: var(--mycelium-glow);
   cursor: grab;
+}
+
+/* ── Marker balloon updates (Phase 4) ───────────────────────────────────────── */
+
+.marker-balloon-id-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 4px;
+}
+
+.marker-status-badge {
+  display: inline-block;
+  padding: 0.08rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.status-verified { background: rgba(124, 255, 178, 0.18); color: var(--mycelium-glow); }
+.status-partial  { background: rgba(226, 255, 154, 0.14); color: #e2ff9a; }
+.status-sample   { background: rgba(214, 210, 196, 0.10); color: var(--muted); }
+
+.marker-species-line { display: block; font-style: normal; }
+
+.marker-confidence {
+  font-size: 0.65rem;
+  color: var(--lichen-field);
+  opacity: 0.85;
+}
+
+.marker-source-note {
+  display: block;
+  font-size: 0.62rem;
+  color: var(--muted);
+  font-style: italic;
+  opacity: 0.72;
+}
+
+.marker-characterize-btn {
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+  margin-top: 2px;
+  border: 1px solid rgba(124, 255, 178, 0.28);
+  border-radius: 8px;
+  background: rgba(26, 42, 30, 0.8);
+  color: var(--mycelium-glow);
+  font-family: "Space Mono", monospace;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+
+.marker-characterize-btn:hover {
+  background: rgba(42, 58, 46, 0.95);
+  border-color: rgba(124, 255, 178, 0.5);
+}
+
+/* is-characterize variant on control-row button */
+.control-row button.is-characterize {
+  border-color: rgba(124, 255, 178, 0.22);
+  color: var(--mycelium-glow);
+}
+
+/* ── Capture flow ─────────────────────────────────────────────────────────── */
+
+.cap-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: flex-end;      /* bottom-sheet on mobile */
+  justify-content: center;
+  pointer-events: auto;
+}
+
+@media (min-width: 600px) {
+  .cap-overlay { align-items: center; }
+}
+
+.cap-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 10, 7, 0.72);
+  backdrop-filter: blur(6px);
+}
+
+.cap-panel {
+  position: relative;
+  width: min(560px, 100vw);
+  max-height: 92dvh;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(214, 210, 196, 0.14);
+  border-radius: 18px 18px 0 0;
+  background: rgba(14, 26, 20, 0.96);
+  backdrop-filter: blur(20px) saturate(0.94);
+  box-shadow: 0 -16px 64px rgba(0, 0, 0, 0.48);
+  overflow: hidden;
+}
+
+@media (min-width: 600px) {
+  .cap-panel { border-radius: 18px; }
+}
+
+/* Header */
+.cap-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem 0.6rem;
+  border-bottom: 1px solid rgba(214, 210, 196, 0.1);
+  flex-shrink: 0;
+}
+
+.cap-header-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.cap-marker-id {
+  font-family: "Space Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--mycelium-glow);
+  letter-spacing: 0.06em;
+}
+
+.cap-marker-name {
+  font-family: "Courier Prime", monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+.cap-steps {
+  display: flex;
+  gap: 0.15rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.cap-step-dot {
+  font-family: "Courier Prime", monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(214, 210, 196, 0.3);
+  padding: 0.2rem 0.42rem;
+  border-radius: 4px;
+  transition: color 140ms ease, background 140ms ease;
+}
+
+.cap-step-dot.is-active {
+  color: var(--mycelium-glow);
+  background: rgba(124, 255, 178, 0.1);
+}
+
+.cap-step-dot.is-done {
+  color: var(--lichen-field);
+}
+
+.cap-close {
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(214, 210, 196, 0.14);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-family: "Space Mono", monospace;
+  font-size: 0.8rem;
+  line-height: 1;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.cap-close:hover { color: var(--fungal-flesh); border-color: rgba(214, 210, 196, 0.3); }
+
+/* Body */
+.cap-body {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0.85rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.cap-step { display: flex; flex-direction: column; gap: 0.55rem; }
+.cap-step-center { align-items: center; justify-content: center; min-height: 120px; text-align: center; }
+
+/* Guidance */
+.cap-guidance {
+  margin: 0;
+  font-family: "Courier Prime", monospace;
+  font-size: 0.74rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.cap-guidance strong { color: var(--fungal-flesh); }
+
+/* Photo grid */
+.cap-photo-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.cap-photo-card {
+  position: relative;
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cap-thumb {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid rgba(214, 210, 196, 0.14);
+}
+
+.cap-organ-select {
+  width: 100%;
+  padding: 0.22rem 0.3rem;
+  border: 1px solid rgba(214, 210, 196, 0.14);
+  border-radius: 5px;
+  background: rgba(26, 42, 30, 0.82);
+  color: var(--text);
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  cursor: pointer;
+}
+
+.cap-photo-remove {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(138, 92, 255, 0.3);
+  background: rgba(14, 26, 20, 0.9);
+  color: var(--spore-signal);
+  font-size: 0.75rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cap-add-photo {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 90px;
+  height: 90px;
+  justify-content: center;
+}
+
+.cap-add-btn {
+  appearance: none;
+  width: 100%;
+  padding: 0.34rem 0;
+  border: 1px dashed rgba(214, 210, 196, 0.18);
+  border-radius: 7px;
+  background: rgba(26, 42, 30, 0.6);
+  color: var(--muted);
+  font-family: "Space Mono", monospace;
+  font-size: 0.6rem;
+  cursor: pointer;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+.cap-add-btn:hover { border-color: rgba(124, 255, 178, 0.28); color: var(--mycelium-glow); }
+
+.cap-count {
+  margin: 0;
+  font-family: "Courier Prime", monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+}
+
+/* Status / spinner */
+.cap-spinner {
+  width: 28px;
+  height: 28px;
+  border: 2px solid rgba(124, 255, 178, 0.2);
+  border-top-color: var(--mycelium-glow);
+  border-radius: 50%;
+  animation: capSpin 0.8s linear infinite;
+  margin: 0 auto 0.5rem;
+}
+
+@keyframes capSpin { to { transform: rotate(360deg); } }
+
+.cap-status {
+  margin: 0;
+  font-family: "Courier Prime", monospace;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.cap-quota {
+  margin: 0;
+  font-family: "Courier Prime", monospace;
+  font-size: 0.65rem;
+  color: rgba(226, 255, 154, 0.7);
+}
+
+.cap-error {
+  margin: 0;
+  font-family: "Courier Prime", monospace;
+  font-size: 0.74rem;
+  color: rgba(255, 120, 120, 0.9);
+}
+
+.cap-hint {
+  margin: 0;
+  font-family: "Courier Prime", monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+
+/* NJ prior note */
+.cap-prior-note {
+  font-family: "Courier Prime", monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+  line-height: 1.4;
+  padding: 0.4rem 0.55rem;
+  border: 1px solid rgba(111, 143, 114, 0.18);
+  border-radius: 6px;
+  background: rgba(111, 143, 114, 0.06);
+}
+
+.cap-prior-badge {
+  display: inline-block;
+  padding: 0.05rem 0.28rem;
+  border-radius: 3px;
+  background: rgba(111, 143, 114, 0.2);
+  color: var(--lichen-field);
+  font-family: "Space Mono", monospace;
+  font-size: 0.58rem;
+  font-weight: 700;
+  margin-left: 3px;
+  vertical-align: middle;
+}
+
+/* Candidate list */
+.cap-candidates {
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+}
+
+.cap-candidate {
+  width: 100%;
+  text-align: left;
+  padding: 0.55rem 0.7rem;
+  border: 1px solid rgba(214, 210, 196, 0.1);
+  border-radius: 10px;
+  background: rgba(26, 42, 30, 0.7);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  transition: border-color 120ms ease, background 120ms ease;
+}
+
+.cap-candidate:hover   { border-color: rgba(214, 210, 196, 0.22); background: rgba(42, 58, 46, 0.8); }
+.cap-candidate.is-selected { border-color: rgba(124, 255, 178, 0.36); background: rgba(42, 58, 46, 0.9); }
+
+.cap-cand-scores {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.cap-adj-score {
+  font-family: "Space Mono", monospace;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--mycelium-glow);
+}
+
+.cap-raw-score {
+  font-family: "Courier Prime", monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+
+.cap-cand-names { display: flex; flex-direction: column; gap: 0.1rem; }
+
+.cap-sci    { font-size: 0.74rem; color: var(--fungal-flesh); font-style: italic; }
+.cap-common { font-size: 0.7rem;  color: var(--muted); }
+.cap-family { font-size: 0.62rem; color: rgba(214, 210, 196, 0.4); }
+
+.cap-ref-images {
+  display: flex;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+.cap-ref-img {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 1px solid rgba(214, 210, 196, 0.12);
+}
+
+/* Manual entry */
+.cap-manual-details summary { list-style: none; }
+.cap-manual-details summary::-webkit-details-marker { display: none; }
+
+.cap-manual-entry {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-top: 0.4rem;
+}
+
+.cap-field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-family: "Courier Prime", monospace;
+  font-size: 0.68rem;
+  color: var(--muted);
+  letter-spacing: 0.04em;
+}
+
+.cap-field-required::after {
+  content: ' *';
+  color: var(--mycelium-glow);
+}
+
+.cap-input {
+  width: 100%;
+  padding: 0.38rem 0.55rem;
+  border: 1px solid rgba(214, 210, 196, 0.14);
+  border-radius: 7px;
+  background: rgba(26, 42, 30, 0.78);
+  color: var(--text);
+  font-family: "Space Mono", monospace;
+  font-size: 0.74rem;
+  outline: none;
+  transition: border-color 120ms ease;
+}
+
+.cap-input:focus { border-color: rgba(124, 255, 178, 0.32); }
+
+/* Structure step */
+.cap-allometry-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Courier Prime", monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.cap-allometry-note {
+  margin: 0;
+  font-family: "Courier Prime", monospace;
+  font-size: 0.65rem;
+  color: rgba(214, 210, 196, 0.4);
+  font-style: italic;
+}
+
+.cap-struct-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .cap-struct-row { grid-template-columns: 1fr 1fr; }
+}
+
+/* Review step */
+.cap-review-card {
+  border: 1px solid rgba(214, 210, 196, 0.12);
+  border-radius: 10px;
+  background: rgba(26, 42, 30, 0.6);
+  padding: 0.65rem 0.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.42rem;
+}
+
+.cap-review-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-family: "Courier Prime", monospace;
+  font-size: 0.74rem;
+  color: var(--fungal-flesh);
+}
+
+.cap-review-label {
+  font-family: "Space Mono", monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  min-width: 80px;
+}
+
+.cap-source-badge {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0.06rem 0.28rem;
+  border-radius: 3px;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(214, 210, 196, 0.08);
+  color: var(--muted);
+  font-family: "Space Mono", monospace;
+}
+
+.cap-status-badge {
+  padding: 0.14rem 0.44rem;
+  border-radius: 5px;
+  font-family: "Space Mono", monospace;
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.cap-status-verified { background: rgba(124, 255, 178, 0.14); color: var(--mycelium-glow); }
+.cap-status-partial  { background: rgba(226, 255, 154, 0.12); color: #e2ff9a; }
+.cap-status-sample   { background: rgba(214, 210, 196, 0.08); color: var(--muted); }
+
+/* Links */
+.cap-link {
+  appearance: none;
+  background: transparent;
+  border: none;
+  color: var(--lichen-field);
+  font-family: "Courier Prime", monospace;
+  font-size: 0.7rem;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  text-decoration: underline;
+  text-decoration-color: rgba(111, 143, 114, 0.4);
+}
+
+.cap-link:hover { color: var(--mycelium-glow); }
+
+/* Footer */
+.cap-footer {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  padding-bottom: calc(0.7rem + env(safe-area-inset-bottom));
+  border-top: 1px solid rgba(214, 210, 196, 0.1);
+  flex-shrink: 0;
+}
+
+.cap-btn {
+  appearance: none;
+  padding: 0.54rem 0.9rem;
+  border-radius: 10px;
+  font-family: "Space Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 120ms ease, border-color 120ms ease, color 120ms ease;
+}
+
+.cap-btn-back {
+  border: 1px solid rgba(214, 210, 196, 0.12);
+  background: rgba(26, 42, 30, 0.7);
+  color: var(--muted);
+}
+
+.cap-btn-back:hover { color: var(--fungal-flesh); }
+
+.cap-btn-next {
+  flex: 1;
+  border: 1px solid rgba(124, 255, 178, 0.26);
+  background: rgba(42, 58, 46, 0.92);
+  color: var(--mycelium-glow);
+}
+
+.cap-btn-next:hover:not(:disabled) {
+  background: rgba(58, 80, 62, 0.98);
+  border-color: rgba(124, 255, 178, 0.45);
+}
+
+.cap-btn-next:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
 }
 
 /* ── Existing hover/coarse overrides (unchanged) ───────────────────────────── */

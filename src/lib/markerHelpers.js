@@ -134,6 +134,16 @@ export function normalizeSupabaseMarker(row, georef = null) {
     coolingScore: Number(row.cooling_score ?? 0),
     shadeSqft: Number(row.shade_sqft ?? 0),
     data_status: row.data_status ?? 'sample',
+    // Phase 4 characterization fields (may be null until characterization runs)
+    dbh_in:               row.dbh_in != null ? Number(row.dbh_in) : null,
+    height_ft:            row.height_ft != null ? Number(row.height_ft) : null,
+    crown_spread_ft:      row.crown_spread_ft != null ? Number(row.crown_spread_ft) : null,
+    crown_base_height_ft: row.crown_base_height_ft != null ? Number(row.crown_base_height_ft) : null,
+    species_confidence:   row.species_confidence != null ? Number(row.species_confidence) : null,
+    species_source:       row.species_source ?? 'manual',
+    structure_source:     row.structure_source ?? 'manual',
+    capture:              row.capture ?? null,
+    photo_url:            row.photo_url ?? null,
   };
 
   const est = estimateBenefits(marker);

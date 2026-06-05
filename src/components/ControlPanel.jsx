@@ -26,6 +26,7 @@ export function ControlPanel({
   onTopView,
 }) {
   const viewMode              = useGroveStore((s) => s.viewMode);
+  const openCapture           = useGroveStore((s) => s.openCapture);
   const layerVisibility       = useGroveStore((s) => s.layerVisibility);
   const toggleLayerVisibility = useGroveStore((s) => s.toggleLayerVisibility);
   const cloudOpacity          = useGroveStore((s) => s.cloudOpacity);
@@ -93,6 +94,14 @@ export function ControlPanel({
               </button>
               <button type="button" onClick={onDeleteSelected} disabled={!selectedMarker}>
                 Delete Selected
+              </button>
+              <button
+                type="button"
+                className={selectedMarker ? 'is-characterize' : ''}
+                disabled={!selectedMarker}
+                onClick={() => selectedMarker && openCapture(selectedMarker.id)}
+              >
+                ✦ Characterize
               </button>
             </div>
 

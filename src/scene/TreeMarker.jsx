@@ -2,6 +2,9 @@ import React from 'react';
 import { Html } from '@react-three/drei';
 import { PLACEMENT_Y } from '../lib/markerHelpers.js';
 import { formatBenefit, formatVerified } from '../lib/markerHelpers.js';
+import { useGroveStore } from '../store/useGroveStore.js';
+
+const STATUS_CLASS = { verified: 'status-verified', partial: 'status-partial', sample: 'status-sample' };
 
 const DEBUG_MARKER_HITS = false;
 const MARKER_HIT_RADIUS = 80;
@@ -19,6 +22,7 @@ export function TreeMarker({
   onHoverChange,
   onSelect,
 }) {
+  const openCapture = useGroveStore((s) => s.openCapture);
   const x = Number(marker?.x);
   const z = Number(marker?.z);
   const markerId = marker?.marker_code || marker?.id;
@@ -129,13 +133,49 @@ export function TreeMarker({
             >
               x
             </button>
-            <strong>{markerId}</strong>
+
+            {/* Header row: ID + data_status badge */}
+            <div className="marker-balloon-id-row">
+              <strong>{markerId}</strong>
+              {marker.data_status && (
+                <span className={`marker-status-badge ${STATUS_CLASS[marker.data_status] ?? ''}`}>
+                  {marker.data_status}
+                </span>
+              )}
+            </div>
+
             <span>{marker.commonName || marker.common_name || 'Tree marker'}</span>
-            <small>{marker.species || 'species pending'}</small>
+            <small className="marker-species-line">
+              {marker.species && marker.species !== 'Unknown'
+                ? <em>{marker.species}</em>
+                : 'species pending'}
+              {marker.species_confidence != null && (
+                <span className="marker-confidence">
+                  {' '}{Math.round(marker.species_confidence * 100)}%
+                  {marker.species_source && marker.species_source !== 'manual'
+                    ? ` · ${marker.species_source}` : ''}
+                </span>
+              )}
+            </small>
+
             <div className="marker-balloon-section">
               <small>Condition: {marker.condition || 'Unsurveyed'}</small>
               <small>Status: {formatVerified(marker.verified)}</small>
             </div>
+
+            {/* Structural fields (when characterized) */}
+            {marker.dbh_in != null && (
+              <div className="marker-balloon-section">
+                <small className="marker-balloon-label">structure</small>
+                <small>DBH: {marker.dbh_in}&Prime;</small>
+                {marker.height_ft != null && <small>Height ~{marker.height_ft} ft</small>}
+                {marker.crown_spread_ft != null && <small>Crown ~{marker.crown_spread_ft} ft spread</small>}
+                {marker.structure_source && marker.structure_source !== 'manual' && (
+                  <small className="marker-source-note">{marker.structure_source}</small>
+                )}
+              </div>
+            )}
+
             <div className="marker-balloon-section">
               <small className="marker-balloon-label">canopy work</small>
               <small>Shade: {formatBenefit(marker.shadeSqft, 'sq ft')}</small>
@@ -143,13 +183,17 @@ export function TreeMarker({
               <small>Carbon stored: {formatBenefit(marker.carbonStoredLb, 'lb')}</small>
               <small>Cooling: {formatBenefit(marker.coolingScore, '/ 100')}</small>
             </div>
-            {marker.lat != null && marker.lng != null && (
-              <div className="marker-balloon-section">
-                <small className="marker-balloon-label">georef</small>
-                <small>{marker.lat.toFixed(6)}° N</small>
-                <small>{marker.lng.toFixed(6)}° E</small>
-              </div>
-            )}
+
+            {/* Characterize CTA */}
+            <div className="marker-balloon-section">
+              <button
+                type="button"
+                className="marker-characterize-btn"
+                onClick={(e) => { e.stopPropagation(); openCapture(markerId); }}
+              >
+                {marker.data_status === 'verified' ? '✦ Re-characterize' : '✦ Characterize'}
+              </button>
+            </div>
           </div>
         </Html>
       ) : null}
