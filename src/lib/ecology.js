@@ -105,8 +105,10 @@ function computeVerified(marker) {
   const heightFt     = Number(marker.heightFt ?? marker.height_ft ?? 35);
   const coolingScore = Math.min(100, Math.round((crownAreaSqft / 200) * (1 + heightFt / 60)));
 
+  const metrics = { carbonStoredLb, annualCarbonLb, annualStormwaterGal, shadeSqft, coolingScore };
   return {
-    metrics: { carbonStoredLb, annualCarbonLb, annualStormwaterGal, shadeSqft, coolingScore },
+    metrics,
+    bands: makeBands(metrics, 'verified'),
     tier: 'verified',
     confidenceWeight: 0.90,
     inputs: { dbhIn, crownSpreadFt, species: marker.species, group: coeff._group },
@@ -147,8 +149,10 @@ function computePartial(marker) {
   const heightFt     = Number(marker.heightFt ?? marker.height_ft ?? 25);
   const coolingScore = Math.min(100, Math.round((crownAreaSqft / 200) * (1 + heightFt / 60)));
 
+  const metrics = { carbonStoredLb, annualCarbonLb, annualStormwaterGal, shadeSqft, coolingScore };
   return {
-    metrics: { carbonStoredLb, annualCarbonLb, annualStormwaterGal, shadeSqft, coolingScore },
+    metrics,
+    bands: makeBands(metrics, 'partial'),
     tier: 'partial',
     confidenceWeight: 0.60,
     inputs: { crownSpreadFt, species: marker.species, group: coeff._group },
@@ -171,8 +175,10 @@ function computeSample(marker) {
   const carbonStoredLb   = Math.round(radius * radius * 1.7);
   const coolingScore     = Math.min(100, Math.round(35 + radius * 2.4));
 
+  const metrics = { carbonStoredLb, annualCarbonLb, annualStormwaterGal, shadeSqft, coolingScore };
   return {
-    metrics: { carbonStoredLb, annualCarbonLb, annualStormwaterGal, shadeSqft, coolingScore },
+    metrics,
+    bands: makeBands(metrics, 'sample'),
     tier: 'sample',
     confidenceWeight: 0.30,
     inputs: { canopyRadiusFt: radius },
@@ -183,15 +189,34 @@ function computeSample(marker) {
   };
 }
 
+// ── Completeness bands ────────────────────────────────────────────────────────
+// Per-metric estimate ranges derived from data completeness, not statistical CIs.
+// They communicate how much the estimate could shift given better input data:
+//   verified: ±10%  — measured DBH + species → Jenkins allometry (well-validated)
+//   partial:  ±30%  — crown-area proxy, no DBH → moderate parametric uncertainty
+//   sample:   ±55%  — canopy-radius only → rough order-of-magnitude
+
+const BAND_HW = { verified: 0.10, partial: 0.30, sample: 0.55 };
+
+function makeBands(metrics, tier) {
+  const hw = BAND_HW[tier];
+  const bands = {};
+  for (const [k, v] of Object.entries(metrics)) {
+    bands[k] = { value: v, low: Math.round(v * (1 - hw)), high: Math.round(v * (1 + hw)) };
+  }
+  return bands;
+}
+
 // ── Public API ────────────────────────────────────────────────────────────────
 
 /**
  * Compute ecological benefit estimates for a single marker.
  *
  * @param {object} marker  Normalized marker object from the store
- * @returns {{ metrics, tier, confidenceWeight, inputs, assumptions }}
+ * @returns {{ metrics, bands, tier, confidenceWeight, inputs, assumptions }}
  *
  * metrics keys: carbonStoredLb, annualCarbonLb, annualStormwaterGal, shadeSqft, coolingScore
+ * bands: per-metric { value, low, high } completeness ranges
  * tier: 'verified' | 'partial' | 'sample'
  * confidenceWeight: 0–1 (drives visual intensity in service-field layer)
  */
@@ -200,6 +225,47 @@ export function computeBenefits(marker) {
   if (tier === 'verified') return computeVerified(marker);
   if (tier === 'partial')  return computePartial(marker);
   return computeSample(marker);
+}
+
+/**
+ * Compute distribution statistics across all markers for chart normalization.
+ * Returns per-metric { min, p25, median, p75, max } + dbhIn stats.
+ *
+ * @param {object[]} markers  Array of normalized marker objects
+ */
+export function computeGroveStats(markers) {
+  const KEYS = ['carbonStoredLb', 'annualCarbonLb', 'annualStormwaterGal', 'shadeSqft'];
+  const buckets = {};
+  for (const k of KEYS) buckets[k] = [];
+  const dbhBucket = [];
+
+  for (const m of markers) {
+    const b = computeBenefits(m);
+    for (const k of KEYS) {
+      const v = b.metrics[k];
+      if (v != null && v > 0) buckets[k].push(v);
+    }
+    const dbh = m.dbhIn ?? m.dbh_in;
+    if (dbh != null && dbh > 0) dbhBucket.push(Number(dbh));
+  }
+
+  function quartiles(arr) {
+    if (!arr.length) return { min: 0, p25: 0, median: 0, p75: 0, max: 0 };
+    const s = [...arr].sort((a, b) => a - b);
+    const n = s.length;
+    return {
+      min:    s[0],
+      p25:    s[Math.floor(n * 0.25)],
+      median: s[Math.floor(n * 0.50)],
+      p75:    s[Math.floor(n * 0.75)],
+      max:    s[n - 1],
+    };
+  }
+
+  const result = {};
+  for (const k of KEYS) result[k] = quartiles(buckets[k]);
+  result.dbhIn = quartiles(dbhBucket);
+  return result;
 }
 
 // Convenience: apply computeBenefits and merge flat metrics + meta into a marker object.

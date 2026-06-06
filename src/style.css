@@ -625,9 +625,13 @@ canvas {
 
 .marker-balloon {
   position: relative;
-  min-width: 180px;
-  max-width: 240px;
-  padding: 12px 14px 11px;
+  min-width: 200px;
+  max-width: 252px;
+  /* Flex column so header and footer stay pinned while body scrolls */
+  display: flex;
+  flex-direction: column;
+  max-height: min(70vh, calc(100dvh - 6rem - env(safe-area-inset-top) - env(safe-area-inset-bottom)));
+  overflow: hidden;
   border-radius: 14px;
   background: rgba(14, 26, 20, 0.88);
   border: 1px solid rgba(138, 92, 255, 0.32);
@@ -640,6 +644,41 @@ canvas {
     inset 0 0 16px rgba(214, 210, 196, 0.04);
   transform: translate(26px, -86px);
   pointer-events: auto;
+}
+
+/* ── Sticky header ──────────────────────────────────────────────────────────── */
+.marker-balloon-header {
+  flex-shrink: 0;
+  padding: 10px 12px 8px;
+  border-bottom: 1px solid rgba(214, 210, 196, 0.1);
+}
+
+/* ── Scrollable body ────────────────────────────────────────────────────────── */
+.marker-balloon-scroll-body {
+  flex: 1;
+  min-height: 0;           /* required for flex overflow to work */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 12px 10px;
+}
+
+/* Thin palette-tinted scrollbar */
+.marker-balloon-scroll-body::-webkit-scrollbar         { width: 2px; }
+.marker-balloon-scroll-body::-webkit-scrollbar-track   { background: transparent; }
+.marker-balloon-scroll-body::-webkit-scrollbar-thumb   { background: rgba(124, 255, 178, 0.25); border-radius: 1px; }
+.marker-balloon-scroll-body::-webkit-scrollbar-thumb:hover { background: rgba(124, 255, 178, 0.45); }
+
+/* First section in the scroll body sits flush against the header border */
+.marker-balloon-scroll-body > .marker-balloon-section:first-child {
+  border-top: none;
+  margin-top: 6px;
+}
+
+/* ── Sticky footer ──────────────────────────────────────────────────────────── */
+.marker-balloon-footer {
+  flex-shrink: 0;
+  padding: 8px 12px;
+  border-top: 1px solid rgba(214, 210, 196, 0.1);
 }
 
 .marker-balloon strong,
@@ -663,11 +702,11 @@ canvas {
 }
 
 .marker-balloon-close {
-  position: absolute;
-  top: 5px;
-  right: 7px;
-  width: 20px;
-  height: 20px;
+  /* Inline in the header id-row (margin-left: auto pushes it right) */
+  margin-left: auto;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
   background: transparent;
   border: 0;
   color: var(--mycelium-glow);
@@ -675,7 +714,10 @@ canvas {
   font-size: 0.72rem;
   line-height: 1;
   cursor: pointer;
+  opacity: 0.75;
 }
+
+.marker-balloon-close:hover { opacity: 1; }
 
 .marker-balloon-section {
   margin-top: 8px;
@@ -1670,7 +1712,7 @@ canvas {
 .marker-characterize-btn {
   width: 100%;
   padding: 0.4rem 0.6rem;
-  margin-top: 2px;
+  margin-top: 0;
   border: 1px solid rgba(124, 255, 178, 0.28);
   border-radius: 8px;
   background: rgba(26, 42, 30, 0.8);
@@ -2311,52 +2353,51 @@ canvas {
   margin-top: 2px;
 }
 
-/* ── MarkerInfo bar charts ───────────────────────────────────────────────── */
+/* ── Observable Plot chart containers ───────────────────────────────────── */
 
-.mi-chart {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin: 4px 0;
+.mi-forest-plot {
+  width: 100%;
+  margin: 2px 0 1px;
+  overflow: visible;
 }
 
-.mi-bar-row {
+.mi-forest-plot svg {
+  overflow: visible;
+}
+
+.benefits-chart {
+  width: 100%;
+  margin: 2px 0;
+  overflow: visible;
+}
+
+.benefits-chart svg {
+  overflow: visible;
+}
+
+/* Tier legend chips below the completeness stacked bar */
+.benefits-tier-legend {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.3rem;
+}
+
+.benefits-tier-chip {
   display: flex;
   align-items: center;
-  gap: 5px;
-}
-
-.mi-bar-label {
+  gap: 4px;
   font-family: "Courier Prime", monospace;
-  font-size: 0.58rem;
+  font-size: 0.6rem;
   color: var(--muted);
-  width: 46px;
+}
+
+.benefits-tier-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
   flex-shrink: 0;
-  white-space: nowrap;
-}
-
-.mi-bar-track {
-  flex: 1;
-  height: 4px;
-  background: rgba(214, 210, 196, 0.10);
-  border-radius: 2px;
-  overflow: hidden;
-}
-
-.mi-bar-fill {
-  height: 100%;
-  border-radius: 2px;
-  transition: width 0.35s ease;
-}
-
-.mi-bar-val {
-  font-family: "Space Mono", monospace;
-  font-size: 0.54rem;
-  color: var(--fungal-flesh);
-  width: 52px;
-  text-align: right;
-  flex-shrink: 0;
-  white-space: nowrap;
 }
 
 /* ── 2D map popup overlay ────────────────────────────────────────────────── */
@@ -2538,97 +2579,12 @@ canvas {
   color: var(--muted);
 }
 
-/* Tier bars */
-.benefits-tier-bars {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
-
-.benefits-tier-row {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.benefits-tier-badge {
-  width: 54px;
-  font-family: "Space Mono", monospace;
-  font-size: 0.58rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  flex-shrink: 0;
-}
-
-.benefits-tier-bar-track {
-  flex: 1;
-  height: 5px;
-  border-radius: 999px;
-  background: rgba(214, 210, 196, 0.1);
-  overflow: hidden;
-}
-
-.benefits-tier-bar-fill {
-  height: 100%;
-  border-radius: 999px;
-  transition: width 300ms ease;
-}
-
-.benefits-tier-count {
-  font-family: "Courier Prime", monospace;
-  font-size: 0.62rem;
-  color: var(--muted);
-  white-space: nowrap;
-}
-
 .benefits-completeness-note {
   margin: 0.4rem 0 0;
   font-family: "Courier Prime", monospace;
   font-size: 0.66rem;
   color: rgba(226, 255, 154, 0.7);
   line-height: 1.4;
-}
-
-/* Species list */
-.benefits-species-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.28rem;
-}
-
-.benefits-species-row {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.28rem 0.38rem;
-  border-radius: 5px;
-  background: rgba(26, 42, 30, 0.45);
-  font-size: 0.68rem;
-}
-
-.benefits-species-name {
-  flex: 1;
-  color: var(--fungal-flesh);
-  font-style: italic;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-family: "Courier Prime", monospace;
-}
-
-.benefits-species-count {
-  color: var(--muted);
-  font-family: "Courier Prime", monospace;
-  font-size: 0.62rem;
-  white-space: nowrap;
-}
-
-.benefits-species-val {
-  color: var(--lichen-field);
-  font-family: "Space Mono", monospace;
-  font-size: 0.65rem;
-  white-space: nowrap;
 }
 
 .benefits-disclaimer {

@@ -425,8 +425,13 @@ export function Map2DView() {
 
     const pt = mapRef.current.project([mk.lng, mk.lat]);
     const cw = mapRef.current.getContainer().clientWidth;
+    const ch = mapRef.current.getContainer().clientHeight;
+    // Clamp y so the capped card (70vh max, half ≈ 35vh) stays on screen
+    const halfCard = Math.min(ch * 0.35, 240);
+    const MARGIN   = 12;
+    const clampedY = Math.max(halfCard + MARGIN, Math.min(ch - halfCard - MARGIN, pt.y));
     // Flip to left side when marker is in the right 58% of the viewport
-    setPopupPos({ x: pt.x, y: pt.y, flipLeft: pt.x > cw * 0.58 });
+    setPopupPos({ x: pt.x, y: clampedY, flipLeft: pt.x > cw * 0.58 });
   }, []);
 
   // Re-project when the selected marker changes

@@ -295,6 +295,7 @@ export const useGroveStore = create((set, get) => ({
     const withBenefits  = applyBenefits(updatedMarker);
     const storeUpdate   = { ...baseUpdate, ...withBenefits };
 
+
     // Single Supabase write — includes both characterization + recomputed benefit columns
     Object.assign(supabaseFields, {
       shade_sqft:            withBenefits.shadeSqft,
