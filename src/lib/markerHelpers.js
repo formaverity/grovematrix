@@ -128,12 +128,19 @@ export function normalizeSupabaseMarker(row, georef = null) {
     carbonStoredLb: Number(row.carbon_stored_lb ?? 0),
     coolingScore: Number(row.cooling_score ?? 0),
     shadeSqft: Number(row.shade_sqft ?? 0),
-    data_status: row.data_status ?? 'sample',
-    // Phase 4 characterization fields (may be null until characterization runs)
+    data_status:   row.data_status ?? 'sample',
+    dataStatus:    row.data_status ?? 'sample',
+    // Phase 4 characterization fields — kept in both snake_case (DB form) and
+    // camelCase (normalized form) so ecology.js tier logic works regardless of
+    // which convention the caller uses.
     dbh_in:               row.dbh_in != null ? Number(row.dbh_in) : null,
+    dbhIn:                row.dbh_in != null ? Number(row.dbh_in) : null,
     height_ft:            row.height_ft != null ? Number(row.height_ft) : null,
+    heightFt:             row.height_ft != null ? Number(row.height_ft) : null,
     crown_spread_ft:      row.crown_spread_ft != null ? Number(row.crown_spread_ft) : null,
+    crownSpreadFt:        row.crown_spread_ft != null ? Number(row.crown_spread_ft) : null,
     crown_base_height_ft: row.crown_base_height_ft != null ? Number(row.crown_base_height_ft) : null,
+    crownBaseFt:          row.crown_base_height_ft != null ? Number(row.crown_base_height_ft) : null,
     species_confidence:   row.species_confidence != null ? Number(row.species_confidence) : null,
     species_source:       row.species_source ?? 'manual',
     structure_source:     row.structure_source ?? 'manual',

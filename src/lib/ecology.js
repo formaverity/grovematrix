@@ -55,21 +55,29 @@ function jenkinsBiomassKg(dbhCm, coeff) {
 }
 
 // ── Tier determination ────────────────────────────────────────────────────────
+// Reads both camelCase (dbhIn, crownSpreadFt, dataStatus) and snake_case
+// (dbh_in, crown_spread_ft, data_status) so the function is safe regardless of
+// which normalization path produced the marker object.
 
 function determineTier(marker) {
-  const hasDbh     = marker.dbh_in != null && Number.isFinite(Number(marker.dbh_in)) && Number(marker.dbh_in) > 0;
+  const dbh    = marker.dbhIn         ?? marker.dbh_in;
+  const crown  = marker.crownSpreadFt ?? marker.crown_spread_ft;
+  const status = marker.dataStatus    ?? marker.data_status;
+
+  const hasDbh     = dbh != null && Number.isFinite(Number(dbh)) && Number(dbh) > 0;
   const hasSpecies = marker.species && marker.species !== 'Unknown';
-  const hasCrown   = marker.crown_spread_ft != null && Number.isFinite(Number(marker.crown_spread_ft));
+  const hasCrown   = crown != null && Number.isFinite(Number(crown));
 
   if (hasDbh && hasSpecies) return 'verified';
-  if (hasCrown || (marker.data_status === 'partial' && hasSpecies)) return 'partial';
+  if (hasSpecies && hasCrown) return 'partial';
+  if (hasSpecies && status === 'partial') return 'partial';
   return 'sample';
 }
 
 // ── Verified: full biomass allometry ─────────────────────────────────────────
 
 function computeVerified(marker) {
-  const dbhIn  = Number(marker.dbh_in);
+  const dbhIn  = Number(marker.dbhIn ?? marker.dbh_in);
   const dbhCm  = dbhIn * 2.54;
   const coeff  = getCoeff(marker.species);
 
@@ -83,7 +91,7 @@ function computeVerified(marker) {
   const annualCarbonLb  = Math.max(1, Math.round((biomassNextKg - biomassKg) * coeff.carbonFraction * KG_TO_LB));
 
   // Crown dimensions — measured/allometric if present, else infer from canopy radius
-  const crownSpreadFt   = Number(marker.crown_spread_ft ?? (marker.canopyRadiusFt ?? 14) * 2);
+  const crownSpreadFt   = Number((marker.crownSpreadFt ?? marker.crown_spread_ft) ?? (marker.canopyRadiusFt ?? 14) * 2);
   const crownRadiusFt   = crownSpreadFt / 2;
   const crownAreaSqft   = Math.PI * crownRadiusFt ** 2;
 
@@ -94,7 +102,7 @@ function computeVerified(marker) {
   );
 
   const shadeSqft    = Math.round(crownAreaSqft);
-  const heightFt     = Number(marker.height_ft ?? 35);
+  const heightFt     = Number(marker.heightFt ?? marker.height_ft ?? 35);
   const coolingScore = Math.min(100, Math.round((crownAreaSqft / 200) * (1 + heightFt / 60)));
 
   return {
@@ -107,7 +115,7 @@ function computeVerified(marker) {
       `Carbon fraction: ${coeff.carbonFraction} (IPCC Tier 1)`,
       `Rainfall: ${ANNUAL_RAIN_IN}"/yr (${LOCALE.location})`,
       `Canopy interception: ${Math.round(coeff.interceptionFraction * 100)}% of precipitation`,
-      crownSpreadFt !== Number(marker.crown_spread_ft)
+      crownSpreadFt !== Number(marker.crownSpreadFt ?? marker.crown_spread_ft)
         ? 'Crown spread: inferred from canopy radius'
         : 'Crown spread: measured or allometric input',
     ],
@@ -118,7 +126,7 @@ function computeVerified(marker) {
 
 function computePartial(marker) {
   const coeff         = getCoeff(marker.species);
-  const crownSpreadFt = Number(marker.crown_spread_ft ?? (marker.canopyRadiusFt ?? 14) * 2);
+  const crownSpreadFt = Number((marker.crownSpreadFt ?? marker.crown_spread_ft) ?? (marker.canopyRadiusFt ?? 14) * 2);
   const crownRadiusFt = crownSpreadFt / 2;
   const crownAreaSqft = Math.PI * crownRadiusFt ** 2;
 
@@ -136,7 +144,7 @@ function computePartial(marker) {
   );
 
   const shadeSqft    = Math.round(crownAreaSqft);
-  const heightFt     = Number(marker.height_ft ?? 25);
+  const heightFt     = Number(marker.heightFt ?? marker.height_ft ?? 25);
   const coolingScore = Math.min(100, Math.round((crownAreaSqft / 200) * (1 + heightFt / 60)));
 
   return {

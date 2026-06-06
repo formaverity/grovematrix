@@ -2311,6 +2311,71 @@ canvas {
   margin-top: 2px;
 }
 
+/* ── MarkerInfo bar charts ───────────────────────────────────────────────── */
+
+.mi-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin: 4px 0;
+}
+
+.mi-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.mi-bar-label {
+  font-family: "Courier Prime", monospace;
+  font-size: 0.58rem;
+  color: var(--muted);
+  width: 46px;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.mi-bar-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(214, 210, 196, 0.10);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.mi-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.35s ease;
+}
+
+.mi-bar-val {
+  font-family: "Space Mono", monospace;
+  font-size: 0.54rem;
+  color: var(--fungal-flesh);
+  width: 52px;
+  text-align: right;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+/* ── 2D map popup overlay ────────────────────────────────────────────────── */
+
+.mi-popup {
+  position: absolute;
+  z-index: 50;
+  pointer-events: none;
+}
+
+.mi-popup > * {
+  pointer-events: auto;
+}
+
+/* In 2D overlay context, the balloon is already absolutely placed — no extra offset */
+.mi-popup .marker-balloon {
+  transform: none;
+}
+
 /* ── Service field controls (ControlPanel) ───────────────────────────────── */
 
 .service-field-control {

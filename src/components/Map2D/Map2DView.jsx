@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useGroveStore, selectSelectedMarker } from '../../store/useGroveStore.js';
 import { getLayer } from '../../lib/cityData.js';
 import { computeBenefits } from '../../lib/ecology.js';
+import { MarkerInfo } from '../MarkerInfo/MarkerInfo.jsx';
 
 // ── Blank dark basemap ────────────────────────────────────────────────────────
 // No external tile provider — the three Overture GeoJSON sources are the map.
@@ -172,6 +173,17 @@ function addLayers(map, layerVisibility) {
     layout: { visibility: layerVisibility.hardscape ? 'visible' : 'none' },
   });
 
+  // Invisible wide-radius hit layer — makes tap targets usable on mobile
+  map.addLayer({
+    id: 'markers-hit',
+    type: 'circle',
+    source: 'markers',
+    paint: {
+      'circle-color': 'rgba(0,0,0,0)',
+      'circle-radius': ['interpolate', ['linear'], ['zoom'], 12, 22, 17, 32],
+    },
+  });
+
   // Markers — unselected
   map.addLayer({
     id: 'markers-circle',
@@ -214,6 +226,8 @@ export function Map2DView() {
   const layerVisibility  = useGroveStore((s) => s.layerVisibility);
   const serviceField     = useGroveStore((s) => s.serviceField);
 
+  const selectedMarker     = useGroveStore(selectSelectedMarker);
+
   const selectMarker       = useGroveStore((s) => s.selectMarker);
   const clearSelection     = useGroveStore((s) => s.clearSelection);
   const placeMarkerAtWorld = useGroveStore((s) => s.placeMarkerAtWorld);
@@ -222,6 +236,7 @@ export function Map2DView() {
   const mapRef          = useRef(null);
   const [mapReady, setMapReady]     = useState(false);
   const [etlMissing, setEtlMissing] = useState(false);
+  const [popupPos, setPopupPos]     = useState(null);
 
   // ── Init MapLibre ───────────────────────────────────────────────────────────
 
@@ -322,6 +337,15 @@ export function Map2DView() {
       if (mk) selectMarker(mk);
     });
 
+    // Hit layer handles the same selection but with a wider tap radius
+    map.on('click', 'markers-hit', (e) => {
+      e.preventDefault();
+      const id = e.features?.[0]?.properties?.id;
+      if (!id) return;
+      const mk = useGroveStore.getState().markers.find((m) => m.id === id);
+      if (mk) selectMarker(mk);
+    });
+
     map.on('click', (e) => {
       // Only fire if the click wasn't consumed by a marker layer
       if (e.defaultPrevented) return;
@@ -338,14 +362,14 @@ export function Map2DView() {
 
     map.on('mouseenter', 'markers-circle',   () => { map.getCanvas().style.cursor = 'pointer'; });
     map.on('mouseenter', 'markers-selected', () => { map.getCanvas().style.cursor = 'pointer'; });
-    map.on('mouseleave', 'markers-circle',   () => {
+    map.on('mouseenter', 'markers-hit',      () => { map.getCanvas().style.cursor = 'pointer'; });
+    const resetCursor = () => {
       const { placementMode: pm } = useGroveStore.getState();
       map.getCanvas().style.cursor = pm ? 'crosshair' : '';
-    });
-    map.on('mouseleave', 'markers-selected', () => {
-      const { placementMode: pm } = useGroveStore.getState();
-      map.getCanvas().style.cursor = pm ? 'crosshair' : '';
-    });
+    };
+    map.on('mouseleave', 'markers-circle',   resetCursor);
+    map.on('mouseleave', 'markers-selected', resetCursor);
+    map.on('mouseleave', 'markers-hit',      resetCursor);
 
     return () => { map.remove(); mapRef.current = null; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -390,6 +414,31 @@ export function Map2DView() {
     }
   }, [serviceField, markers, mapReady]);
 
+  // ── Popup position — project selected marker lat/lng to screen coords ────────
+
+  const updatePopupPos = useCallback(() => {
+    if (!mapRef.current) { setPopupPos(null); return; }
+    const { selectedMarkerId: sid, markers: ms } = useGroveStore.getState();
+    if (!sid) { setPopupPos(null); return; }
+    const mk = ms.find((m) => m.id === sid);
+    if (!mk || mk.lng == null || mk.lat == null) { setPopupPos(null); return; }
+
+    const pt = mapRef.current.project([mk.lng, mk.lat]);
+    const cw = mapRef.current.getContainer().clientWidth;
+    // Flip to left side when marker is in the right 58% of the viewport
+    setPopupPos({ x: pt.x, y: pt.y, flipLeft: pt.x > cw * 0.58 });
+  }, []);
+
+  // Re-project when the selected marker changes
+  useEffect(() => { updatePopupPos(); }, [selectedMarker, updatePopupPos]);
+
+  // Track the point live as the map pans/zooms
+  useEffect(() => {
+    if (!mapReady || !mapRef.current) return;
+    mapRef.current.on('move', updatePopupPos);
+    return () => { mapRef.current?.off('move', updatePopupPos); };
+  }, [mapReady, updatePopupPos]);
+
   // ── No georeference guard ───────────────────────────────────────────────────
 
   if (georeferenceStatus === 'absent') {
@@ -416,6 +465,21 @@ export function Map2DView() {
           <code> node scripts/derive-bbox.js </code>→
           <code> node scripts/fetch-overture.js </code>→
           <code> node scripts/classify-overture.js</code>
+        </div>
+      )}
+
+      {selectedMarker && popupPos && (
+        <div
+          className="mi-popup"
+          style={{
+            left: popupPos.x,
+            top: popupPos.y,
+            transform: popupPos.flipLeft
+              ? 'translate(calc(-100% - 18px), -50%)'
+              : 'translate(18px, -50%)',
+          }}
+        >
+          <MarkerInfo marker={selectedMarker} onClose={clearSelection} />
         </div>
       )}
 

@@ -15,7 +15,7 @@ import { useGroveStore, selectSelectedMarker } from '../store/useGroveStore.js';
 import { getLayer } from '../lib/cityData.js';
 import { latLngToENU, lngLatToEnuCoords } from '../lib/geoTransform.js';
 import { CanopyDomes } from './CanopyDomes.jsx';
-import { formatBenefit } from '../lib/markerHelpers.js';
+import { MarkerInfo } from '../components/MarkerInfo/MarkerInfo.jsx';
 
 const EMPTY_FC = { type: 'FeatureCollection', features: [] };
 
@@ -180,7 +180,7 @@ function SurfaceMesh({ data, anchor, elevY, material, visible }) {
 
 // ── Markers ───────────────────────────────────────────────────────────────────
 
-function CityMarkerPin({ marker, anchor, selected, placementMode, onSelect, onHover }) {
+function CityMarkerPin({ marker, anchor, selected, placementMode, onSelect, onHover, onDeselect }) {
   const markerId = marker.marker_code ?? marker.id;
   const pos = useMemo(
     () => marker.lng != null ? toVec3(marker.lng, marker.lat, anchor, 0.5) : null,
@@ -215,28 +215,7 @@ function CityMarkerPin({ marker, anchor, selected, placementMode, onSelect, onHo
         <Html center={false} occlude={false} transform={false} zIndexRange={[2000, 0]}
           pointerEvents="auto"
         >
-          <div className="marker-balloon city-marker-balloon"
-            onClick={(e) => e.stopPropagation()}
-            onPointerDown={(e) => e.stopPropagation()}
-          >
-            <strong>{markerId}</strong>
-            <span>{marker.commonName ?? marker.common_name ?? 'Tree'}</span>
-            <small>{marker.species ?? 'species pending'}</small>
-            <div className="marker-balloon-section">
-              <small>Condition: {marker.condition ?? 'Unsurveyed'}</small>
-            </div>
-            <div className="marker-balloon-section">
-              <small className="marker-balloon-label">canopy work</small>
-              <small>Shade: {formatBenefit(marker.shadeSqft, 'sq ft')}</small>
-              <small>Stormwater: {formatBenefit(marker.annualStormwaterGal, 'gal / yr')}</small>
-            </div>
-            {marker.lat != null && (
-              <div className="marker-balloon-section">
-                <small className="marker-balloon-label">georef</small>
-                <small>{marker.lat.toFixed(5)}° N, {marker.lng.toFixed(5)}°</small>
-              </div>
-            )}
-          </div>
+          <MarkerInfo marker={marker} onClose={onDeselect} className="city-marker-balloon" />
         </Html>
       )}
     </group>
@@ -427,6 +406,7 @@ function CityScene({
           placementMode={placementMode}
           onSelect={selectMarker}
           onHover={setHoveredMarkerId}
+          onDeselect={clearSelection}
         />
       ))}
 

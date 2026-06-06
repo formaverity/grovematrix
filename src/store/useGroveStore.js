@@ -265,21 +265,28 @@ export const useGroveStore = create((set, get) => ({
     const existingMarker = get().markers.find((m) => m.id === markerId);
     const supabaseId     = existingMarker?.marker_code ?? markerId;
 
-    // Build updated marker and recompute benefits BEFORE the Supabase write
+    // Build updated marker and recompute benefits BEFORE the Supabase write.
+    // Both snake_case (DB columns) and camelCase (normalized form) are included
+    // so ecology.js tier logic works immediately without a round-trip refresh.
     const baseUpdate = {
       commonName,
-      common_name: commonName,
+      common_name:          commonName,
       species,
       species_confidence:   speciesConfidence ?? null,
       species_source:       speciesSource ?? 'manual',
       dbh_in:               dbhIn   != null ? Number(dbhIn)   : null,
+      dbhIn:                dbhIn   != null ? Number(dbhIn)   : null,
       height_ft:            heightFt != null ? Number(heightFt) : null,
+      heightFt:             heightFt != null ? Number(heightFt) : null,
       crown_spread_ft:      crownSpreadFt != null ? Number(crownSpreadFt) : null,
+      crownSpreadFt:        crownSpreadFt != null ? Number(crownSpreadFt) : null,
       crown_base_height_ft: crownBaseFt  != null ? Number(crownBaseFt)  : null,
+      crownBaseFt:          crownBaseFt  != null ? Number(crownBaseFt)  : null,
       structure_source:     structureSource ?? 'manual',
       capture:              captureWithPhoto,
       photo_url:            photoUrl,
       data_status:          dataStatus,
+      dataStatus,
       verified:             dataStatus === 'verified',
     };
 
