@@ -67,6 +67,7 @@ function GroveApp() {
 
   // Store actions
   const fetchMarkers = useGroveStore((s) => s.fetchMarkers);
+  const loadGeoreference = useGroveStore((s) => s.loadGeoreference);
   const placeMarker = useGroveStore((s) => s.placeMarker);
   const deleteMarker = useGroveStore((s) => s.deleteMarker);
   const selectMarker = useGroveStore((s) => s.selectMarker);
@@ -98,8 +99,9 @@ function GroveApp() {
   // ── Boot ────────────────────────────────────────────────────────────────────
 
   useEffect(() => {
+    loadGeoreference();
     fetchMarkers();
-  }, [fetchMarkers]);
+  }, [loadGeoreference, fetchMarkers]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setMinIntroElapsed(true), 5000);

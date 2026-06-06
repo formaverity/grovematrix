@@ -458,7 +458,8 @@ function CityScene({
 // ── Top-level view ────────────────────────────────────────────────────────────
 
 export function City3DView() {
-  const georeference    = useGroveStore((s) => s.georeference);
+  const georeference       = useGroveStore((s) => s.georeference);
+  const georeferenceStatus = useGroveStore((s) => s.georeferenceStatus);
   const markers         = useGroveStore((s) => s.markers);
   const selectedMarkerId= useGroveStore((s) => s.selectedMarkerId);
   const layerVisibility = useGroveStore((s) => s.layerVisibility);
@@ -484,7 +485,9 @@ export function City3DView() {
     });
   }, []);
 
-  if (!georeference) {
+  if (georeferenceStatus === 'loading') return null;
+
+  if (georeferenceStatus === 'absent') {
     return (
       <div className="stub-mode">
         <div className="stub-mode-inner">

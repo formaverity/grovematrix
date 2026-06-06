@@ -206,8 +206,9 @@ function addLayers(map, layerVisibility) {
 // ── Component ─────────────────────────────────────────────────────────────────
 
 export function Map2DView() {
-  const georeference     = useGroveStore((s) => s.georeference);
-  const markers          = useGroveStore((s) => s.markers);
+  const georeference        = useGroveStore((s) => s.georeference);
+  const georeferenceStatus  = useGroveStore((s) => s.georeferenceStatus);
+  const markers             = useGroveStore((s) => s.markers);
   const selectedMarkerId = useGroveStore((s) => s.selectedMarkerId);
   const placementMode    = useGroveStore((s) => s.placementMode);
   const layerVisibility  = useGroveStore((s) => s.layerVisibility);
@@ -391,7 +392,9 @@ export function Map2DView() {
 
   // ── No georeference guard ───────────────────────────────────────────────────
 
-  if (!georeference) {
+  if (georeferenceStatus === 'loading') return null;
+
+  if (georeferenceStatus === 'absent') {
     return (
       <div className="map2d-container map2d-no-georef">
         <div className="map2d-notice">

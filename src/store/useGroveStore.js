@@ -21,6 +21,13 @@ function loadStoredGeoref() {
   }
 }
 
+function isValidGeoref(obj) {
+  if (!obj || typeof obj !== 'object') return false;
+  return ['ar', 'ai', 'tx', 'ty', 'anchorLng', 'anchorLat'].every(
+    (k) => typeof obj[k] === 'number' && isFinite(obj[k]),
+  );
+}
+
 export const useGroveStore = create((set, get) => ({
   // ── Markers ────────────────────────────────────────────────────────────────
   markers: [],
@@ -47,7 +54,8 @@ export const useGroveStore = create((set, get) => ({
   pointCloudError: null,
 
   // ── Georeference ───────────────────────────────────────────────────────────
-  georeference: loadStoredGeoref(),
+  georeference: null,
+  georeferenceStatus: 'loading', // 'loading' | 'ready' | 'absent'
 
   // ── City 3D cross-fade (0 = full city, 1 = full scanned cloud) ────────────
   cloudOpacity: 0,
@@ -301,13 +309,38 @@ export const useGroveStore = create((set, get) => ({
     }));
   },
 
+  loadGeoreference: async () => {
+    // Dev: prefer localStorage so Solve & Save takes effect immediately
+    if (import.meta.env.DEV) {
+      const stored = loadStoredGeoref();
+      if (isValidGeoref(stored)) {
+        set({ georeference: stored, georeferenceStatus: 'ready' });
+        return;
+      }
+    }
+    // All envs: fetch the committed static asset
+    try {
+      const res = await fetch('/data/grove-georeference.json');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = await res.json();
+      if (!isValidGeoref(json)) throw new Error('invalid shape');
+      // Mirror into localStorage in dev so the calibrator picks it up
+      if (import.meta.env.DEV) {
+        try { localStorage.setItem(GEOREF_STORAGE_KEY, JSON.stringify(json)); } catch {}
+      }
+      set({ georeference: json, georeferenceStatus: 'ready' });
+    } catch {
+      set({ georeferenceStatus: 'absent' });
+    }
+  },
+
   setGeoreference: (georef) => {
     try {
       localStorage.setItem(GEOREF_STORAGE_KEY, JSON.stringify(georef));
     } catch {
       // storage may be unavailable
     }
-    set({ georeference: georef });
+    set({ georeference: georef, georeferenceStatus: 'ready' });
   },
 }));
 

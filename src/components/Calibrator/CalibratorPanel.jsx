@@ -284,10 +284,12 @@ function MapControls({ basemap, onBasemapChange, mapRef }) {
 // ── Main panel ────────────────────────────────────────────────────────────────
 
 export function CalibratorPanel() {
-  const setGeoreference = useGroveStore((s) => s.setGeoreference);
-  const currentGeoref = useGroveStore((s) => s.georeference);
+  const setGeoreference  = useGroveStore((s) => s.setGeoreference);
+  const loadGeoreference = useGroveStore((s) => s.loadGeoreference);
+  const currentGeoref    = useGroveStore((s) => s.georeference);
 
-  const [gcps, setGcps] = useState(() => currentGeoref?.gcps ?? []);
+  const [gcps, setGcps] = useState([]);
+  const gcpsSeededRef = useRef(false);
   const [pickStep, setPickStep] = useState('idle'); // 'scene' | 'map' | 'idle'
   const [pendingScene, setPendingScene] = useState(null);
   const [solved, setSolved] = useState(null);
@@ -303,6 +305,18 @@ export function CalibratorPanel() {
 
   const mapContainerRef = useRef(null);
   const mapRef = useRef(null);
+
+  // ── Boot: hydrate georef from file/localStorage ───────────────────────────
+
+  useEffect(() => { loadGeoreference(); }, [loadGeoreference]);
+
+  // Seed GCPs once when georef resolves (only if user hasn't added any yet)
+  useEffect(() => {
+    if (currentGeoref && !gcpsSeededRef.current) {
+      gcpsSeededRef.current = true;
+      setGcps(currentGeoref.gcps ?? []);
+    }
+  }, [currentGeoref]);
 
   // ── Initialise MapLibre ───────────────────────────────────────────────────
 
@@ -432,9 +446,12 @@ export function CalibratorPanel() {
             {solved.rmsM < 5 ? ' ✓' : solved.rmsM < 15 ? ' ⚠' : ' ✗ re-pick GCPs'}
           </span>
         )}
-        {solved && (
-          <button type="button" className="cal-btn cal-btn-solve" style={{ marginLeft: 'auto' }}
-            onClick={() => triggerDownload(solved)}
+        {(solved ?? currentGeoref) && (
+          <button
+            type="button"
+            className="cal-btn cal-btn-solve"
+            style={{ marginLeft: 'auto' }}
+            onClick={() => triggerDownload(solved ?? currentGeoref)}
           >
             ↓ grove-georeference.json
           </button>
